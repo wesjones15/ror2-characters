@@ -1,13 +1,13 @@
 # RoR2 Characters
 
-Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin. Each character is a separate BepInEx mod with its own releases and version numbers.
+Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin. Each character is a separate BepInEx mod. Both start at 0.1.0 in each compatibility line: legacy and modern.
 
 **Offline and friends-only co-op only.**
 
 | Character | Release tag | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | `mario-v0.2.0` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | `olimar-v0.1.0` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Mario | `legacy-v0.1.0` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | `legacy-v0.1.0` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
 
 ## Download
 

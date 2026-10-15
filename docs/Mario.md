@@ -1,6 +1,6 @@
 # Mario for Risk of Rain 2
 
-Version 0.2.0. A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.1.0 (legacy). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
