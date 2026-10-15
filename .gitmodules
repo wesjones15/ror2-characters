@@ -1,0 +1,15 @@
+[submodule "libpikmin"]
+	path = sources/libpikmin
+	url = https://github.com/wesjones15/libpikmin.git
+[submodule "libsms"]
+	path = sources/libsms
+	url = https://github.com/wesjones15/libsms.git
+[submodule "ror2-common"]
+	path = sources/ror2-common
+	url = https://github.com/wesjones15/ror2-common.git
+[submodule "ror2-mario"]
+	path = sources/ror2-mario
+	url = https://github.com/wesjones15/ror2-mario.git
+[submodule "ror2-olimar"]
+	path = sources/ror2-olimar
+	url = https://github.com/wesjones15/ror2-olimar.git

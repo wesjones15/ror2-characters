@@ -1,0 +1,220 @@
+# Mario for Risk of Rain 2
+
+Version 0.2.0. A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
+a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
+
+**Offline and friends-only co-op only.** Do not run this online.
+
+## Requirements
+
+- Risk of Rain 2 **1.2.4.4** (the 2023 build, Unity 2019.4.37), Windows x64. Other builds are
+  not supported.
+- **BepInEx 5.4.21.0** (the installer refuses any other version).
+- **RoR2BepInExPack 1.14.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
+- Your own **Super Mario Sunshine** disc image (`.iso`, `.gcm` or `.ciso`, any region). RVZ,
+  WIA and WBFS images must be converted to ISO first. The ZIP contains no Nintendo data.
+- Mario and Olimar can be installed together.
+
+## Install
+
+1. Unzip the release.
+2. Run the installer, pointing it at the folder that contains `BepInEx`:
+
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
+   ```
+
+   Add `-WhatIf` to preview. The installer verifies the package hashes and copies only
+   `MarioTest.dll` and `sms.dll` into `BepInEx/plugins/MarioTest/`. It leaves your config,
+   assets, disc image and other mods alone. With a mod manager, use the active profile folder
+   (the one containing `BepInEx`) as `-InstallDir` and launch through that profile.
+3. Launch the game once so the config file is created, then quit.
+4. Open `BepInEx/config/com.libsms.mariotest.cfg` and set `Paths.Disc` to your Sunshine image.
+   Alternatives: put the image beside the plugin DLLs, or set the `SMS_DISC` environment
+   variable.
+5. Launch again. Mario's first-run extraction runs on a background thread.
+
+Install `MarioTest.dll` and `sms.dll` together. A mismatched pair is refused at load (the ABI
+version must match; this release is ABI 24).
+
+## First run
+
+The plugin builds its asset cache from your disc: models, animation, tuning, sounds, HUD and
+particle effects, plus the arrival, "Too Bad!", game over and blue coin jingles (in
+`assets/ror2_audio/`) and the pictures of the game over wipe (`assets/wipe/`). The cache is
+reused on later launches without the disc. A cache made by an older version gets the jingles
+and the wipe pictures added when the disc is found (`Paths.Disc`); without them the game over
+screen is simply not shown. By default it is the `assets/` folder next to the
+plugin; `Paths.AssetsDir`, then `assets_dir.txt` beside the plugin, then `SMS_ASSETS`, override that.
+
+- Mario stays registered while extraction runs, but his sim, model and coins wait for the
+  complete cache. If extraction fails or there is no disc, he plays as Commando and the log
+  says what to fix.
+- If you pick Mario on the character select screen before extraction finishes, select another
+  survivor and then Mario again to refresh his lobby display.
+- An incomplete cache from an older version is repaired automatically.
+
+## Controls
+
+Mario has two input layouts, picked automatically by whichever device you used last: a
+**gamepad** layout (Sunshine's, by button position) and a **keyboard and mouse** layout (your
+RoR2 binds). VR is not supported in this release. Movement is always RoR2's own (the stick or WASD, relative
+to the camera); libsms turns it into Sunshine's walk, run and slide.
+
+### Gamepad
+
+Buttons are read by their position on an Xbox-style pad through Rewired's gamepad template, so
+**your RoR2 binds don't change them**. The pad must be the last device you touched.
+
+| Button | Sunshine | Does |
+| --- | --- | --- |
+| Left stick | stick | walk, run |
+| A | A | jump; wall kick against a wall |
+| B | B | dive in the air; punch on the ground |
+| Right trigger (RT) | R | spray FLUDD. Analog: a light pull is a short splash just ahead, a half pull sprays on the move, pulling all the way in plants Mario and sprays |
+| Left trigger (LT) | L | ground pound in the air; crouch on the ground. While held, FLUDD points where the camera looks (`Controls.CameraAim`) |
+| Left bumper (LB), held | | lock onto an enemy and aim FLUDD at it, on the ground or in the air. Mario doesn't crouch for it |
+| Right bumper (RB) | X | switch nozzle: Spray, Hover, Rocket, Turbo. With LB held it steps to the next lock-on target instead |
+| Right stick (while RB is pressed with LB held) | | picks the direction to cycle the lock-on (right if centred) |
+| D-pad down | | refill FLUDD's tank (`Fludd.DpadRefill`) |
+| X | | RoR2's interact (Mario uses it for nothing else) |
+| Y | | RoR2's equipment |
+| RoR2's sprint bind | | sprint, for sprint items (adds no speed of its own) |
+
+Notes:
+
+- **Spray trigger**: the trigger's travel is curved (`Controls.TriggerCurve`, default 2) so the
+  light zone is easier to hold. Sunshine's light zone is the first tenth of a GameCube trigger.
+- **Lock-on** picks the enemy nearest where the camera points, within `Controls.LockRange`
+  (60 m) and in line of sight, and keeps it until you let go of LB. While locked, RT's full pull
+  doesn't plant him, so you can spray on the move.
+- **Camera aim** (LT held): FLUDD follows the camera's pitch, and a crouching Mario turns with
+  the camera while the stick side-steps. A lock-on, if LB is also held, takes over.
+- Pressing X or Y never also triggers a Mario move.
+- The HUD's skill icons show these buttons: RT for FLUDD and the Air Pump, LT for the Ground
+  Pound, B for the Wet Slide.
+
+### Keyboard and mouse
+
+Your RoR2 binds stand in, since a keyboard has no spare buttons:
+
+| RoR2 action (default key) | Does |
+| --- | --- |
+| Move (WASD) | walk, run |
+| Jump (Space) | A: jump, wall kick |
+| Primary skill (left mouse) | spray. A tap is a light splash just ahead; held longer than `Controls.LightTapSeconds` (0.2 s) it sprays at full |
+| Sprint (your bind) | plant Mario and spray at full; also RoR2's sprint for sprint items |
+| Secondary skill (right mouse) | B: dive, punch |
+| Utility skill (your bind) | L: crouch, ground pound in the air, FLUDD aimed by the camera, **and** the lock-on |
+| Special skill (R) | switch nozzle. While the utility key is held, cycles the lock-on target instead |
+
+Because the utility key is both L and the lock-on: a fresh press in the air still ground pounds,
+but Mario doesn't crouch while locked. The keys shown are RoR2's usual defaults, so check your own
+binds in RoR2's settings.
+
+### Related settings
+
+In `BepInEx/config/com.libsms.mariotest.cfg`:
+
+| Setting | Default | Effect |
+| --- | --- | --- |
+| `Controls.LockOn` | on | the lock-on (LB or the utility key) |
+| `Controls.LockRange` | 60 | lock-on reach in metres |
+| `Controls.CameraAim` | on | LT points FLUDD where the camera looks |
+| `Controls.TriggerCurve` | 2 | spray trigger travel curve; 1 is linear |
+| `Controls.LightTapSeconds` | 0.2 | keyboard tap length that counts as a light splash; 0 means always full |
+| `Fludd.DpadRefill` | on | D-pad down fills the tank |
+| `Fludd.SprayBursts` | on | Sunshine's burst-based spray |
+| `Hud.CoinCounters` | on | Sunshine's coin counters in place of RoR2's gold and lunar coins |
+| `Hud.CoinX`, `Hud.CoinY`, `Hud.CoinScale` | -1, -1, 0.4 | where the counters sit (negative: where RoR2's own are) and their size |
+| `Coins.Gold` | 1 | RoR2 gold each yellow coin is worth |
+| `Hud.ScreenEffects` | on | the "TOO BAD!" and game over screens |
+| `Hud.ScreenSpeed` | 1.25 | their pace against the game's own |
+| `Hud.TooBadDrop` | 20 | metres below his last footing at which a fall starts "TOO BAD!" |
+| `Hud.LivesScale` | 0.7 | size of the "MARIO x N" banner |
+| `SpawnMusic.Cues` | on | the blue coin jingle (and other extra cues) |
+
+### Not supported yet
+
+- Rebinding Mario's moves to other buttons. The gamepad layout is fixed by position.
+
+## Playing Mario
+
+- **Spray** works as in Sunshine: a light press drops a short splash just ahead, which a belly
+  slide can glide over; a full press sprays at full reach for about five seconds, then fades.
+- **FLUDD's tank** empties as you spray and refills while you hold spray standing in water,
+  with D-pad down, and on each new stage.
+- **Wet slide**: a belly slide glides only over wet ground (FLUDD's water leaves wet patches,
+  and shallow water counts). It lasts up to 1.5 s, with no charges, and cooldown reduction and
+  Lysate Cell lengthen it.
+- **Ground pound** hits hard and sends a shock wave on landing. Stomps bounce higher in a
+  chain, as in Sunshine.
+- **Life meter**: Sunshine's sun replaces RoR2's health bar (the numbers stay). Eight rays show
+  his health, and the shield's rays follow in cyan. While locked on, the sun turns on the enemy
+  as a marker showing its health.
+- **Coins**: enemies Mario kills drop a yellow coin; touching it restores one life-meter
+  segment (an eighth of full health) and is worth `Coins.Gold` (1) RoR2 gold. Coins expire after
+  60 seconds.
+- **Coin counters**: Sunshine's counters, drawn from the disc's HUD pictures, replace RoR2's: the
+  yellow coin shows your gold, the blue coin your lunar coins (once you have one), each where
+  RoR2's own counter was, which hides. Picking up a lunar coin plays Sunshine's blue coin jingle.
+  The counters take up to seven digits (the game's own stop at three).
+- **Items**: RoR2's items work through Mario's moves, using the skill slots (FLUDD is the
+  primary, extra mid-air FLUDD the secondary, full ground pounds the utility, wet slides the
+  special). Movement-speed items speed him up, and jump pads, knockback and stuns work.
+- **Hits and falls**: a powerful hit (a quarter of max health and shield) knocks him down
+  without stunning him. Fall damage applies only beyond 40 body heights; ground pounds are
+  always safe and a dive landing protects far more.
+- **Dying** plays Sunshine's fall and its **game over** song, with its game over screen: the
+  "TOO BAD!" letters drop in and bounce, then the screen goes black with the letters "GAME OVER"
+  cut out of it (the scene showing through), and a red box comes in behind them. With an extra
+  life in hand (Dio's Best Friend, a Pluripotent Larva) a death is a miss instead: the "Too Bad!"
+  jingle and letters, and Sunshine's "MARIO x N" lives banner sliding in and counting down as
+  RoR2 uses the life. No extra life, no banner.
+- **Falling off the map** plays "TOO BAD!" and its jingle as soon as Mario is 20 m below where
+  he last stood with no ground under him for a long way (`Hud.TooBadDrop`), and he is put back
+  where he last stood, unhurt, a little later, when the stage's kill zone takes him (or he is
+  150 m down). He cannot be hurt while the screen is black. A long drop onto lower ground, as on
+  a tall stage, is not a fall off the map.
+- **Walls**: if the sim lets him through a wall (a hit's knock-back against one, a corner), he is
+  put back where he stood (`Mario put back` in the log).
+- **Unstuck**: if Mario stays wedged in place for three seconds while fallen, sliding or
+  falling, he is moved to safe ground (`Mario unstuck after 3 seconds` in the log).
+- **Character select**: Mario jumps on the spot with a "wahoo".
+- **Arrival**: about 2.5 seconds of Delfino Plaza play once per run as he leaves the pod.
+
+## Configuration
+
+`BepInEx/config/com.libsms.mariotest.cfg`. The main sections are `Look.*` (model, height,
+effects, smoke speed, water tint), `Sound.*`, `SpawnMusic.*`, `Sim.*` (jump, stomp and speed
+rules), `Fludd.*`, `Controls.*` (camera aim, lock range, trigger curve), `Hud.*`, `Damage.*`,
+`Items.*`, `FallDamage.*`, `Knockdown.*`, `Paths.*` and `Debug.*`. Each entry has a
+description in the file.
+
+## Troubleshooting
+
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 24`, `Mario is 1.xx m tall`,
+`Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
+
+- *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check
+  `Paths.Disc`, then restart.
+- *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
+- *Wrong game version*: only 1.2.4.4 is supported.
+
+## Known limitations
+
+- VR is not supported in this release.
+- Multiplayer is new and not yet tested with two players: other players with the plugin and the disc
+  assets see Mario, his FLUDD water and his coins, and a client's hits, falls and blasts are sent to
+  the host. Players without the plugin see Commando.
+- Yoshi is not implemented.
+- The skill icons are Commando's, with Mario's buttons shown as glyphs.
+- Goobo Jr.'s Mario clone is drawn in the gummy material, not a Shadow Mario skin.
+
+## Legal
+
+This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or Gearbox. The
+package contains no game assets. All models, textures and audio are extracted on your machine
+from a disc you own, and are never uploaded or redistributed. Do not share your extracted
+`assets/` folder.
