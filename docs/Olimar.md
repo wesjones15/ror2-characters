@@ -1,8 +1,8 @@
-> Modern 0.1.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
+> Modern 0.2.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Olimar for Risk of Rain 2
 
-Version 0.1.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.2.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -28,7 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Olimar-modern-0.1.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
+2. Unzip **Olimar-modern-0.2.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
 
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
@@ -55,7 +55,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. The native ABI must match; this release uses ABI 28.
+Install `OlimarTest.dll` and `pikmin.dll` together. The native ABI must match; this release uses ABI 29.
 
 ## First run
 
@@ -202,7 +202,7 @@ lifts off and follows you.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 28`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 29`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.

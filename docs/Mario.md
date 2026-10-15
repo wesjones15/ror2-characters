@@ -1,8 +1,8 @@
-> Modern 0.1.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
+> Modern 0.2.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Mario for Risk of Rain 2
 
-Version 0.1.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.2.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -27,7 +27,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Mario. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Mario-modern-0.1.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
+2. Unzip **Mario-modern-0.2.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
 
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
@@ -54,12 +54,12 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Super Mario Sunshine.iso
    ```
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 24.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 26.
 
 ## First run
 
 The plugin builds its asset cache from your disc: models, animation, tuning, sounds, HUD and
-particle effects, plus the arrival, "Too Bad!", game over and blue coin jingles (in
+particle effects, the Shine Sprite and its Shine Get camera, plus the arrival, "Too Bad!", game over, blue coin, "secret" chime and Shine Get fanfare jingles (in
 `assets/ror2_audio/`) and the pictures of the game over wipe (`assets/wipe/`). The cache is
 reused on later launches without the disc. A cache made by an older version gets the jingles
 and the wipe pictures added when the disc is found (`Paths.Disc`); without them the game over
@@ -144,6 +144,11 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 | `Controls.LightTapSeconds` | 0.2 | keyboard tap length that counts as a light splash; 0 means always full |
 | `Fludd.DpadRefill` | on | D-pad down fills the tank |
 | `Fludd.SprayBursts` | on | Sunshine's burst-based spray |
+| `Shine.Enabled` | on | the Shine Sprite over a charged teleporter |
+| `Shine.Height`, `Shine.TouchRadius` | 1.6, 1.5 | metres the Shine hangs above the teleporter, and how near you touch it from |
+| `Shine.Seconds` | 6.3 | seconds from the pose to the stage ending |
+| `Shine.Camera` | on | fly the camera along Sunshine's Shine Get path |
+| `Hud.LunarCoinSecret` | on | lunar coins play the "puzzle solved" chime, not the blue coin jingle |
 | `Hud.CoinCounters` | on | Sunshine's coin counters in place of RoR2's gold and lunar coins |
 | `Hud.CoinX`, `Hud.CoinY`, `Hud.CoinScale` | -1, -1, 0.4 | where the counters sit (negative: where RoR2's own are) and their size |
 | `Coins.Gold` | 1 | RoR2 gold each yellow coin is worth |
@@ -171,12 +176,20 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 - **Life meter**: Sunshine's sun replaces RoR2's health bar (the numbers stay). Eight rays show
   his health, and the shield's rays follow in cyan. While locked on, the sun turns on the enemy
   as a marker showing its health.
+- **Shine Sprite**: when a teleporter has charged (its boss dead) a Shine from the disc rises above its
+  middle and hums, for the Mario player only. Touch it, by walking or jumping into it, for Sunshine's Shine
+  Get: Mario lands and holds it over his head, the camera flies the disc's own path, the fanfare plays and
+  "SHINE!" flies in. About `Shine.Seconds` (6.3) later the stage ends for everyone, as if Mario had used the
+  teleporter: to the stage the run was going to, to a Lunar Seer's choice if one was made, or, on the last
+  stage before the moon, to the moon instead of the loop. The other portals are never taken. Other players
+  see Mario in the pose but not the Shine, and RoR2's own interaction with the teleporter still works.
 - **Coins**: enemies Mario kills drop a yellow coin; touching it restores one life-meter
   segment (an eighth of full health) and is worth `Coins.Gold` (1) RoR2 gold. Coins expire after
   60 seconds.
 - **Coin counters**: Sunshine's counters, drawn from the disc's HUD pictures, replace RoR2's: the
   yellow coin shows your gold, the blue coin your lunar coins (once you have one), each where
-  RoR2's own counter was, which hides. Picking up a lunar coin plays Sunshine's blue coin jingle.
+  RoR2's own counter was, which hides. Picking up a lunar coin plays Sunshine's "puzzle solved" chime
+  (`Hud.LunarCoinSecret`; off for the blue coin's own jingle).
   The counters take up to seven digits (the game's own stop at three).
 - **Items**: RoR2's items work through Mario's moves, using the skill slots (FLUDD is the
   primary, extra mid-air FLUDD the secondary, full ground pounds the utility, wet slides the
@@ -212,7 +225,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 24`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 26`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check
