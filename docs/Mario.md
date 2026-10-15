@@ -1,8 +1,8 @@
-> Unreleased DLC4 migration. The version below identifies the legacy baseline, not a published modern package. Runtime validation is pending.
+> Modern 0.1.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Mario for Risk of Rain 2
 
-Version 0.2.0. A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.1.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -220,3 +220,8 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 package contains no game assets. All models, textures and audio are extracted on your machine
 from a disc you own, and are never uploaded or redistributed. Do not share your extracted
 `assets/` folder.
+
+## Shared native audio
+
+Both characters read BepInEx/config/Ror2Common.Audio.cfg, Output.GainDb, default -4 dB.
+Restart after editing. Master and SFX/music settings also apply. No additional tone filter is enabled.

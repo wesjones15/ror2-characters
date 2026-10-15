@@ -1,8 +1,15 @@
 # Mario changelog
 
-Requires Risk of Rain 2 1.2.4.4, BepInEx 5.4.21.0 and RoR2BepInExPack 1.14.0. Native ABI 24.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 24.
 
-## 0.2.0 - 2026-10-14
+## 0.1.0 - 2026-10-15
+
+First modern release. Includes the character features below, adapted to DLC4 APIs and netstandard2.1.
+Fixes opaque materials, survivor portraits and native audio gain before clipping. Shared native audio
+defaults to -4 dB; the temporary tone filters and separate FLUDD attenuation are removed.
+The earlier legacy package used 0.2.0; modern releases start at 0.1.0.
+
+## Legacy 0.2.0 - 2026-10-14
 
 First packaged release: `MarioTest.dll` and `sms.dll`, with an installer and checksums. Earlier
 builds were development builds installed straight from source, so everything the character does is
