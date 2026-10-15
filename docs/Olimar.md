@@ -1,8 +1,8 @@
-> Unreleased DLC4 migration. The version below identifies the legacy baseline, not a published modern package. Runtime validation is pending.
+> Modern 0.1.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Olimar for Risk of Rain 2
 
-Version 0.1.0. A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.1.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -38,7 +38,7 @@ disc's own models, animations and sounds. Commando's skills never fire.
 5. Launch again. First-run extraction runs on a background thread.
 
 Install `OlimarTest.dll` and `pikmin.dll` together. A mismatched pair is refused at load (the
-ABI version must match; this release is ABI 27).
+ABI version must match; this release is ABI 28).
 
 ## First run
 
@@ -185,7 +185,7 @@ lifts off and follows you.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 27`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 28`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
@@ -214,3 +214,11 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 package contains no game assets. All models, animations and audio are extracted on your machine
 from a disc you own, and are never uploaded or redistributed. Do not share your extracted
 `assets/` folder.
+
+## Shared native audio
+
+Both characters read BepInEx/config/Ror2Common.Audio.cfg, Output.GainDb, default -4 dB.
+Restart after editing. Master and SFX/music settings also apply. No additional tone filter is enabled.
+
+The full vanilla sundown bell plays on death and continues through the results screen.
+It is generated in memory from your own disc, uses SFX volume, and stops when you leave the run.

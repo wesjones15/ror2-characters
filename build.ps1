@@ -16,7 +16,7 @@ $sources = Join-Path $PSScriptRoot 'sources'
 if ($Character -eq 'Mario') {
     $native = 'libsms'; $hostRepo = 'ror2-mario'; $plugin = 'MarioTest'; $dll = 'sms.dll'; $abi = 24
 } else {
-    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 27
+    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 28
 }
 $changelog = Get-Content -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Raw
 if ($changelog -notmatch "(?m)^## $([regex]::Escape($Version)) - ") { throw "Add a $Version entry to changelogs/$Character.md first." }
@@ -47,7 +47,7 @@ foreach ($reference in @('RoR2.dll', 'UnityEngine.CoreModule.dll')) {
     if (-not (Test-Path -LiteralPath (Join-Path $RoR2Dir "Risk of Rain 2_Data/Managed/$reference"))) { throw "Missing local reference: $reference" }
 }
 $dist = Join-Path $PSScriptRoot 'dist'
-$name = "$Character-$Version-win-x64"
+$name = "$Character-modern-$Version-win-x64"
 $package = Join-Path $dist $name
 $zip = "$package.zip"
 if ((Test-Path -LiteralPath $package) -or (Test-Path -LiteralPath $zip)) { throw "Output already exists: $package. Move it aside before rebuilding this version." }
@@ -66,6 +66,7 @@ $relativePaths = @('README.md', 'CHANGELOG.md', 'install.ps1', "BepInEx/plugins/
 $files = @($relativePaths | ForEach-Object { [ordered]@{ path = $_; sha256 = (Get-FileHash -LiteralPath (Join-Path $package $_) -Algorithm SHA256).Hash.ToLowerInvariant() } })
 $manifest = [ordered]@{
     schema = 1; character = $Character; version = $Version; nativeAbi = $abi
+    channel = 'modern'; sourceBranch = 'modern/1.5.0'; parentCommit = (& git -C $PSScriptRoot rev-parse HEAD)
     game = 'Risk of Rain 2'; gameVersion = 'DLC4 (2026)'; unity = '2021.3.45f2'; platform = 'win-x64'
     bepinex = '5.4.21.0'; ror2BepInExPack = '1.46.0'; sourceCommits = $commits
     toolchain = [ordered]@{ rust = (& rustc --version); dotnet = (& dotnet --version) }
