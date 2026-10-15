@@ -1,3 +1,5 @@
+> This branch is an unreleased DLC4 migration. Existing download tags below are legacy releases; do not install those ZIPs as 2026 builds. See [migration notes](docs/Modern2026.md).
+
 # RoR2 Characters
 
 Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin. Each character is a separate BepInEx mod with its own releases and version numbers.
@@ -17,9 +19,9 @@ Get the character ZIP from the [releases page](https://github.com/wesjones15/ror
 
 | Requirement | Version |
 | --- | --- |
-| Risk of Rain 2 | **1.2.4.4** (the 2023 build, Unity 2019.4.37), Windows x64 |
+| Risk of Rain 2 | **DLC4 (2026)** (the 2026 build, Unity 2021.3.45f2), Windows x64 |
 | BepInEx | **5.4.21.0** |
-| RoR2BepInExPack | **1.14.0** |
+| RoR2BepInExPack | **1.46.0** |
 | Mario: a Super Mario Sunshine disc image | your own `.iso`, `.gcm` or `.ciso` (any region) |
 | Olimar: a Pikmin disc image | your own `.iso`, `.gcm` or `.ciso` |
 
@@ -27,7 +29,7 @@ Other game builds are not supported. VR is not supported in these releases.
 
 ## Install
 
-1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.14.0 into Risk of Rain 2 1.2.4.4.
+1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0 into Risk of Rain 2 DLC4 (2026).
 2. Unzip the character release and run its installer, pointing it at the folder that contains `BepInEx`:
 
    ```powershell

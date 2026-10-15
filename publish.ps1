@@ -51,12 +51,12 @@ if ($LASTEXITCODE -ne 0 -or $destination.nameWithOwner -ne $repo) { throw "Desti
 # The repository is public, so everything uploaded below is world-readable (draft releases excepted).
 if (-not $destination.isPrivate -and -not $Draft) { Write-Host "Publishing $tag publicly to $repo." }
 $head = & git -C $PSScriptRoot rev-parse HEAD
-$remoteHead = & git -C $PSScriptRoot ls-remote origin refs/heads/main
-if ($LASTEXITCODE -ne 0 -or ($remoteHead -split '\s+')[0] -ne $head) { throw 'Push the parent main branch before publishing.' }
+$remoteHead = & git -C $PSScriptRoot ls-remote origin refs/heads/modern/2026
+if ($LASTEXITCODE -ne 0 -or ($remoteHead -split '\s+')[0] -ne $head) { throw 'Push the parent modern/2026 branch before publishing.' }
 $notes = (Get-Content -LiteralPath (Join-Path $package 'README.md') -Raw) + "`n`n---`n`n" + (Get-Content -LiteralPath (Join-Path $package 'CHANGELOG.md') -Raw)
 $notesPath = Join-Path $PSScriptRoot "dist/$tag-notes.md"
 $notes | Set-Content -LiteralPath $notesPath -Encoding UTF8
-$arguments = @('release', 'create', $tag, '--repo', $repo, '--target', $head, '--title', "$Character $Version (RoR2 1.2.4.4)", '--notes-file', $notesPath, '--latest=false', $zip, "$zip.sha256", "$(Join-Path $package 'README.md')#README.md", "$(Join-Path $package 'CHANGELOG.md')#CHANGELOG.md")
+$arguments = @('release', 'create', $tag, '--repo', $repo, '--target', $head, '--title', "$Character $Version (RoR2 DLC4 (2026))", '--notes-file', $notesPath, '--latest=false', $zip, "$zip.sha256", "$(Join-Path $package 'README.md')#README.md", "$(Join-Path $package 'CHANGELOG.md')#CHANGELOG.md")
 if ($Draft) { $arguments += '--draft' }
 & gh @arguments
 if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation failed; no existing release was overwritten.' }

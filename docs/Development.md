@@ -15,7 +15,7 @@ The five Git submodules under `sources/` pin the exact source commits used toget
 
 ## Build a character
 
-Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.0`. The build uses your local RoR2 1.2.4.4 installation and its BepInEx 5.4.21.0 reference assemblies. Install the runtime requirements in the character guide first. Players using release ZIPs do not need these build tools.
+Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.1`. The build uses your local RoR2 DLC4 (2026) installation and its BepInEx 5.4.21.0 reference assemblies. Install the runtime requirements in the character guide first. Players using release ZIPs do not need these build tools.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\build.ps1 -Character Mario -Version 0.2.0 -RoR2Dir "D:\Games\Risk of Rain 2"
@@ -32,7 +32,7 @@ Unzip a release, then run its `install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
 powershell -ExecutionPolicy Bypass -File .\deploy.ps1 -InstallDir "D:\Games\Risk of Rain 2" -MarioPackage .\dist\Mario-0.2.0-win-x64 -OlimarPackage .\dist\Olimar-0.1.0-win-x64
 ```
 
-Use `-WhatIf` to preview installation. Deployment verifies hashes and copies only the selected character's two DLLs. It preserves your existing configuration, assets, ISO, and other mods. For a mod manager, use the active profile folder containing `BepInEx` as `-InstallDir` and launch through that profile. The target game must still be 1.2.4.4.
+Use `-WhatIf` to preview installation. Deployment verifies hashes and copies only the selected character's two DLLs. It preserves your existing configuration, assets, ISO, and other mods. For a mod manager, use the active profile folder containing `BepInEx` as `-InstallDir` and launch through that profile. The target game must still be DLC4 (2026).
 
 ## Publish separate releases
 
