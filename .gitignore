@@ -1,0 +1,11 @@
+/dist/
+/test-output/
+*.iso
+*.gcm
+*.ciso
+*.rvz
+*.wia
+*.wbfs
+*.wav
+assets_dir.txt
+local.ps1
