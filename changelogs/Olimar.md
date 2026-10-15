@@ -5,55 +5,108 @@ Requires Risk of Rain 2 1.2.4.4, BepInEx 5.4.21.0 and RoR2BepInExPack 1.14.0. Na
 ## 0.1.0 - 2026-10-14
 
 First packaged release: `OlimarTest.dll` and `pikmin.dll`, with an installer and checksums.
-Earlier builds were development builds installed straight from source. Everything below has been
-play-tested in game except the last changes before this release, listed under "Not yet play-tested".
+Earlier builds were development builds installed straight from source, so everything the character
+does is listed here. Most of it has been play-tested in game; the rest is listed under "Not yet
+play-tested".
 
 ### Character
-- Pikmin's Olimar as a survivor, with a squad of 10 Red, 5 Yellow and 5 Blue Pikmin that follow in
-  formation, get whistled, thrown and swarm, drawn with the disc's models and animations.
-- Pad layout by button position (A throw/pluck, B jump, LB+B whistle, X Onion, RB dismiss strike,
-  D-pad colour select, right stick camera, LB + right stick swarm, RT lock-on), plus a keyboard and
-  mouse scheme, with skill-icon glyphs for the pad buttons.
-- Character select: Olimar with a red, a yellow and a blue Pikmin, and a portrait from his model.
-- S.S. Dolphin landing with Olimar beaming out beside it and the squad coming out of the Onion, and the Impact Site sting.
+- Pikmin's Olimar as a survivor ("Olimar"), leading libpikmin's (`pikmin.dll`) reimplementation of
+  Pikmin 1's squad written from the decompilation, in place of RoR2's character controller. He keeps
+  Commando's body and HUD, at two thirds of Commando's height, and is tougher than the game's
+  Olimar, as are his Pikmin.
+- A squad of 10 Red, 5 Yellow and 5 Blue Pikmin that follow in formation, get whistled, thrown,
+  swarm and rejoin on their own, drawn with the disc's models, textures, helmet and animations
+  (materials baked from the game's own), and heard with its sounds: whistle, formation trumpet
+  (with a gain setting that lifts it over RoR2 combat), carry, spit and growth sounds.
+- Pad layout by button position (A throw/pluck, B jump, LB+B whistle, X lower/raise the Onion,
+  RB dismiss strike, D-pad colour select and Onion menu, right stick camera, LB + right stick swarm,
+  RT lock-on, R3 zoom), plus a keyboard and mouse scheme on RoR2's binds, with skill-icon glyphs and
+  text for the pad buttons and vanilla skill icons. Y stays RoR2's equipment; X is RoR2's interact
+  whenever it shows a prompt.
+- Camera: an orbit camera that can look up like RoR2's (`Controls.LookUpDegrees`), panned with the
+  right stick, with high-refresh smoothing of Olimar and the Pikmin.
+- Character select: Olimar with a red, a yellow and a blue Pikmin standing in formation after the
+  whistle, and a portrait rendered from his lobby model.
+- Arrival: the S.S. Dolphin lands behind Olimar with its parts repaired, he beams out of its hatch
+  with the ship's healing effects, the squad comes out of the Onion, and the Impact Site sting
+  plays. The Onion lands beside him.
+
+### Squad
+- Follow, whistle, throw, swarm (with the disc's formation trumpet and the C-stick's swarm moved to
+  LB + right stick), plucking (chained), jumping with Olimar's takeoffs and jump pads (Pikmin's own
+  jump motion by default), and the dismiss strike.
+- Throws reach twice as far, are steered onto the cursor, home onto a locked-on enemy's real
+  hurtboxes (40 m range) and end latched there. The colour switch steps through Any (the nearest
+  Pikmin) and each colour; locked on, a throw calls the nearest Pikmin of any colour from far away.
+  A Pikmin called to Olimar's hand sprints to catch him when he throws on the run.
+- Dismiss strike replaces the dismissal: a melee blow all round Olimar that staggers enemies,
+  charges the squad at them, resets its cooldown on a kill and has its own damage setting.
+- Enemy attacks shake latched Pikmin off (with two seconds' protection); hits near Pikmin hurt
+  them, scaled to Olimar's health. Pikmin die, leaving ghosts.
+- RoR2's freezes freeze Pikmin in an area; stuns, freezes, shocks and roots hold Olimar.
 
 ### Combat and items
-- RoR2's enemies are creatures to the sim, with hurtboxes as latch points. Pikmin hits are RoR2
-  damage from Olimar, so his damage stat, crits and on-hit items apply.
-- Throws reach twice as far, steer onto the cursor, and end latched on a locked-on enemy (40 m range).
-- Dismiss strike replaces the dismissal: a melee blow all round Olimar that staggers enemies,
-  charges the squad at them and refunds its cooldown on a kill.
-- Enemy attacks shake latched Pikmin off; hits near Pikmin hurt them, scaled to Olimar's health.
-- Movement-speed items speed Olimar up, and the Onion gets his items as his minion.
-- Fall damage through RoR2's own landing hook; Olimar is two thirds of Commando's height.
+- RoR2's enemies are creatures to the sim, with hurtboxes (their real collider shapes, handed over
+  a tick ahead for fast fliers) as latch points. Pikmin hits are RoR2 damage from Olimar, so his
+  damage stat, crits and on-hit items apply. Enemy health bars are Pikmin 1's life gauge wheel
+  (`Look.PikminHealthGauges`) and RoR2's damage numbers can use Pikmin's digits.
+- His moves use RoR2's skill slots (the dismiss strike is the special, with a RoR2 cooldown; the
+  Onion plucker is a passive), so RoR2's items work: proc clocks, air jumps, stomps, cooldown
+  items, sprint items and movement-speed items (which speed Olimar, and the squad's pace follows).
+- The Onion is Olimar's minion and gets his items; jump pads, knockback and Milky Chrysalis throws
+  are relayed to the squad.
+- Fall damage through RoR2's own landing hook.
+- Goobo Jr.'s Olimar gets a brain and is drawn in the gummy clone material.
 
 ### Pikmin economy
-- Dead enemies leave 1, 5, 10 or 20 pellets by size; Pikmin carry them to the Onion, which makes
-  seeds. Sprouts grow from leaf to bud to flower, Pikmin grow after two kills, and flowers wilt after
-  five minutes.
-- One Onion holds all three colours, with a menu to transfer Pikmin and to Follow Olimar or Land
-  Here, flight and landing animations, light cones and sounds. The Onion plucks planted sprouts
+- Dead enemies leave numbered pellets (1, 5, 10 or 20 by size, random colour); Pikmin carry them
+  to the Onion, which makes seeds (an option carries enemies' own bodies instead). Loose pellets
+  are collected automatically, and drop collectors are recruited.
+- Sprouts grow from leaf to bud to flower on fixed timers (faster buds), Pikmin grow after kills
+  credited to them with the disc's growth sparkles, burst and sounds, and flowers wilt after five
+  minutes. Every Onion starts with a Pikmin inside, and the Onion's pluckers pick planted sprouts
   after a minute.
-- The squad and stock carry over to the next stage. Pikmin collect nearby drops and rejoin on their own.
-- Jumping squad, with Pikmin copying Olimar's takeoffs and jump pads.
+- The squad and stock carry over to the next stage.
 
 ### Onion
-- The Onion can go dormant (drawn in its colour) and be revived; its
-  startup sound and effects replay, queued seeds resume, and Pikmin only collect loose pellets once
-  the Onion has descended. A life gauge (a Pikmin wheel) floats above a wounded or dormant Onion,
-  refilling with its revival timer. The flying Onion stops lower over a pellet.
-- Captains beam out of the Dolphin's hatch; a Pikmin called to his hand sprints to catch Olimar when
-  he throws on the run; Pikmin that fall into a void come back to their captain, unhurt.
+- One Onion holds all three colours, with a menu (call out, put away, transfer Pikmin, Follow
+  Olimar or Land Here) on the pad and the keyboard; it flies to the squad, lands, takes off, and
+  can be planted. Light cone, beacon rings, suck effect and sounds from the disc.
+- A hovering Onion takes deliveries; the new Pikmin stay inside as leaves. It stops 0.75 m above
+  the ground over a pellet.
+- Onions have health and can be healed by pellets, go dormant (drawn in their colour) when
+  killed and revive on a timer, replaying their startup sound and effects; queued seeds resume
+  after a revival, deliveries interrupted by a death release their teams, and Pikmin collect loose
+  pellets only once an Onion has descended. A life gauge (a Pikmin wheel) floats above a wounded
+  or dormant Onion, refilling with its revival timer.
+- The Onion's ally card is hidden, and RoR2's interact prompt opens the Onion window.
+
+### Not getting stuck
+- Falling off the map puts Olimar and his squad back where he last stood, unhurt; Pikmin that fall
+  into a void come back to their captain. Olimar's sim probes the layers RoR2's own bodies collide
+  with.
+
+### Multiplayer
+- The host sends snapshots of its Pikmin world and other machines draw a replica of it, with the
+  client's own Olimar shown on his locally predicted motion. A client's Olimar moves on his own
+  machine and the host's captain follows his pose; Onion commands and the squad HUD work over the
+  network.
 
 ### First run
 - Models, animations, tuning, sounds and effects are extracted from your own Pikmin disc
   (ISO/GCM/CISO) on first launch. The build and the ZIP contain no game data.
 
+### Settings
+- Everything above has a setting in `com.libpikmin.olimartest.cfg` (look, sound, controls, combat,
+  Pikmin and Onion rules, Dolphin), each with a description.
+
 ### Not yet play-tested
-- Olimar beaming out beside the Dolphin at the start of a run, with the squad coming out of the
-  Onion.
+- Olimar beaming out of the Dolphin's hatch at the start of a run, with the squad coming out of
+  the Onion, and the arrival effects.
+- Onion health, dormancy and revival, the life gauge, and the hovering Onion's descent for pellets.
+- Multiplayer with two players.
 
 ### Known limitations
-- Multiplayer is new and untested with two players: the host's Pikmin are shown to every player with the plugin, and a client's Olimar moves on their own machine.
+- Multiplayer is new and untested with two players.
 - No Olimar footsteps or voice, no hazard types, no ship-part repair, and enemies don't target
   Pikmin directly.
