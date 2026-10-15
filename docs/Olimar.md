@@ -9,36 +9,53 @@ disc's own models, animations and sounds. Commando's skills never fire.
 
 **Offline and friends-only co-op only.** Do not run this online.
 
-## Requirements
+## Requirements and dependency mods
 
-- Risk of Rain 2 **DLC4 (2026)** (the 2026 build, Unity 2021.3.45f2), Windows x64. Other builds are
-  not supported.
-- **BepInEx 5.4.21.0** (the installer refuses any other version).
-- **RoR2BepInExPack 1.46.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
-- Your own **Pikmin** (GameCube) disc image (`.iso`, `.gcm` or `.ciso`). The plugin was
-  developed against the USA disc; other regions are untested. The ZIP contains no Nintendo data.
-- Mario and Olimar can be installed together.
+- Risk of Rain 2 **modern/1.5.0 (DLC4, Unity 2021.3.45f2)**, Windows x64.
+- [BepInExPack by bbepis](https://old.thunderstore.io/package/bbepis/BepInExPack/), with BepInEx 5.4.21.0 and its supporting mods below. The character ZIP does not include or install these dependencies.
+- Your own **Pikmin** GameCube disc image (`.iso`, `.gcm` or `.ciso`). RVZ/WIA/WBFS must be converted to ISO first. No game data is included in this release.
+
+Install the BepInExPack dependency set for the modern game:
+
+| Dependency | Purpose |
+| --- | --- |
+| [BepInEx_GUI](https://thunderstore.io/c/riskofrain2/p/RiskofThunder/BepInEx_GUI/) | Loader/logging interface. |
+| [FixPluginTypesSerialization](https://thunderstore.io/c/riskofrain2/p/RiskofThunder/FixPluginTypesSerialization/) | Unity serialization support for plugin types. |
+| [RoR2BepInExPack](https://thunderstore.io/c/riskofrain2/p/RiskofThunder/RoR2BepInExPack/) | RoR2 compatibility fixes; this release was checked with 1.46.0. |
+| [SeekersPatcher](https://thunderstore.io/c/riskofrain2/p/pseudopulse/SeekersPatcher/) | Compatibility redirects for game updates. |
+| [MiscFixes](https://thunderstore.io/c/riskofrain2/p/score/MiscFixes/) | Fixes for game bugs and mod compatibility. |
 
 ## Install
 
-1. Unzip the release.
-2. Run the installer, pointing it at the folder that contains `BepInEx`:
+1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
+2. Unzip **Olimar-modern-0.1.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
 
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
    ```
 
-   Add `-WhatIf` to preview. The installer verifies the package hashes and copies only
-   `OlimarTest.dll` and `pikmin.dll` into `BepInEx/plugins/OlimarTest/`. It leaves your config,
-   assets, disc image and other mods alone. With a mod manager, use the active profile folder
-   (the one containing `BepInEx`) as `-InstallDir` and launch through that profile.
-3. Launch the game once so the config file is created, then quit.
-4. Open `BepInEx/config/com.libpikmin.olimartest.cfg` and set `Paths.Disc` to your Pikmin
-   image. Alternatively put the image beside the plugin DLLs.
-5. Launch again. First-run extraction runs on a background thread.
+   With a mod manager, use its active profile directory as `-InstallDir` and launch the game through that profile. Add `-WhatIf` to preview. The installer checks hashes and copies the two mod DLLs; it preserves existing configs, assets, disc images and other mods.
+3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
-Install `OlimarTest.dll` and `pikmin.dll` together. A mismatched pair is refused at load (the
-ABI version must match; this release is ABI 28).
+   ```text
+   BepInEx/
+     plugins/
+       OlimarTest/
+         OlimarTest.dll
+         pikmin.dll
+         Pikmin.iso
+   ```
+
+   The ISO filename does not matter. Keep it in this character folder, rather than the game root or the `assets` subfolder. The plugin searches beside its DLLs automatically. Olimar and the other character use separate folders and can be installed together.
+4. Launch the game and let first-run extraction finish. The plugin creates `assets/` beside its DLLs by default and reuses that cache on later launches.
+5. To keep the ISO elsewhere, launch once to create the config, quit, and edit `BepInEx/config/com.libpikmin.olimartest.cfg`. Under `[Paths]`, set `Disc` to its full path, then launch again:
+
+   ```ini
+   [Paths]
+   Disc = D:\GameCube\Pikmin.iso
+   ```
+
+Install `OlimarTest.dll` and `pikmin.dll` together. The native ABI must match; this release uses ABI 28.
 
 ## First run
 
