@@ -2,7 +2,7 @@
 
 Requires Risk of Rain 2 1.2.4.4, BepInEx 5.4.21.0 and RoR2BepInExPack 1.14.0. Native ABI 27.
 
-## 0.1.0 - 2026-10-14
+## 0.1.0 - 2026-10-15
 
 First packaged release: `OlimarTest.dll` and `pikmin.dll`, with an installer and checksums.
 Earlier builds were development builds installed straight from source, so everything the character

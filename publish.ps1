@@ -2,6 +2,7 @@
 param(
     [Parameter(Mandatory = $true)][ValidateSet('Mario', 'Olimar')][string]$Character,
     [Parameter(Mandatory = $true)][ValidatePattern('^\d+\.\d+\.\d+$')][string]$Version,
+    [ValidateSet('modern', 'legacy')][string]$Channel = 'modern',
     [switch]$Draft,
     [switch]$ValidateOnly
 )
@@ -9,8 +10,8 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $repo = 'wesjones15/ror2-characters'
-$tag = "$($Character.ToLowerInvariant())-v$Version"
-$package = Join-Path $PSScriptRoot "dist/$Character-$Version-win-x64"
+$tag = "$Channel-$($Character.ToLowerInvariant())-v$Version"
+$package = Join-Path $PSScriptRoot "dist/$Character-$Channel-$Version-win-x64"
 $zip = "$package.zip"
 $manifest = Get-Content -LiteralPath (Join-Path $package 'release.json') -Raw | ConvertFrom-Json
 if ($manifest.character -ne $Character -or $manifest.version -ne $Version) { throw 'Package identity mismatch.' }
@@ -51,12 +52,13 @@ if ($LASTEXITCODE -ne 0 -or $destination.nameWithOwner -ne $repo) { throw "Desti
 # The repository is public, so everything uploaded below is world-readable (draft releases excepted).
 if (-not $destination.isPrivate -and -not $Draft) { Write-Host "Publishing $tag publicly to $repo." }
 $head = & git -C $PSScriptRoot rev-parse HEAD
-$remoteHead = & git -C $PSScriptRoot ls-remote origin refs/heads/main
-if ($LASTEXITCODE -ne 0 -or ($remoteHead -split '\s+')[0] -ne $head) { throw 'Push the parent main branch before publishing.' }
+$branch = if ($Channel -eq 'modern') { 'modern/1.5.0' } else { 'legacy/1.2.4.4' }
+$remoteHead = & git -C $PSScriptRoot ls-remote origin "refs/heads/$branch"
+if ($LASTEXITCODE -ne 0 -or ($remoteHead -split '\s+')[0] -ne $head) { throw "Push the parent $branch branch before publishing." }
 $notes = (Get-Content -LiteralPath (Join-Path $package 'README.md') -Raw) + "`n`n---`n`n" + (Get-Content -LiteralPath (Join-Path $package 'CHANGELOG.md') -Raw)
 $notesPath = Join-Path $PSScriptRoot "dist/$tag-notes.md"
 $notes | Set-Content -LiteralPath $notesPath -Encoding UTF8
-$arguments = @('release', 'create', $tag, '--repo', $repo, '--target', $head, '--title', "$Character $Version (RoR2 1.2.4.4)", '--notes-file', $notesPath, '--latest=false', $zip, "$zip.sha256", "$(Join-Path $package 'README.md')#README.md", "$(Join-Path $package 'CHANGELOG.md')#CHANGELOG.md")
+$arguments = @('release', 'create', $tag, '--repo', $repo, '--target', $head, '--title', "$Character $Version (RoR2 DLC4 (2026))", '--notes-file', $notesPath, '--latest=false', $zip, "$zip.sha256", "$(Join-Path $package 'README.md')#README.md", "$(Join-Path $package 'CHANGELOG.md')#CHANGELOG.md")
 if ($Draft) { $arguments += '--draft' }
 & gh @arguments
 if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation failed; no existing release was overwritten.' }

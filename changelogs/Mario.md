@@ -2,7 +2,9 @@
 
 Requires Risk of Rain 2 1.2.4.4, BepInEx 5.4.21.0 and RoR2BepInExPack 1.14.0. Native ABI 24.
 
-## 0.2.0 - 2026-10-14
+## 0.1.0 - 2026-10-15
+
+First legacy release, consistently versioned 0.1.0. This corrects the earlier 0.2.0 package label; gameplay is unchanged.
 
 First packaged release: `MarioTest.dll` and `sms.dll`, with an installer and checksums. Earlier
 builds were development builds installed straight from source, so everything the character does is

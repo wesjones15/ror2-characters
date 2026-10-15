@@ -1,6 +1,6 @@
 # Olimar for Risk of Rain 2
 
-Version 0.1.0. A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.1.0 (legacy). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
