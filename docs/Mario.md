@@ -1,3 +1,5 @@
+> Unreleased DLC4 migration. The version below identifies the legacy baseline, not a published modern package. Runtime validation is pending.
+
 # Mario for Risk of Rain 2
 
 Version 0.2.0. A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
@@ -8,10 +10,10 @@ a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
 ## Requirements
 
-- Risk of Rain 2 **1.2.4.4** (the 2023 build, Unity 2019.4.37), Windows x64. Other builds are
+- Risk of Rain 2 **DLC4 (2026)** (the 2026 build, Unity 2021.3.45f2), Windows x64. Other builds are
   not supported.
 - **BepInEx 5.4.21.0** (the installer refuses any other version).
-- **RoR2BepInExPack 1.14.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
+- **RoR2BepInExPack 1.46.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
 - Your own **Super Mario Sunshine** disc image (`.iso`, `.gcm` or `.ciso`, any region). RVZ,
   WIA and WBFS images must be converted to ISO first. The ZIP contains no Nintendo data.
 - Mario and Olimar can be installed together.
@@ -200,7 +202,7 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 24`, `Mario is 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check
   `Paths.Disc`, then restart.
 - *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
-- *Wrong game version*: only 1.2.4.4 is supported.
+- *Wrong game version*: only DLC4 (2026) is supported.
 
 ## Known limitations
 

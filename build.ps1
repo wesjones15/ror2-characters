@@ -41,7 +41,7 @@ if ($nativeSource -notmatch "ABI_VERSION: u32 = $abi;" -or $hostNative -notmatch
 }
 $core = Join-Path $RoR2Dir 'BepInEx/core/BepInEx.dll'
 if (-not (Test-Path -LiteralPath $core) -or [Diagnostics.FileVersionInfo]::GetVersionInfo($core).FileVersion -ne '5.4.21.0') {
-    throw 'Build against the documented RoR2 1.2.4.4 / BepInEx 5.4.21.0 installation.'
+    throw 'Build against the documented RoR2 DLC4 (2026) / BepInEx 5.4.21.0 installation.'
 }
 foreach ($reference in @('RoR2.dll', 'UnityEngine.CoreModule.dll')) {
     if (-not (Test-Path -LiteralPath (Join-Path $RoR2Dir "Risk of Rain 2_Data/Managed/$reference"))) { throw "Missing local reference: $reference" }
@@ -58,7 +58,7 @@ Invoke-Checked dotnet @('build', (Join-Path $sources "$hostRepo/$plugin/$plugin.
 $destination = Join-Path $package "BepInEx/plugins/$plugin"
 New-Item -ItemType Directory -Path $destination -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $sources "$native/target/x86_64-pc-windows-msvc/release/$dll") -Destination $destination
-Copy-Item -LiteralPath (Join-Path $sources "$hostRepo/$plugin/bin/Release/netstandard2.0/$plugin.dll") -Destination $destination
+Copy-Item -LiteralPath (Join-Path $sources "$hostRepo/$plugin/bin/Release/netstandard2.1/$plugin.dll") -Destination $destination
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "docs/$Character.md") -Destination (Join-Path $package 'README.md')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Destination (Join-Path $package 'CHANGELOG.md')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install.ps1') -Destination $package
@@ -66,8 +66,8 @@ $relativePaths = @('README.md', 'CHANGELOG.md', 'install.ps1', "BepInEx/plugins/
 $files = @($relativePaths | ForEach-Object { [ordered]@{ path = $_; sha256 = (Get-FileHash -LiteralPath (Join-Path $package $_) -Algorithm SHA256).Hash.ToLowerInvariant() } })
 $manifest = [ordered]@{
     schema = 1; character = $Character; version = $Version; nativeAbi = $abi
-    game = 'Risk of Rain 2'; gameVersion = '1.2.4.4'; unity = '2019.4.37'; platform = 'win-x64'
-    bepinex = '5.4.21.0'; ror2BepInExPack = '1.14.0'; sourceCommits = $commits
+    game = 'Risk of Rain 2'; gameVersion = 'DLC4 (2026)'; unity = '2021.3.45f2'; platform = 'win-x64'
+    bepinex = '5.4.21.0'; ror2BepInExPack = '1.46.0'; sourceCommits = $commits
     toolchain = [ordered]@{ rust = (& rustc --version); dotnet = (& dotnet --version) }
     files = $files
 }

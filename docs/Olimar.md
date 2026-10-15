@@ -1,3 +1,5 @@
+> Unreleased DLC4 migration. The version below identifies the legacy baseline, not a published modern package. Runtime validation is pending.
+
 # Olimar for Risk of Rain 2
 
 Version 0.1.0. A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
@@ -9,10 +11,10 @@ disc's own models, animations and sounds. Commando's skills never fire.
 
 ## Requirements
 
-- Risk of Rain 2 **1.2.4.4** (the 2023 build, Unity 2019.4.37), Windows x64. Other builds are
+- Risk of Rain 2 **DLC4 (2026)** (the 2026 build, Unity 2021.3.45f2), Windows x64. Other builds are
   not supported.
 - **BepInEx 5.4.21.0** (the installer refuses any other version).
-- **RoR2BepInExPack 1.14.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
+- **RoR2BepInExPack 1.46.0**, the Risk of Rain 2 BepInEx pack (install it through your mod manager, or by hand per its own instructions). The installer does not check for it, so make sure it is installed.
 - Your own **Pikmin** (GameCube) disc image (`.iso`, `.gcm` or `.ciso`). The plugin was
   developed against the USA disc; other regions are untested. The ZIP contains no Nintendo data.
 - Mario and Olimar can be installed together.
@@ -188,7 +190,7 @@ and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `ca
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
 - *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
-- *Wrong game version*: only 1.2.4.4 is supported.
+- *Wrong game version*: only DLC4 (2026) is supported.
 
 ## Known limitations
 
