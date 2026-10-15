@@ -45,7 +45,7 @@ try {
 } finally { $archive.Dispose() }
 $checksum = (Get-Content -LiteralPath "$zip.sha256" -Raw).Trim().Split(' ')[0]
 if ($checksum -ne (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()) { throw 'ZIP checksum mismatch.' }
-if ($ValidateOnly) { Write-Host "Validated $tag: package allowlist, hashes, docs, and pinned source commits."; return }
+if ($ValidateOnly) { Write-Host "Validated ${tag}: package allowlist, hashes, docs, and pinned source commits."; return }
 $destination = & gh repo view $repo --json nameWithOwner,isPrivate | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0 -or $destination.nameWithOwner -ne $repo) { throw "Destination must be the $repo repository." }
 # The repository is public, so everything uploaded below is world-readable (draft releases excepted).
