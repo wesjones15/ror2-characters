@@ -2,6 +2,11 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
 
+## 0.2.1 - 2026-10-15
+
+Hotfix release shared with Mario (no change to Olimar's play). The ZIP has no `install.ps1` any more:
+copy its `BepInEx` folder into the game folder.
+
 ## 0.2.0 - 2026-10-15
 
 Install both DLLs together, and have every player in a game on this release: the native ABI and the

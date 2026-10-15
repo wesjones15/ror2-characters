@@ -16,9 +16,9 @@ $zip = "$package.zip"
 $manifest = Get-Content -LiteralPath (Join-Path $package 'release.json') -Raw | ConvertFrom-Json
 if ($manifest.character -ne $Character -or $manifest.version -ne $Version) { throw 'Package identity mismatch.' }
 if ($Character -eq 'Mario') { $plugin = 'MarioTest'; $dll = 'sms.dll' } else { $plugin = 'OlimarTest'; $dll = 'pikmin.dll' }
-$allowed = @('README.md', 'CHANGELOG.md', 'install.ps1', 'release.json', "BepInEx/plugins/$plugin/$plugin.dll", "BepInEx/plugins/$plugin/$dll")
-if (@(Compare-Object @($allowed | Where-Object { $_ -ne 'release.json' }) @($manifest.files | ForEach-Object { $_.path })).Count -ne 0 -or $manifest.files.Count -ne 5) {
-    throw 'Manifest must list exactly the approved two DLLs, README, changelog, and installer.'
+$allowed = @('README.md', 'CHANGELOG.md', 'release.json', "BepInEx/plugins/$plugin/$plugin.dll", "BepInEx/plugins/$plugin/$dll")
+if (@(Compare-Object @($allowed | Where-Object { $_ -ne 'release.json' }) @($manifest.files | ForEach-Object { $_.path })).Count -ne 0 -or $manifest.files.Count -ne 4) {
+    throw 'Manifest must list exactly the approved two DLLs, README, and changelog.'
 }
 foreach ($file in $manifest.files) {
     if ((Get-FileHash -LiteralPath (Join-Path $package $file.path) -Algorithm SHA256).Hash -ne $file.sha256) { throw "Modified file: $($file.path)" }
@@ -28,7 +28,7 @@ foreach ($source in $manifest.sourceCommits.PSObject.Properties) {
     $head = & git -C (Join-Path $PSScriptRoot "sources/$($source.Name)") rev-parse HEAD
     if ($head -ne $source.Value) { throw "Rebuild after changing $($source.Name)." }
 }
-foreach ($pair in @(@('README.md', "docs/$Character.md"), @('CHANGELOG.md', "changelogs/$Character.md"), @('install.ps1', 'install.ps1'))) {
+foreach ($pair in @(@('README.md', "docs/$Character.md"), @('CHANGELOG.md', "changelogs/$Character.md"))) {
     if ((Get-FileHash -LiteralPath (Join-Path $package $pair[0])).Hash -ne (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $pair[1])).Hash) { throw "Rebuild after changing $($pair[1])." }
 }
 $archive = [IO.Compression.ZipFile]::OpenRead($zip)

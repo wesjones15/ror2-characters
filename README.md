@@ -1,4 +1,4 @@
-> Modern 0.2.0 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Modern 0.2.1 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
 
 # RoR2 Characters
 
@@ -8,12 +8,12 @@ Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super
 
 | Character | Release tag | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | `modern-v0.2.0` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | `modern-v0.2.0` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Mario | `modern-v0.2.1` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | `modern-v0.2.1` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
 
 ## Download
 
-Get the character ZIP from the [releases page](https://github.com/wesjones15/ror2-characters/releases). Pick the release by its character tag (`mario-v…` or `olimar-v…`): GitHub's single repository-wide Latest label does not identify the latest release of both characters. Each ZIP contains a README with the full guide, a changelog, a checksum manifest and an installer. Both characters can be installed together.
+Get the character ZIP from the [releases page](https://github.com/wesjones15/ror2-characters/releases). Pick the release by its character tag (`mario-v…` or `olimar-v…`): GitHub's single repository-wide Latest label does not identify the latest release of both characters. Each ZIP contains a README with the full guide, a changelog and a checksum manifest, and the `BepInEx` folder to install. Both characters can be installed together.
 
 ## Requirements
 
@@ -30,11 +30,7 @@ Other game builds are not supported. VR is not supported in these releases.
 ## Install
 
 1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0 into Risk of Rain 2 DLC4 (2026).
-2. Unzip the character release and run its installer, pointing it at the folder that contains `BepInEx`:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
-   ```
+2. Unzip the character release and copy its `BepInEx` folder into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy it into the active profile folder instead.
 
 3. Launch the game once, set `Paths.Disc` in the character's config file to your own disc image, and launch again.
 
@@ -42,7 +38,7 @@ The character's README in the ZIP has the details, controls and troubleshooting.
 
 ## Your disc, not ours
 
-Both mods extract their models, textures and audio from **your own GameCube disc image** on first launch. The ZIPs contain no disc images, extracted game assets, generated music, game DLLs or dependency DLLs; only the two mod DLLs, documentation and the installer. Please don't share extracted assets.
+Both mods extract their models, textures and audio from **your own GameCube disc image** on first launch. The ZIPs contain no disc images, extracted game assets, generated music, game DLLs or dependency DLLs; only the two mod DLLs, the documentation and a manifest. Please don't share extracted assets.
 
 This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or Gearbox.
 

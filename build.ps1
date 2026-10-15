@@ -61,8 +61,7 @@ Copy-Item -LiteralPath (Join-Path $sources "$native/target/x86_64-pc-windows-msv
 Copy-Item -LiteralPath (Join-Path $sources "$hostRepo/$plugin/bin/Release/netstandard2.1/$plugin.dll") -Destination $destination
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "docs/$Character.md") -Destination (Join-Path $package 'README.md')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Destination (Join-Path $package 'CHANGELOG.md')
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install.ps1') -Destination $package
-$relativePaths = @('README.md', 'CHANGELOG.md', 'install.ps1', "BepInEx/plugins/$plugin/$plugin.dll", "BepInEx/plugins/$plugin/$dll")
+$relativePaths = @('README.md', 'CHANGELOG.md', "BepInEx/plugins/$plugin/$plugin.dll", "BepInEx/plugins/$plugin/$dll")
 $files = @($relativePaths | ForEach-Object { [ordered]@{ path = $_; sha256 = (Get-FileHash -LiteralPath (Join-Path $package $_) -Algorithm SHA256).Hash.ToLowerInvariant() } })
 $manifest = [ordered]@{
     schema = 1; character = $Character; version = $Version; nativeAbi = $abi
@@ -76,4 +75,4 @@ $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $packa
 [IO.Compression.ZipFile]::CreateFromDirectory($package, $zip)
 $checksum = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
 "$checksum  $name.zip" | Set-Content -LiteralPath "$zip.sha256" -Encoding ASCII
-Write-Host "Built $zip (only mod DLLs, documentation, installer, and manifest)."
+Write-Host "Built $zip (only mod DLLs, documentation, and manifest)."

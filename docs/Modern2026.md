@@ -57,7 +57,7 @@ Mario modern 0.1.0 and Olimar modern 0.1.0 share the modern-v0.1.0 release.
 The mod version starts at 0.1.0 for each character; modern/1.5.0 names the game compatibility branch.
 The release tag pins the parent commit, whose five submodule entries pin every source commit.
 All six repositories retain legacy/1.2.4.4 for the 2023 build. The parent's deploy.ps1 and
-install.ps1 are unchanged from that legacy snapshot; build.ps1 and publish.ps1 were adapted.
+install.ps1 are unchanged from that legacy snapshot; build.ps1 and publish.ps1 were adapted. (install.ps1 was dropped in 0.2.1: a user copies the ZIP's BepInEx folder.)
 
 The temporary low-pass filters and FLUDD-only attenuation described above were removed.
 All native audio now uses one shared Ror2Common.Audio.cfg Output.GainDb setting, default -4 dB.
