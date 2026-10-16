@@ -1,6 +1,38 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 24.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
+
+## 0.2.0 - 2026-10-15
+
+Install both DLLs together, and have every player in a game on this release: the multiplayer frames
+and the native ABI changed.
+
+### Shine Get
+- A charged teleporter shows a Shine Sprite from your disc above its middle, humming, for the Mario
+  player only. Touching it (walking or jumping into it, no button) is Sunshine's Shine Get: Mario lands
+  and holds it over his head, the camera flies the disc's own path, the Shine's glow and the Shine Get
+  fanfare play, and "SHINE!" flies in. The stage ends about 6.3 s later for everyone, as if Mario had
+  used the teleporter: the stage the run was going to, a Lunar Seer's choice if one was made, or on the
+  last stage before the moon, the moon rather than the loop. Other players see Mario in the pose.
+- New settings: `Shine.Enabled`, `Shine.Height`, `Shine.TouchRadius`, `Shine.Seconds`, `Shine.Camera`.
+  The Shine, its clips and the camera path are fetched from your disc with the wipe pictures.
+
+### Lunar coins
+- A lunar coin plays Sunshine's "puzzle solved" chime instead of the blue coin's jingle, which sounded
+  like a save (`Hud.LunarCoinSecret` turns it back).
+
+### Character select
+- Mario has a new overview, and each skill now states its controls, duration, range and cooldown
+  (the Spray burst, hover and rocket times, the Turbo's speed, the Air Pump's recharge, the Ground
+  Pound's damage, radius and recharge, the Wet Slide's glide).
+
+### Items
+- Hits carry the skill they came from (FLUDD's water and stomps are the primary, ground pounds the
+  utility, the dive and belly slide the special), so the items that only answer skill hits work:
+  Breaching Fin, Luminous Shot, Infernal Mark, Nightmare Demon, Vile Censer, Deus Ex Machina.
+- His jumps raise RoR2's jump event (Faraday Spur, Earthbound Vessel, Hex of Leaping) and landings
+  raise its landing event (Mycelium Cap's spores). Jump power scales his jumps and acceleration his
+  running (Faraday Spur, Hex of Leaping, Hex of Acceleration).
 
 ## 0.1.0 - 2026-10-15
 

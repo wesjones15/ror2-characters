@@ -55,16 +55,16 @@ $destination = & gh repo view $repo --json nameWithOwner | ConvertFrom-Json
 if ($LASTEXITCODE -or $destination.nameWithOwner -ne $repo) { throw 'Wrong release destination.' }
 $notesPath = Join-Path $PSScriptRoot "dist/$tag-notes.md"
 $notes = @"
-Mario $Channel $Version and Olimar $Channel $Version are the first releases for this game compatibility line.
+Mario $Channel $Version and Olimar $Channel $Version for this game compatibility line. Each package's CHANGELOG.md lists what changed.
 
 Requires Risk of Rain 2 $game, Windows x64 and BepInEx 5.4.21.0. Download the ZIP for either character, or both. Each package contains its installer, guide, changelog, two mod DLLs and a checksum manifest.
 
-The tag pins parent commit $head. That commit pins all five source repositories; the attached sources manifest records their full commit IDs. The branch is $branch. Character versions start at 0.1.0 independently in each compatibility line.
+The tag pins parent commit $head. That commit pins all five source repositories; the attached sources manifest records their full commit IDs. The branch is $branch. Both characters share this version in this release.
 
 Models, textures, sounds and tuning are extracted from your own GameCube disc. No disc images, extracted assets, generated audio, game binaries or dependency DLLs are included. Offline and friends-only co-op; two-player multiplayer remains unverified. Read the included character guide for requirements and known limitations.
 "@
 if ($Channel -eq 'modern') {
-    $notes += "`n`nIncludes DLC4 API support, material/portrait fixes, shared native output gain (default -4 dB), and Olimar's full vanilla sundown death bell surviving game-over cleanup. Mario uses ABI 24; Olimar uses ABI 28. Final sound listening and full gameplay acceptance remain manual."
+    $notes += "`n`nIncludes DLC4 API support, material/portrait fixes, shared native output gain (default -4 dB), and Olimar's full vanilla sundown death bell surviving game-over cleanup. Mario uses ABI 26; Olimar uses ABI 29. Everyone in a game needs the same release. Final sound listening and full gameplay acceptance remain manual."
     $notes += @'
 
 

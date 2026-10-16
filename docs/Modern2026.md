@@ -65,3 +65,10 @@ Olimar's full vanilla sundown bell is prepared from the user's disc in memory an
 game-over presentation cleanup. Olimar uses ABI 28; Mario remains ABI 24.
 Startup, shaders and portraits have been checked. Full multiplayer and final sound listening
 acceptance remain manual. No disc files, extracted assets or generated audio ship in the packages.
+
+## Second modern release (2026-10-15)
+
+Mario modern 0.2.0 and Olimar modern 0.2.0 share the modern-v0.2.0 release. Mario uses libsms ABI 26
+and Olimar libpikmin ABI 29; the multiplayer frame protocol and Olimar's snapshots changed, so every
+player needs the same release. New: the Shine Sprite as Mario's teleporter trigger, rewritten
+character select text for both, and the skill-sourced hit, jump event and jump power items.

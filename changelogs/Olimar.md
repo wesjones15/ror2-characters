@@ -1,6 +1,24 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 28.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
+
+## 0.2.0 - 2026-10-15
+
+Install both DLLs together, and have every player in a game on this release: the native ABI and the
+multiplayer snapshots changed.
+
+### Character select
+- Olimar has a new overview, and each skill now states its controls, duration, range and cooldown,
+  with the Pikmin's damage per swing (Red 75% of his damage, Blue and Yellow 50%), the throw and lock-on
+  ranges, the whistle's circle, the Onion's recharge and the dismiss strike's reach, damage and cooldown.
+
+### Items
+- Pikmin hits and Olimar's punch are primary damage and the dismiss strike special, so the items that
+  only answer skill hits work: Breaching Fin, Luminous Shot, Infernal Mark, Nightmare Demon, Vile
+  Censer, Deus Ex Machina.
+- His jumps raise RoR2's jump event (Faraday Spur, Earthbound Vessel, Hex of Leaping) and landings raise
+  its landing event (Mycelium Cap's spores). Jump power and acceleration reach the sim: Faraday Spur's
+  higher jumps, Hex of Leaping, Hex of Acceleration.
 
 ## 0.1.0 - 2026-10-15
 
