@@ -1,7 +1,7 @@
-# Ship Repair 0.3.3 preview — implementation and validation
+# Ship Repair 0.3.4 preview — implementation and validation
 
 Branch: `feature/ship-part-mode`, based on `modern/1.5.0` with the 0.2.3 ground-wait
-hotfix retained. Native ABI 32; objective protocol 3. This is a local feature
+hotfix retained. Native ABI 33; objective protocol 3. This is a local feature
 preview, not a published release. No game launch or deployment was performed.
 
 ## Implemented
@@ -38,12 +38,22 @@ preview, not a published release. No game launch or deployment was performed.
   pickup targeting rejects every ship part before movement/descent; native
   ground vacuum separately rejects every ship part. Only an intentional Pikmin
   carry handoff to its selected Onion starts salvage suction.
-- Placement waits for the Dolphin's landing and checks paths to its actual intake
+- After dropping off Olimar, Onion and squad, the Dolphin relocates near the
+  teleporter and remains landed for deliveries. Docks check terrain, hull clearance
+  and an intake route, reserving at least 14 metres between multiplayer ships.
+  A failed search retains the safe arrival site. Same-stage respawns preserve the dock.
+- Placement waits for all Dolphin relocations and checks paths to an actual intake
   goal. Retries are bounded and spread across frames. Discovery markers, sustained
   jam recovery, void recovery and stage departure warnings are included.
 - Original wreck/root poses, ordered fitting animations, repair levels, lights,
   sounds and particle cues. Restored stage progress is silent. Arrival repeats
-  each stage; the existing arrival music sting remains first-stage-only.
+  each stage. Impact Site loops on stage one; later stages use seeded random
+  Pikmin stage songs without consecutive repeats, including consistent late joins.
+- Optional local enemy-proximity music layers respond to nearby RoR2 monsters.
+  An independent music stream follows music/master volume and pause. Teleporter
+  bosses retain RoR2 music; Pikmin playback resumes afterward. Hidden realms retain
+  RoR2 music. Missing music assets/output fall back to RoR2. Local settings are
+  `StageMusic`, `AdaptiveStageMusic` and `StageMusicVolume`.
 - Final delivery secures victory and freezes repair time. Original celebration,
   farewell music and winning Dolphin takeoff lead to the normal RoR2 report. Normally
   twelve seconds; queued repairs delay takeoff, with a bounded fallback and host
@@ -75,6 +85,11 @@ The complete-ending farewell stream is `SndData/compend0.stx`:
 audition WAV is ignored at `assets/ship-mode-audit/victory-compend0.wav`.
 Listening in the game is still pending.
 
+Stage sequence IDs are 4/5/10/9/17 (Impact Site, Forest of Hope, Forest Navel,
+Distant Spring, Final Trial), traced through `piki_scene.c::tbl_stage_to_bgm`.
+`pikiinter.c::Jac_UpdateCamera` maps nearby type-1 enemy events to BGM mode flag 1;
+the host drives that original musical layering from RoR2 monsters.
+
 Re-run the local audit from `sources/libpikmin`:
 
 ```powershell
@@ -102,6 +117,10 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
   unattributed kills/invalid clock rejection, stage reset and sustained
   four-player kill bursts without queued rewards.
 - Shared multiplayer and run-audio headless checks pass.
+- Disc audio checks render finite audible PCM for all five stage songs and verify
+  that enemy proximity changes their mix. Native music API checks cover song
+  selection, pause, stop and invalid-ID rejection. Seeded selection and priority
+  checks cover late joins, no consecutive repeats, bosses, victory and other modes.
 - Managed Release build succeeds against the installed DLC4 reference assemblies.
   Existing warnings remain: BepInEx reference architecture and unused
   `OlimarDriver.warnedClient` field. These checks do not establish runtime menu,
@@ -111,8 +130,10 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
 
 1. Open Ship Repair through solo and host menus; verify survivor/artifact preflight
    and matching client builds. Smoke-test Classic, Eclipse and Simulacrum.
-2. Observe the initial wreck, all arrivals over multiple stages, first-stage-only
-   sting and silently restored partial repairs. Verify original fitting motions,
+2. Observe the initial wreck, all arrivals over multiple stages and silently
+   restored partial repairs. Verify drop-off, takeoff, flight and landing near the
+   teleporter, including indoor flight clearance, separated multiplayer docks,
+   bounded-search fallback and respawn continuity. Verify original fitting motions,
    hull grounding, lights, SFX and particles during simultaneous deliveries.
 3. Check two map/one boss/seven-per-player enemy supply, 20% post-quota bonus drops,
    multi-boss single reward, four-player scaling, fallback wreckage,
@@ -130,6 +151,10 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
 6. Deliver part 30 during combat/departure/team wipe; verify secured win, queued
    fitting completion, celebration, sound balance, takeoff, skip, report and music
    lifetime. Check failure summary, pause/loading clock and a fresh run afterward.
+7. Listen to Impact Site and later seeded stage songs, local enemy-proximity
+   layers, music/master gain, pause/resume and late join. Verify RoR2 boss music
+   takes over and Pikmin music resumes; test hidden realms, settings disabled,
+   missing assets, victory/results and leaving for another mode.
 
 Pikmin enemies, mixed-survivor teams, artifacts, online leaderboards and save/resume
 are deferred. Competitive races are now the default; cooperative repair is optional.

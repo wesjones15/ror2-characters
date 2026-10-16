@@ -1,6 +1,6 @@
 # Ship Repair mode — rules and design
 
-Implemented as the 0.3.3 feature preview on `feature/ship-part-mode`, based on
+Implemented as the 0.3.4 feature preview on `feature/ship-part-mode`, based on
 `modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
 in-game playtesting is pending. See [current status](ShipPartMode-Status.md),
 [baseline research](ShipPartMode-Research.md) and the historical
@@ -94,7 +94,14 @@ parts. Unsupported terminal destinations redirect to an eligible first-tier stag
 
 ## Placement, recovery and departure
 
-Wait for the Dolphin to land and navigation to be ready. Spread initial sites
+After drop-off, the Dolphin leaves Olimar, his Onion and squad at their spawn
+and flies to a dock near the teleporter. It stays there for deliveries. Dock
+selection checks floor slope, hull clearance and a no-jump route to its actual
+intake. Multiplayer docks reserve at least 14 metres of horizontal separation.
+If no valid dock is found, the Dolphin retains its safe arrival site. Same-stage
+respawns keep the existing dock and fitted parts.
+
+Wait for all Dolphin relocations to finish and navigation to be ready. Spread initial sites
 outside arrival, check ground/slope/clearance and a carryable route to an actual
 Dolphin intake goal. Do not consume chest/interactable RNG or credits. Placement
 retries are bounded and spread over frames; fewer safe sites means fewer initial
@@ -126,8 +133,21 @@ parts; an internal recovery does not add an invented exterior model.
 Queue fittings in delivery order, keep combat running and show a toast per recovery.
 Restore personal parts silently before each new stage's arrival. Stage entry,
 respawn and late join must not replay old collection sounds or repair animations.
-Arrival plays once per player per stage; the existing music sting remains local,
-first-stage-only and once per run. Same-stage respawns use short re-entry.
+Arrival plays once per player per stage. Same-stage respawns use short re-entry.
+
+With local `[ShipRepair] StageMusic = true` (default), the full Impact Site song
+loops on stage one. Later stages choose from the five original Pikmin stage songs
+using the run seed, without consecutive repeats; late joiners select the same
+song. Teleporter boss fights retain RoR2 music and pause the Pikmin song, which
+resumes afterward. Hidden realms retain RoR2 music. Victory uses the existing
+complete-ending farewell stream.
+
+`AdaptiveStageMusic = true` activates Pikmin's original enemy-proximity layers
+when a living RoR2 monster is within 30 metres of the local player, held for two
+seconds after contact. `StageMusicVolume = 1` multiplies RoR2's master/music gain
+independently of Pikmin SFX. Pause freezes playback. Missing music assets or output
+leave RoR2 music active. With stage music disabled, the original first-stage-only
+arrival sting remains available; other modes retain their existing soundtrack.
 
 ## Victory, failure and reporting
 

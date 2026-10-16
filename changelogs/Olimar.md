@@ -1,6 +1,19 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 32 from 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 33 from 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.4 - 2026-10-16
+
+Teleporter dock and stage soundtrack preview. Install both DLLs; native ABI 33 / objective protocol 3.
+
+- After landing and dropping off Olimar, his Onion and squad, the Dolphin takes off and relocates near the teleporter. It stays landed there for part deliveries. Multiplayer docks reserve at least 14 metres of horizontal spacing and require clear terrain, hull clearance and a carryable route to the actual intake point. If no valid dock exists, retain the safe arrival site.
+- Keep docked Dolphins in place on same-stage respawns. Delay part placement until the arrival relocations finish, so hauling routes target the final docks.
+- Replace Ship Repair's opening sting with looping Impact Site music on stage one. Later stages select a seeded random Pikmin stage song without consecutive repeats; late join uses the same sequence.
+- Nearby RoR2 enemies drive the original Pikmin enemy-proximity music layers. Retain RoR2 teleporter boss music, pause the Pikmin song during that fight, and resume afterward. Other modes keep their soundtrack.
+- Add local `ShipRepair.StageMusic`, `AdaptiveStageMusic` and `StageMusicVolume` settings. Music uses an independent native stream and RoR2 music/master volume, with pause and teardown support. Missing music assets/output retain RoR2 music.
+- Verify all five extracted stage songs produce finite audible PCM, enemy proximity changes the original mix, the native music ABI accepts pause/stop and rejects invalid songs, and seeded policy yields to bosses/victory/other modes.
+
+Automated checks and Release builds pass. Flight paths, multiplayer dock placement, in-game mix balance and boss-track transitions still need manual playtesting.
 
 ## 0.3.3 - 2026-10-15
 
