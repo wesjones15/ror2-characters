@@ -45,3 +45,8 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 ## For maintainers
 
 Building from source, deploying and publishing releases are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
+
+The `feature/ship-part-mode` branch contains a proposed [Ship Repair mode design](docs/ShipPartMode.md),
+with [source/API findings](docs/ShipPartMode-Research.md) and an
+[implementation and validation plan](docs/ShipPartMode-Implementation.md). This is design work;
+the mode is not included in the current playable release.
