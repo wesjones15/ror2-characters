@@ -1,6 +1,21 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 30 from 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.0 - 2026-10-15
+
+Feature preview on `feature/ship-part-mode`; automated checks pass, in-game validation pending.
+Install both DLLs together. All co-op participants need this preview and their own extracted assets.
+
+- Add Ship Repair mode to the solo extra-mode menu and multiplayer mode picker. All players choose Olimar; artifacts must be off.
+- Start with a wrecked Dolphin. Recover 30 unique parts as a team; each stage offers up to seven ground parts and three powerful-enemy drops. Missed parts may return on later stages.
+- Pikmin carry parts to a landed Dolphin. Use original disc weights, part models, fitting motions, progressive hull repairs, lights, sounds and particles. Every player's Dolphin reflects the shared recovered set.
+- Repeat arrival on each stage, retaining the arrival music sting only on stage one. Restore fitted parts without replaying deliveries.
+- Add reachable ground navigation, discovery markers, stuck-part recovery, repair timer, departure warnings and results summaries alongside the normal RoR2 report.
+- At 30 deliveries, secure victory, play the complete-ending farewell music and original Pikmin/Olimar celebration motions, then launch the Dolphin. Preserve the music through results.
+- Retire the old `Dolphin.ShipPartsMode` placeholder. Classic, Eclipse and Simulacrum retain normal objectives and a repaired Dolphin.
+
+See [validation status](../docs/ShipPartMode-Status.md) for checks and the manual playtest checklist.
 
 ## 0.2.3 - 2026-10-15
 

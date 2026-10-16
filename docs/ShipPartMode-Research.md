@@ -1,7 +1,8 @@
 # Ship Repair mode — source and API findings
 
-Inspected on 2026-10-15. These findings support the [design](ShipPartMode.md);
-they do not claim a playable mode or verified runtime behavior.
+Baseline inspected on 2026-10-15, before implementation. These historical findings
+explain the starting point. See [current status](ShipPartMode-Status.md) for the
+implemented 0.3.0 preview and validation. Dolphin delivery is the final requirement.
 
 ## Baseline
 
@@ -12,8 +13,9 @@ they do not claim a playable mode or verified runtime behavior.
 | ror2-olimar | `02c0738c8a9d586cddda09f8b843fb456862846e` |
 | ror2-common | `177d4f4b2d89586b0a3a346f9c9c02e70ae17428` |
 
-The feature branch lives in the parent repository. The design does not change
-source submodule pins, DLLs, release versions, or the installed game.
+The initial design changed no source pins or binaries. Subsequent implementation
+uses feature branches in the parent and source repositories; it builds a local
+preview without modifying the installed game.
 
 ## Existing support and gaps
 
@@ -22,13 +24,13 @@ source submodule pins, DLLs, release versions, or the installed game.
 | Broken Dolphin | [PikminWorld.cs](../sources/ror2-olimar/OlimarTest/PikminWorld.cs), `SpawnDolphin`, adds all 30 parts only when the placeholder config is off | Drive the initial part set from run state; config currently produces a bare ship without an objective |
 | Thirty part identities and assets | [ship.rs](../sources/libpikmin/crates/libpikmin-assets/src/ship.rs), `PART_IDS`, `parse_pel_anim`, `ship_joint` | Spawn world parts and expose names/markers in the host |
 | Core ship-part carry | [carry.rs](../sources/libpikmin/crates/libpikmin/src/carry.rs), `PelletDesc.ship_part`, `decide_goal`, `suck_step` | Current path deliberately delivers to a grounded ship, not an Onion |
-| Onion delivery | Same file, `pellet_has_destination`; test `ship_parts_go_to_the_ship_not_the_onion` | Add an opt-in delivery policy and event; also update destination selection, validation, and completion, which currently expects a ship and would panic for an Onion |
+| Host-owned Dolphin delivery | Same file, `pellet_has_destination`; test `ship_parts_go_to_the_ship_not_the_onion` | Keep Dolphin destination, add an opt-in host receipt so the shared ledger controls fitting |
 | Host creates a ship part | [FFI lib.rs](../sources/libpikmin/crates/libpikmin-ffi/src/lib.rs), `pik_sim_spawn_pellet` | Current FFI constructor explicitly sets `ship_part: None`; add a dedicated validated part-spawn function |
 | World part rendering | [view.rs](../sources/libpikmin/crates/libpikmin-present/src/view.rs), pellet draw loop | Currently selects numbered-pellet models by carrier count; add a branch for actual loose ship-part models and carry motions |
 | Restore fitted parts | [onion.rs](../sources/libpikmin/crates/libpikmin/src/onion.rs), `give_ship_part`; matching FFI entry and [Native.cs](../sources/ror2-olimar/OlimarTest/Native.cs) | API exists, but the host does not retain a recovered set across stages |
 | Progressive appearance | [repaired_ship.rs](../sources/libpikmin/crates/libpikmin-present/tests/repaired_ship.rs) and [view.rs](../sources/libpikmin/crates/libpikmin-present/src/view.rs) | Test covers empty versus restored full ship; it silently returns without assets and does not verify incremental repairs |
 | Part addition animation | [ship.rs](../sources/libpikmin/crates/libpikmin-assets/src/ship.rs), `ShipAnimator.suck_start`, `suck_finish`, `assign_start` | Methods exist, but the current ship path in `View` calls start/land/update rather than the live suck methods; wire ordered deliveries and allow repair poses instead of the fixed grounded root pose |
-| Part collection sound | [audio.rs](../sources/libpikmin/crates/libpikmin-present/src/audio.rs), `Event::ShipPartCollected` | Existing sound locates a ship; an Onion receipt event needs correct positioning and exactly-once feedback |
+| Part collection sound | [audio.rs](../sources/libpikmin/crates/libpikmin-present/src/audio.rs), `Event::ShipPartCollected` | Preserve actual receiving Dolphin positioning and exactly-once feedback |
 | Stage arrival | [Plugin.cs](../sources/ror2-olimar/OlimarTest/Plugin.cs), `DolphinArrival` registration; [DolphinArrival.cs](../sources/ror2-olimar/OlimarTest/DolphinArrival.cs) | Body initial state is registered, but the game gates pod spawning to stage one; arrange later-stage arrivals explicitly and verify authority/respawns |
 | Stage-one sting | [SpawnMusic.cs](../sources/ror2-common/src/SpawnMusic.cs), `PlayOnce` | Already checks `stageClearCount == 0`, local ownership, and `playedRun`; retain those gates |
 | Stage persistence | [PikminWorld.cs](../sources/ror2-olimar/OlimarTest/PikminWorld.cs), `NewStage` and `FreeSim` | Squad/storage are preserved separately; a run-scoped repair ledger must survive sim teardown |

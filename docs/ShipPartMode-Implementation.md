@@ -1,7 +1,9 @@
 # Ship Repair mode — implementation and validation plan
 
-Status: proposed work, not completed implementation. Follow the
-[ruleset](ShipPartMode.md) and [source findings](ShipPartMode-Research.md).
+Status: this is the original milestone plan, with delivery corrected to the
+Dolphin. The 0.3.0 preview now implements its first playable scope; see
+[current implementation and validation](ShipPartMode-Status.md). Follow the
+[ruleset](ShipPartMode.md) and [baseline source findings](ShipPartMode-Research.md).
 Each numbered milestone is a separate commit or small sequence of commits; commit
 the relevant checks with the behavior they verify. Do not deploy while designing.
 
@@ -44,10 +46,10 @@ message handler, marker, presentation queue, and audio object owned by the run.
 
 ## Delivery transaction
 
-1. Core finishes suction into a permitted landed Onion and emits an explicit
+1. Core finishes suction into a permitted landed Dolphin and emits an explicit
    ship-part receipt event, without seed production or direct ship mutation.
 2. Host verifies the active run is Playing, the stage is accepting receipts,
-   the event matches the current epoch's registered pellet/part/Onion, and the
+   the event matches the current epoch's registered pellet/part/Dolphin, and the
    part's recovered bit is clear. Reject stale or duplicate receipts.
 3. Atomically set the bit and mark the stage record accepted, assign a delivery
    revision, append the journal entry, and stamp the authoritative repair time.
@@ -110,15 +112,15 @@ Check: deterministic samples with no stage duplicates or recovered IDs; 0, 7,
 26, 29, and 30 recovered; repeated stage loads; run restart; pauses and loading;
 late join; duplicate delivery; invalid part ID; exactly-once terminal transition.
 
-### 3. Extend native carry APIs for Onion receipts
+### 3. Extend native carry APIs for host-owned Dolphin receipts
 
 Add an opt-in generic ship-part delivery policy, defaulting to existing ship
 delivery. Expose a validated dedicated part-spawn ABI using the disc's config
 for weight, size, and identity. Add a receipt event that names the actual receiving
-Onion. Keep ship fitting as a separate operation driven by the host ledger.
+Dolphin. Keep ship fitting as a separate operation driven by the host ledger.
 
 Change destination selection, destination validity, and suction completion
-together. In repair mode require a landed reachable Onion, pin the selected
+together. In repair mode require a landed reachable Dolphin, pin the selected
 goal, and release/put down safely if it becomes unavailable. Part receipts never
 produce seeds or call `ship.as_mut().expect(...)` on an Onion. Exclude parts from
 the flying-Onion loose-pellet pickup path and other auto-suction shortcuts.
@@ -129,7 +131,7 @@ multiplayer envelope compatibility together. Update and retain the old
 ship-delivery test to prove default behavior still works.
 
 Check in Rust: normal pellet/corpse economy unchanged; default ship delivery;
-opt-in Onion delivery; airborne Onion rejection; goal removal/takeoff; no seed
+opt-in host Dolphin delivery; airborne receiver rejection; goal removal/takeoff; no seed
 gain; repeated completion; invalid IDs; snapshot round trips. Run the native ABI
 size and managed/native compatibility checks for the new contract.
 
@@ -149,7 +151,7 @@ required data before enabling the mode rather than making an invisible objective
 
 Check: 10/10 deliveries on several open and indoor stages; final stage with
 fewer than 10 missing parts; bounded placement failure; falling/stuck part;
-large carrier ring clearance; marker sync; moving Onions; departing with unfinished
+large carrier ring clearance; marker sync; unavailable Dolphins; departing with unfinished
 hauls. A later stage can offer those IDs again.
 
 ### 5. Connect live repair presentation and every-stage arrival
