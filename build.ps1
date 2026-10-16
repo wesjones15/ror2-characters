@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][ValidateSet('Mario', 'Olimar')][string]$Character,
-    [Parameter(Mandatory = $true)][ValidatePattern('^\d+\.\d+\.\d+$')][string]$Version,
+    [Parameter(Mandatory = $true)][ValidatePattern('^\d+\.\d+\.\d+(\.\d+)?$')][string]$Version,
     [Parameter(Mandatory = $true)][string]$RoR2Dir
 )
 $ErrorActionPreference = 'Stop'

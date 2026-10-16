@@ -2,6 +2,11 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
 
+## 0.2.2.1 - 2026-10-15
+
+No change in play. The wait for the stage's ground that 0.2.2 added to Mario now lives in the shared
+code, so Olimar uses it too.
+
 ## 0.2.2 - 2026-10-15
 
 Have every player in a game on 0.2.1 or later (the network format is unchanged since 0.2.0, so a mix of
