@@ -40,9 +40,9 @@ to use their normal objectives and repaired Dolphin presentation.
 ## Stage loop
 
 1. The Dolphin lands, Olimar beams down, and the Onion releases the squad on
-   **every normal stage**, showing the team's current repairs. The first arrival
-   is a wreck with no recovered parts. A damaged ship can still make these short
-   hops; all 30 parts are needed for the final escape.
+   **every gameplay stage**, including supported hidden realms, showing the team's
+   current repairs. The first arrival is a wreck with no recovered parts. A damaged
+   ship can still make these short hops; all 30 parts are needed for the final escape.
 2. Spawn up to **10 distinct uncollected parts** on reachable terrain. Finding a
    part reveals its name, carrier requirement, and a persistent team marker.
 3. Throw or swarm Pikmin onto a part. Once it has enough carriers, they haul it
