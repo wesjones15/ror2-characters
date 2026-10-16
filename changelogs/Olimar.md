@@ -2,6 +2,12 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
 
+## 0.2.2 - 2026-10-15
+
+- The Pikmin damage numbers (`Look.PikminDamageNumbers`) now apply only while you play Olimar (every
+  number you see then, whoever dealt it). Other survivors keep RoR2's font; they changed for everyone
+  before.
+
 ## 0.2.1 - 2026-10-15
 
 Hotfix release shared with Mario (no change to Olimar's play). The ZIP has no `install.ps1` any more:
