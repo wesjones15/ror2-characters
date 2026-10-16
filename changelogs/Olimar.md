@@ -2,6 +2,12 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
 
+## 0.2.2.1 - 2026-10-15
+
+- Olimar now waits for the stage's ground before he is placed, the way Mario does since 0.2.2. A stage's
+  floor can load after the body appears, which dropped a client through the map on spawn. He holds still
+  for up to 10 s until there is ground under him (the log says so), then carries on as before.
+
 ## 0.2.2 - 2026-10-15
 
 - The Pikmin damage numbers (`Look.PikminDamageNumbers`) now apply only while you play Olimar (every
