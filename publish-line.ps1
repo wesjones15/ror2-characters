@@ -47,17 +47,32 @@ if ($LASTEXITCODE -or ($remote -split '\s+')[0] -ne $head) { throw "Push the par
 $destination = & gh repo view $repo --json nameWithOwner | ConvertFrom-Json
 if ($LASTEXITCODE -or $destination.nameWithOwner -ne $repo) { throw 'Wrong release destination.' }
 $notesPath = Join-Path $PSScriptRoot "dist/$tag-notes.md"
+function Get-Changes([string]$Character) {
+    $text = Get-Content -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Raw
+    if ($text -notmatch "(?ms)^## $([regex]::Escape($Version)) - [^\r\n]*\r?\n(.*?)(?=^## |\z)") { throw "No $Version entry in changelogs/$Character.md." }
+    return $Matches[1].Trim()
+}
+$marioChanges = Get-Changes 'Mario'
+$olimarChanges = Get-Changes 'Olimar'
 $notes = @"
-Mario $Channel $Version and Olimar $Channel $Version for this game compatibility line. Each package's CHANGELOG.md lists what changed.
+Mario $Channel $Version and Olimar $Channel $Version for this game compatibility line.
 
 Requires Risk of Rain 2 $game, Windows x64 and BepInEx 5.4.21.0. Download the ZIP for either character, or both. Each ZIP holds the character's two mod DLLs under BepInEx/plugins, its guide, its changelog and a checksum manifest.
 
-The tag pins parent commit $head. That commit pins all five source repositories (the full commit IDs are in each ZIP's release.json). The branch is $branch. Both characters share this version in this release.
+## What changed
 
-Models, textures, sounds and tuning are extracted from your own GameCube disc. No disc images, extracted assets, generated audio, game binaries or dependency DLLs are included. Offline and friends-only co-op; two-player multiplayer remains unverified. Read the included character guide for requirements and known limitations.
+**Mario**
+
+$marioChanges
+
+**Olimar**
+
+$olimarChanges
+
+Each ZIP's CHANGELOG.md has the full history.
 "@
 if ($Channel -eq 'modern') {
-    $notes += "`n`nMario uses ABI 26 and Olimar ABI 29. Everyone in a game needs the same release. Each ZIP's CHANGELOG.md lists what changed."
+    $notes += "`n`nMario uses ABI 26 and Olimar ABI 29. Everyone in a game needs the same release."
     $notes += @'
 
 
