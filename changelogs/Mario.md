@@ -2,6 +2,18 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
 
+## 0.2.2 - 2026-10-15
+
+Have every player in a game on 0.2.1 or later (the network format is unchanged since 0.2.0, so a mix of
+0.2.1 and 0.2.2 plays together).
+
+- Lunar coins lying in the world show as Sunshine's spinning blue coin, for the Mario player only
+  (`Hud.LunarCoinBlueCoin` turns it off). RoR2's own model is hidden on your machine; the pickup itself
+  is unchanged for everyone.
+- Mario waits for the stage's ground before he starts moving. A stage's floor can load after the body
+  appears, which dropped a client through the map on spawn. He holds still for up to 10 s until there
+  is ground under him (the log says so), then carries on as before.
+
 ## 0.2.1 - 2026-10-15
 
 Hotfix.

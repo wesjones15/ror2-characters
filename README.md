@@ -1,4 +1,4 @@
-> Modern 0.2.1 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Modern 0.2.2 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
 
 # RoR2 Characters
 
@@ -8,8 +8,8 @@ Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super
 
 | Character | Release tag | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | `modern-v0.2.1` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | `modern-v0.2.1` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Mario | `modern-v0.2.2` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | `modern-v0.2.2` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
 
 ## Download
 
