@@ -1,7 +1,7 @@
-# Ship Repair 0.3.2 preview — implementation and validation
+# Ship Repair 0.3.3 preview — implementation and validation
 
 Branch: `feature/ship-part-mode`, based on `modern/1.5.0` with the 0.2.3 ground-wait
-hotfix retained. Native ABI 31; objective protocol 3. This is a local feature
+hotfix retained. Native ABI 32; objective protocol 3. This is a local feature
 preview, not a published release. No game launch or deployment was performed.
 
 ## Implemented
@@ -34,6 +34,10 @@ preview, not a published release. No game launch or deployment was performed.
   in seeds, split among the three colours. Salvage does not count toward 30. If an
   active rival still needs the identity, the physical part returns to its original
   validated map site after at least five seconds once clear. Each racer can salvage it again.
+- Ship-part classification crosses the native ABI explicitly. Host automatic
+  pickup targeting rejects every ship part before movement/descent; native
+  ground vacuum separately rejects every ship part. Only an intentional Pikmin
+  carry handoff to its selected Onion starts salvage suction.
 - Placement waits for the Dolphin's landing and checks paths to its actual intake
   goal. Retries are bounded and spread across frames. Discovery markers, sustained
   jam recovery, void recovery and stage departure warnings are included.
@@ -87,6 +91,8 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
   weights/names, actual Dolphin intake goal, physical hauling through C# callbacks,
   exactly one completed Dolphin receipt, a competitive duplicate haul into its
   owner's Onion with host-granted seeds, victory PCM and existing native behavior.
+  Pickup regression checks reject loose new/fitted parts and carried parts across
+  all delivery policies, and managed tracking rejects every ship-part state/receiver.
 - `ShipRepairCheck` passes: deterministic sampling, duplicate/stale receipt
   rejection, clock boundaries, restart, failure, secured victory, packet truncation,
   invalid state and pending/spawned enemy objective records. New race checks cover

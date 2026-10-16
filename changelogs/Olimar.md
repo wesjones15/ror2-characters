@@ -1,6 +1,17 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 31 from 0.3.1; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 32 from 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.3 - 2026-10-15
+
+Ship-part pickup guard preview. Install both DLLs together; native ABI 32 / objective protocol 3.
+
+- Expose explicit ship-part classification to the host. Flying/following Onions ignore all ship parts when choosing automatic pickup targets, including loose duplicates and parts in any carry/suction state.
+- Keep native ground-vacuum rejection as a second guard. Ship parts enter an Onion only through the normal Pikmin carry handoff targeting that Onion, such as intentional competitive salvage.
+- Add regression checks for loose new/duplicate parts, teams targeting a Dolphin or Onion, all delivery policies, raw native classification and managed automatic-pickup filtering. Verify actual deliberate salvage still completes once.
+- Document existing Pikmin regeneration: living assigned Pikmin inherit Olimar's percentage regeneration with `Items.MinionHealScale` (default 0.5), and receive healing from nearby wards. Direct healing of Olimar is not copied to them.
+
+Build/headless checks pass; in-game validation remains pending.
 
 ## 0.3.2 - 2026-10-15
 

@@ -1,6 +1,6 @@
 # Ship Repair mode — rules and design
 
-Implemented as the 0.3.2 feature preview on `feature/ship-part-mode`, based on
+Implemented as the 0.3.3 feature preview on `feature/ship-part-mode`, based on
 `modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
 in-game playtesting is pending. See [current status](ShipPartMode-Status.md),
 [baseline research](ShipPartMode-Research.md) and the historical
@@ -43,6 +43,10 @@ after at least five seconds, once that site is clear. This intentionally allows 
 The marker identifies duplicates as `Onion salvage`. A flying Onion must land
 before it can receive these parts; automatic loose-pellet vacuum shortcuts do not
 collect ship parts.
+Both the host's following/pickup target selection and the native ground-vacuum
+API reject ship parts in every state. Only native carry AI handing over a part
+to the team's selected Onion can start salvage ingestion; a passing Onion cannot
+intercept loose parts or a team delivering to the Dolphin.
 
 With competitive false, every accepted new identity fits all Dolphins and counts
 toward a single team set. Already recovered IDs stop spawning in cooperative mode.
