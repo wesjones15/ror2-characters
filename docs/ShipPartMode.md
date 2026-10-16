@@ -1,16 +1,16 @@
-# Ship Repair mode — design proposal
+# Ship Repair mode — rules and design
 
-Status: design only; no playable mode is implemented by this branch. Based on
-`modern/1.5.0`, parent commit `9bf1a41`. Working branch: `feature/ship-part-mode`.
-The rules below are recommended defaults for a first playable version, subject to
-playtesting. Technical findings are in [ShipPartMode-Research.md](ShipPartMode-Research.md)
-and the delivery plan is in [ShipPartMode-Implementation.md](ShipPartMode-Implementation.md).
+Status: implemented as the 0.3.0 feature preview on `feature/ship-part-mode`, based
+on `modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
+in-game playtesting is pending. See [current status](ShipPartMode-Status.md),
+[baseline research](ShipPartMode-Research.md), and the
+[implementation plan](ShipPartMode-Implementation.md). Tuning remains provisional.
 
 ## The pitch
 
 Repair the S.S. Dolphin while surviving a normal Risk of Rain 2 stage loop.
 Start with a broken ship, find scattered parts, assign Pikmin to carry them to
-the Onion, and watch the Dolphin rebuild itself. Deliver the thirtieth unique
+the Dolphin, and watch it rebuild itself. Deliver the thirtieth unique
 part to win. The central choice is how long to search and haul before taking
 the teleporter and letting the remaining parts appear on a later stage.
 
@@ -43,11 +43,14 @@ to use their normal objectives and repaired Dolphin presentation.
    **every gameplay stage**, including supported hidden realms, showing the team's
    current repairs. The first arrival is a wreck with no recovered parts. A damaged
    ship can still make these short hops; all 30 parts are needed for the final escape.
-2. Spawn up to **10 distinct uncollected parts** on reachable terrain. Finding a
-   part reveals its name, carrier requirement, and a persistent team marker.
+2. Offer up to **10 distinct uncollected parts**: normally seven scattered on
+   reachable ground and three dropped by powerful enemies/minibosses. Drops use
+   this same budget and require hauling. With fewer than ten IDs remaining,
+   reserve `min(3, remaining / 3)` enemy parts. Finding a part reveals its name,
+   carrier requirement, and a persistent team marker.
 3. Throw or swarm Pikmin onto a part. Once it has enough carriers, they haul it
-   to a landed Onion. Fight, gather items, and manage the squad as usual.
-4. At the end of Onion suction, record the part, update `Parts recovered: N/30`,
+   to a landed Dolphin. Fight, gather items, and manage the squad as usual.
+4. At the end of Dolphin suction, record the part, update `Parts recovered: N/30`,
    and play the Dolphin's fitting/repair animation. Collection gives no seeds,
    items, experience, or money in v1; it advances the objective.
 5. Use the teleporter normally to reach another stage. Taking it is allowed with
@@ -69,7 +72,7 @@ At each eligible stage, sample without replacement from its uncollected set:
 `stage parts = seeded sample(uncollected IDs, min(10, uncollected count))`
 
 An ID appears at most once on a stage. An uncollected ID can appear again on any
-later eligible stage. A recovered ID never spawns again. Delivery to any Onion
+later eligible stage. A recovered ID never spawns again. Delivery to any Dolphin
 counts for the whole team; each player's Dolphin reflects the same recovered set.
 Use a dedicated seeded random stream so placement does not consume the game's
 normal chest or enemy random sequence.
@@ -92,7 +95,7 @@ that return cannot be implemented. Never let an alternate ending replace the
 Spawn parts independently of interactable credits, after ground and navigation
 are ready. Spread them across the reachable stage, outside the arrival zone,
 with space for their model and carrier ring. Validate a carryable route to a
-safe Onion landing area, slope, clearance, and kill-plane distance. Do not place
+safe Dolphin intake area, slope, clearance, and kill-plane distance. Do not place
 parts behind a paid interaction, a survivor-specific jump, or an optional portal.
 
 Placement uses bounded retries. If fewer than 10 safe sites exist, place fewer,
@@ -100,15 +103,18 @@ log the reason, and show the actual stage total. Never award missing parts for
 free or block stage departure. A fall into a kill plane returns an undelivered
 part to its last verified safe location and releases its carriers. A jammed route
 gets a visible recovery prompt after a sustained timeout; recovery moves the part
-to its last safe position and never increments progress or teleports it to an Onion.
+to its last safe position and never increments progress or teleports it to a Dolphin.
 
-The Onion remains movable with existing controls. A flying Onion cannot collect a
-ship part automatically: land it to receive a carry team. Choose the nearest
-reachable landed Onion when hauling begins. Pin that destination while the team
-is travelling; if it takes off, dies, or disappears, put the part down safely and
-release the carriers to rejoin. Players can land an Onion and reassign the haul.
-This prevents a moving goal from towing a part across the map or bypassing carrying.
-Ordinary corpse and pellet behavior remains unchanged.
+Choose the nearest reachable landed Dolphin when hauling begins. Pin that
+destination while the team travels; if it becomes unavailable, put the part down
+safely and release the carriers. The movable Onion continues to receive ordinary
+pellets and corpses; ship parts cannot use its automatic pickup shortcuts.
+
+Boss/champion deaths can release the remaining three reserved parts. Other powerful
+enemies (base health at least 600, or elites with at least 200) release one. If an
+eligible death does not occur, remaining reserved parts become physical wreckage
+at their validated safe sites when the teleporter charges. Unsafe death positions
+also use those sites. These fallbacks never grant a part directly.
 
 At departure, only completed deliveries persist. Undelivered parts and carry jobs
 are discarded with that stage; their IDs return to the sampling pool. Preserve
@@ -148,12 +154,13 @@ Missing music or animation must still end in a successful results screen.
 
 There are native happy jump and spin-jump motions worth auditioning for the
 Pikmin celebration. Use real disc motions with staggered timing rather than
-promise an unverified dance. The exact victory music clip still needs identification
-and listening; ending-track names alone do not identify the desired song.
+promise an unverified dance. The preview uses extracted `RotJump` for Pikmin and
+`WaveJmp` for Olimar. Music is `compend0.stx`, traced from GoodEndingWave's actual
+audio configuration to stream 11; playback and timing still need in-game listening.
 
 Team wipe is failure. Show parts recovered and elapsed time even on failure.
 Ordinary deaths and revives preserve the recovered set. Disconnects do not reduce
-progress or leave a part attached to a removed Onion. With no connected players,
+progress or leave a part attached to a removed Dolphin. With no connected players,
 end or tear down according to the normal session lifecycle; do not leave an
 unattended repair run advancing. Leaving the run discards its progress; save/resume
 is outside v1.
@@ -176,7 +183,7 @@ parts-per-stage or enabling gameplay modifiers does not look like a standard run
 ## First playable scope
 
 Include mode/lobby selection, all-Olimar solo and friends co-op, normal stage loops,
-seeded placement, Onion hauling, shared 30-part progress, repairs, repeated arrivals,
+seeded placement, enemy drops, Dolphin hauling, shared 30-part progress, repairs, repeated arrivals,
 HUD, victory/failure, and results. Prototype with 10 parts per stage and a fixed
 30-part goal; a developer override for spawn count marks the result as custom.
 
@@ -186,7 +193,7 @@ need a later compatibility pass; disable their selection in this mode's v1 lobby
 and enforce that rule on the host. Keep the three standard difficulties available.
 
 Playtesting must answer whether 10 recoveries per stage gives interesting routes,
-whether native weights make early hauling too slow, whether moving the Onion
-removes too much travel, and whether repairs are visible enough during combat.
+whether native weights make early hauling too slow, whether the enemy quota
+gives interesting combat choices, and whether repairs are visible enough during combat.
 The first prototype should record discovery, hauling, delivery, and stage-departure
 times so these choices can be tuned from actual runs.

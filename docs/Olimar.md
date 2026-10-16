@@ -1,8 +1,8 @@
-> Modern 0.2.3 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
+> Modern 0.3.0 feature preview for the modern/1.5.0 game compatibility line. Ship Repair's in-game validation is pending; see Known limitations.
 
 # Olimar for Risk of Rain 2
 
-Version 0.2.3 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.3.0 (modern preview). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -28,7 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Olimar-modern-0.2.3-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip **Olimar-modern-0.3.0-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
@@ -49,7 +49,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. The native ABI must match; this release uses ABI 29.
+Install `OlimarTest.dll` and `pikmin.dll` together. This preview uses native ABI 30 and repair protocol 2. Every co-op participant needs the same build.
 
 ## First run
 
@@ -187,6 +187,36 @@ lifts off and follows you.
   scales with him.
 - **Falls**: landing damage uses RoR2's own fall rules (`Items.FallDamage`).
 
+## Ship Repair mode (preview)
+
+Select **Ship Repair** in the solo extra-mode menu or the multiplayer host's mode picker.
+Everyone must choose Olimar and turn artifacts off. Your extracted disc assets must be ready.
+
+Start with a wrecked Dolphin and recover **30 unique parts as a team**. Each normal stage
+offers up to ten missing parts: seven scattered on reachable ground and three reserved for
+powerful enemies or minibosses. Bosses can release the remaining enemy quota. If no usable
+enemy drop occurs, those parts become physical wreckage when the teleporter finishes.
+Near the end, fewer parts remain available and the enemy quota shrinks.
+
+Assign enough Pikmin to haul each part to a **landed Dolphin**. Parts use their disc weights
+(10–50 carriers). Ordinary pellets still go to the Onion to grow your squad. Recoveries
+update the shared objective and every player's Dolphin, using the original fitting animations,
+repair states, lights, particles and sounds. Internal parts do not add an exterior attachment.
+
+Leaving parts behind is allowed; their IDs can return on later stages. Recovered parts never
+repeat. Discovery shows a name/weight marker. A sustained hauling jam offers a recovery
+button that puts the part back on safe ground without awarding progress.
+
+Arrival plays every stage; its music sting plays only on stage one. The thirtieth delivery
+secures victory, freezes repair time, plays the original complete-ending music and celebration,
+then launches the Dolphin and opens the normal RoR2 report. The host can skip the celebration.
+Repair time, count, stages, seed and difficulty appear alongside the report; a detailed summary
+is saved in `BepInEx/config/OlimarShipRepairReports`. There is no combined numeric score yet.
+
+Co-op shares one objective; players cooperate to repair all Dolphins. Competitive races,
+Pikmin enemies, mixed survivors, save/resume and leaderboards are deferred.
+The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instead.
+
 ## Configuration
 
 `BepInEx/config/com.libpikmin.olimartest.cfg`. Main sections: `Controls.*`, `Combat.*`,
@@ -196,7 +226,7 @@ lifts off and follows you.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 29`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 30`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
@@ -215,9 +245,9 @@ and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `ca
 - Hazards (fire, water, electricity) are not implemented, so colours differ only in attack and
   carrying.
 - Attack-speed items don't change how fast Pikmin swing.
-- Carry paths are straight lines, so corpses can snag on walls between them and the Onion.
+- Ship Repair uses ground navigation for carrying. Other modes retain straight paths, so corpses can snag on walls between them and the Onion.
 - The Onion window doesn't pause the game and only opens for the host's Olimar.
-- Ship-part repair isn't implemented. The Dolphin arrives already repaired.
+- Ship Repair is a feature preview: mode menus, terrain placement, portals, full victory and two-player synchronization still need in-game playtesting. Other modes use a repaired Dolphin.
 
 ## Legal
 
