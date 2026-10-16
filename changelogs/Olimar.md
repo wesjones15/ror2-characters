@@ -1,6 +1,18 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 30 from 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 31 from 0.3.1; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.1 - 2026-10-15
+
+Competitive Ship Repair preview. Install both DLLs; all players need ABI 31 / objective protocol 3.
+In-game validation remains pending.
+
+- Add `[ShipRepair] CompetitiveMode = true` as a host-owned rule locked at run start. Each player repairs their own Dolphin; first to 30 unique parts wins. Set false for shared cooperative repair.
+- Carry teams use their captain's Dolphin, regardless of opponents' nearer ships. Part identities can recur for players who still need them. HUD and results show each racer's progress and the winner.
+- Duplicate parts go to the carrier owner's landed Onion for twice their weight in seeds (20–100), split across the three colours. Salvage never advances the 30-part goal. If a rival still needs the part, it returns to its original map site after five seconds.
+- Start with up to two shared map parts, one guaranteed stage-boss part, and seven other powerful-enemy drops per player (seven per team in cooperative mode). Stage bosses have a separate one-part quota across their group.
+- After the ordinary enemy quota, powerful enemies have a 20% bonus-drop chance with no lifetime stage cap. Consumed tracking slots can be reused. Leaving for another stage remains optional.
+- Add headless coverage for independent progress, secured winners, salvage, player-count scaling, replicated race state, and physical native hauling to the correct Dolphin/Onion.
 
 ## 0.3.0 - 2026-10-15
 

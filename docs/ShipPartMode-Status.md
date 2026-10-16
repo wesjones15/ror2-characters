@@ -1,22 +1,33 @@
-# Ship Repair 0.3.0 preview — implementation and validation
+# Ship Repair 0.3.1 preview — implementation and validation
 
 Branch: `feature/ship-part-mode`, based on `modern/1.5.0` with the 0.2.3 ground-wait
-hotfix retained. Native ABI 30; objective protocol 2. This is a local feature
+hotfix retained. Native ABI 31; objective protocol 3. This is a local feature
 preview, not a published release. No game launch or deployment was performed.
 
 ## Implemented
 
 - Solo extra-mode button and multiplayer mode picker; all-Olimar/artifacts-off
   preflight and matching-build requirement.
-- Shared server-owned ledger of 30 unique parts, ordered deliveries, stage
-  epochs, seeded sampling, reliable objective snapshots and late-state hydration.
-- Up to ten missing IDs per normal stage: seven ground parts plus three reserved
-  enemy parts. Near completion, reserve `min(3, remaining / 3)` for enemies.
-  Bosses/champions release the remaining quota; large enemies and strong elites
-  release one. Teleporter-charge fallback reveals any undropped physical parts.
+- Host-owned `[ShipRepair] CompetitiveMode = true`, locked at run start and shown
+  in the lobby. Each player has an independent 30-part ledger. First to finish
+  secures the race. False preserves shared cooperative repair. HUD/results show
+  racer progress, salvage totals and the winner; objective packets retain ordered
+  journals, epochs and late-state hydration.
+- Two shared map parts, one guaranteed stage-boss part, seven other powerful-enemy
+  parts per player (per team in cooperative mode). Initial totals are 10 solo and
+  31 with four racers. Parts are limited by actual remaining demand near completion.
+  Stage bosses consume their separate single quota across a multi-member group.
+  After the ordinary enemy quota, each eligible kill has a 20% bonus-drop chance.
+  No lifetime stage cap; up to 451 simultaneous tracking records, with consumed
+  slots reused for further bonus drops. Teleporter-charge fallback reveals any
+  undropped guaranteed physical parts.
 - Original 10–50 carrier weights. Parts are hauled to the nearest reachable
-  **landed Dolphin**, then fitted on every team's Dolphin. Ordinary pellets and
-  corpses still feed the Onion. No seeds or direct enemy-kill awards for parts.
+  **owner's landed Dolphin**, chosen by the carrier majority. Ordinary pellets and
+  corpses still feed the Onion. Enemy kills never directly award objective progress.
+- Duplicate hauls go to the owner's **landed Onion** for twice the carrier weight
+  in seeds, split among the three colours. Salvage does not count toward 30. If an
+  active rival still needs the identity, the physical part returns to its original
+  validated map site after five seconds. Each racer can salvage it again.
 - Placement waits for the Dolphin's landing and checks paths to its actual intake
   goal. Retries are bounded and spread across frames. Discovery markers, sustained
   jam recovery, void recovery and stage departure warnings are included.
@@ -24,7 +35,7 @@ preview, not a published release. No game launch or deployment was performed.
   sounds and particle cues. Restored stage progress is silent. Arrival repeats
   each stage; the existing arrival music sting remains first-stage-only.
 - Final delivery secures victory and freezes repair time. Original celebration,
-  farewell music and Dolphin takeoff lead to the normal RoR2 report. Normally
+  farewell music and winning Dolphin takeoff lead to the normal RoR2 report. Normally
   twelve seconds; queued repairs delay takeoff, with a bounded fallback and host
   skip. Music survives into results and stops on leaving/new run.
 - Repair summary shows outcome/count/time/stages/seed/difficulty alongside RoR2's
@@ -68,10 +79,13 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
   restored parts, flight poses, models, animations and particle loaders.
 - `NativeCheck` passes against the release DLL and actual cache: all thirty
   weights/names, actual Dolphin intake goal, physical hauling through C# callbacks,
-  exactly one completed Dolphin receipt, victory PCM and existing native behavior.
+  exactly one completed Dolphin receipt, a competitive duplicate haul into its
+  owner's Onion with host-granted seeds, victory PCM and existing native behavior.
 - `ShipRepairCheck` passes: deterministic sampling, duplicate/stale receipt
   rejection, clock boundaries, restart, failure, secured victory, packet truncation,
-  invalid state and pending/spawned enemy objective records.
+  invalid state and pending/spawned enemy objective records. New race checks cover
+  independent duplicate identities, salvage without progress, first winner,
+  scaling, near-completion demand, winner packets and recycled map parts.
 - Shared multiplayer and run-audio headless checks pass.
 - Managed Release build succeeds against the installed DLC4 reference assemblies.
   Existing warnings remain: BepInEx reference architecture and unused
@@ -85,19 +99,20 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
 2. Observe the initial wreck, all arrivals over multiple stages, first-stage-only
    sting and silently restored partial repairs. Verify original fitting motions,
    hull grounding, lights, SFX and particles during simultaneous deliveries.
-3. Check seven ground/three enemy sources, boss/elite drops, fallback wreckage,
+3. Check two map/one boss/seven-per-player enemy supply, 20% post-quota bonus drops,
+   multi-boss single reward, four-player scaling, fallback wreckage,
    discovery markers, 10–50 carrier rings, slopes, gaps, jams and void recovery
    across the installed normal stages. Fewer safe sites should log and remain
    playable without granting progress.
-4. Two-player host/client and late join: shared mask/order, parts delivered to
-   either Dolphin, all Dolphins updated, death/respawn/disconnect, packet delay,
-   and no replayed fittings or duplicate recoveries.
+4. Two-player host/client and late join: independent mask/order, correct owned
+   Dolphin, personal repairs, duplicate Onion salvage/seed payout/five-second
+   recycling, death/respawn/disconnect and delayed packets. Also test competitive
+   false for shared repairs and no replayed fittings or duplicate recoveries.
 5. Leave unfinished parts, loop, visit Bazaar/Void Fields and attempt terminal
    portals; confirm progress survives and an onward route remains available.
 6. Deliver part 30 during combat/departure/team wipe; verify secured win, queued
    fitting completion, celebration, sound balance, takeoff, skip, report and music
    lifetime. Check failure summary, pause/loading clock and a fresh run afterward.
 
-Pikmin enemies, competitive Dolphin races, mixed-survivor teams, artifacts,
-leaderboards and save/resume are deferred. The preview's co-op objective is shared;
-there are no per-player duplicate-part inventories.
+Pikmin enemies, mixed-survivor teams, artifacts, online leaderboards and save/resume
+are deferred. Competitive races are now the default; cooperative repair is optional.

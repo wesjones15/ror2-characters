@@ -46,7 +46,7 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 
 Building from source, deploying and publishing releases are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
 
-The `feature/ship-part-mode` branch contains the Olimar 0.3.0 **Ship Repair preview**:
+The `feature/ship-part-mode` branch contains the Olimar 0.3.1 **Ship Repair preview**:
 recover 30 unique parts and carry them to the Dolphin to rebuild it. See the
 [rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md).
 This preview is built locally; the published stable release remains 0.2.3.
