@@ -46,7 +46,9 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 
 Building from source, deploying and publishing releases are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
 
-The `feature/ship-part-mode` branch contains the Olimar 0.3.3 **Ship Repair preview**:
-recover 30 unique parts and carry them to the Dolphin to rebuild it. See the
+The `feature/ship-part-mode` branch contains the Olimar 0.3.4 **Ship Repair preview**:
+recover 30 unique parts and carry them to your Dolphin near the teleporter to rebuild
+it. Dolphins relocate after drop-off, and original Pikmin stage music accompanies
+exploration while RoR2 boss music remains active during teleporter fights. See the
 [rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md).
 This preview is built locally; the published stable release remains 0.2.3.

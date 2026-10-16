@@ -1,8 +1,8 @@
-> Modern 0.3.3 feature preview for the modern/1.5.0 game compatibility line. Ship Repair's in-game validation is pending; see Known limitations.
+> Modern 0.3.4 feature preview for the modern/1.5.0 game compatibility line. Ship Repair's in-game validation is pending; see Known limitations.
 
 # Olimar for Risk of Rain 2
 
-Version 0.3.3 (modern preview). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.3.4 (modern preview). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -28,7 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Olimar-modern-0.3.3-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip **Olimar-modern-0.3.4-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
@@ -49,7 +49,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. This preview uses native ABI 32 and repair protocol 3. Every participant needs the same build.
+Install `OlimarTest.dll` and `pikmin.dll` together. This preview uses native ABI 33 and repair protocol 3. Every participant needs the same build.
 
 ## First run
 
@@ -203,6 +203,9 @@ The host's config controls the rule, locked at run start:
 [ShipRepair]
 CompetitiveMode = true
 EnemyPartIntervalSeconds = 30
+StageMusic = true
+AdaptiveStageMusic = true
+StageMusicVolume = 1
 ```
 
 Set `CompetitiveMode = false` for shared cooperative progress. Competitive is the default.
@@ -239,7 +242,19 @@ Leaving parts behind is allowed; their IDs can return on later stages. In a race
 remains eligible while any active racer needs it. Discovery shows a name/weight marker. A sustained hauling jam offers a recovery
 button that puts the part back on safe ground without awarding progress.
 
-Arrival plays every stage; its music sting plays only on stage one. The first racer's thirtieth
+Arrival plays every stage. After dropping off Olimar, Onion and squad, the Dolphin flies
+near the teleporter and stays there for deliveries. Multiplayer docks are at least 14 metres
+apart, with terrain, clearance and intake-route checks. If no safe dock is found, it stays
+at the arrival site. Same-stage respawns preserve the dock.
+
+Ship Repair loops Impact Site music on stage one and seeded random Pikmin stage songs
+later. Nearby RoR2 enemies activate the original Pikmin musical layers. Teleporter boss
+fights retain RoR2 music, then the Pikmin song resumes. The three music settings above
+are local: disable `AdaptiveStageMusic` for steady exploration music, adjust
+`StageMusicVolume` alongside RoR2's master/music volume, or disable `StageMusic` to keep
+RoR2 music and the first-stage-only arrival sting. Missing music assets/output retain RoR2 music.
+
+The first racer's thirtieth
 unique delivery secures victory, freezes repair time, plays the original complete-ending music
 and celebration, then launches the winning Dolphin and opens the normal RoR2 report. The host can skip the celebration.
 Repair time, count, stages, seed and difficulty appear alongside the report; a detailed summary
@@ -254,12 +269,12 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 
 `BepInEx/config/com.libpikmin.olimartest.cfg`. Main sections: `Controls.*`, `Combat.*`,
 `Pikmin.*`, `Growth.*`, `Corpses.*`, `Scale.*`, `Items.*`, `Dolphin.*`, `Sound.*`,
-`SpawnMusic.*`, `Look.*`, `Paths.*` and `Debug.*`. Each entry has a description in the file.
+`SpawnMusic.*`, `ShipRepair.*`, `Look.*`, `Paths.*` and `Debug.*`. Each entry has a description in the file.
 `Corpses.CarryBodies` is experimental and off.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 32`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 33`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
