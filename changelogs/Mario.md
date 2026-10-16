@@ -2,6 +2,17 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
 
+## 0.2.1 - 2026-10-15
+
+Hotfix.
+
+- Mario's voice, footsteps and FLUDD (and the coin and hover sounds) came out of the right ear only,
+  the lobby "wahoo" included: the left output was never connected for sounds routed through the game's
+  surround mixer. They play in both ears now, so everything is a little louder (`Output.GainDb` in
+  `Ror2Common.Audio.cfg` lowers it). The cached jingles (arrival, "Too Bad!", game over, the coin
+  chimes and the Shine Get fanfare) were right-ear only too and are rendered again on the next launch.
+- The ZIP has no `install.ps1` any more: copy its `BepInEx` folder into the game folder.
+
 ## 0.2.0 - 2026-10-15
 
 Install both DLLs together, and have every player in a game on this release: the multiplayer frames

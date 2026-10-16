@@ -22,12 +22,8 @@ foreach ($character in @('Mario', 'Olimar')) {
     $package = Join-Path $PSScriptRoot "dist/$character-$Channel-$Version-win-x64"
     $manifest = Get-Content -LiteralPath (Join-Path $package 'release.json') -Raw | ConvertFrom-Json
     if ($manifest.parentCommit -ne $head -or $manifest.channel -ne $Channel) { throw "Rebuild $character from this parent commit/channel." }
-    $assets += "$package.zip", "$package.zip.sha256"
-    foreach ($document in @('README.md', 'CHANGELOG.md', 'release.json')) {
-        $uploadPath = Join-Path $uploadDir "$character-$document"
-        Copy-Item -LiteralPath (Join-Path $package $document) -Destination $uploadPath -Force
-        $assets += $uploadPath
-    }
+    # The release carries the two ZIPs and nothing else; each holds its guide, changelog and manifest.
+    $assets += "$package.zip"
 }
 foreach ($source in @('libpikmin', 'libsms', 'ror2-common', 'ror2-mario', 'ror2-olimar')) {
     $path = Join-Path $PSScriptRoot "sources/$source"
@@ -43,9 +39,6 @@ foreach ($source in @('libpikmin', 'libsms', 'ror2-common', 'ror2-mario', 'ror2-
 $snapshotPath = Join-Path $PSScriptRoot "dist/$tag-sources.json"
 [ordered]@{ schema = 1; channel = $Channel; version = $Version; branch = $branch; parentCommit = $head; sourceCommits = $sources } |
     ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $snapshotPath -Encoding UTF8
-$sourceUpload = Join-Path $uploadDir 'source-commits.json'
-Copy-Item -LiteralPath $snapshotPath -Destination $sourceUpload -Force
-$assets += $sourceUpload
 $assetNames = @($assets | ForEach-Object { [IO.Path]::GetFileName($_) })
 if (@($assetNames | Select-Object -Unique).Count -ne $assetNames.Count) { throw 'Release asset filenames must be unique.' }
 if ($ValidateOnly) { Write-Host "Validated ${tag}: both packages and all five source pins."; return }
@@ -57,14 +50,14 @@ $notesPath = Join-Path $PSScriptRoot "dist/$tag-notes.md"
 $notes = @"
 Mario $Channel $Version and Olimar $Channel $Version for this game compatibility line. Each package's CHANGELOG.md lists what changed.
 
-Requires Risk of Rain 2 $game, Windows x64 and BepInEx 5.4.21.0. Download the ZIP for either character, or both. Each package contains its installer, guide, changelog, two mod DLLs and a checksum manifest.
+Requires Risk of Rain 2 $game, Windows x64 and BepInEx 5.4.21.0. Download the ZIP for either character, or both. Each ZIP holds the character's two mod DLLs under BepInEx/plugins, its guide, its changelog and a checksum manifest.
 
-The tag pins parent commit $head. That commit pins all five source repositories; the attached sources manifest records their full commit IDs. The branch is $branch. Both characters share this version in this release.
+The tag pins parent commit $head. That commit pins all five source repositories (the full commit IDs are in each ZIP's release.json). The branch is $branch. Both characters share this version in this release.
 
 Models, textures, sounds and tuning are extracted from your own GameCube disc. No disc images, extracted assets, generated audio, game binaries or dependency DLLs are included. Offline and friends-only co-op; two-player multiplayer remains unverified. Read the included character guide for requirements and known limitations.
 "@
 if ($Channel -eq 'modern') {
-    $notes += "`n`nIncludes DLC4 API support, material/portrait fixes, shared native output gain (default -4 dB), and Olimar's full vanilla sundown death bell surviving game-over cleanup. Mario uses ABI 26; Olimar uses ABI 29. Everyone in a game needs the same release. Final sound listening and full gameplay acceptance remain manual."
+    $notes += "`n`nMario uses ABI 26 and Olimar ABI 29. Everyone in a game needs the same release. Each ZIP's CHANGELOG.md lists what changed."
     $notes += @'
 
 
@@ -78,11 +71,11 @@ Install [BepInExPack by bbepis](https://old.thunderstore.io/package/bbepis/BepIn
 - [SeekersPatcher](https://thunderstore.io/c/riskofrain2/p/pseudopulse/SeekersPatcher/)
 - [MiscFixes](https://thunderstore.io/c/riskofrain2/p/score/MiscFixes/)
 
-Unzip the character's modern ZIP and run its included install.ps1 with -InstallDir pointing at the folder containing BepInEx. For a mod manager, use the active profile folder and launch through that profile. The character installer copies its two verified DLLs; dependency mods are installed separately.
+Unzip the character's ZIP and copy its BepInEx folder into your Risk of Rain 2 game folder (the one with Risk of Rain 2.exe), merging with the BepInEx folder already there. With a mod manager, copy it into the active profile folder and launch through that profile. It adds only the character's two DLLs; dependency mods are installed separately.
 
 Put your own Super Mario Sunshine ISO directly beside MarioTest.dll and sms.dll in BepInEx/plugins/MarioTest/. Put your own Pikmin ISO directly beside OlimarTest.dll and pikmin.dll in BepInEx/plugins/OlimarTest/. Filenames do not matter. Launch and wait for extraction; assets are cached for future launches. To keep the ISO elsewhere, set Disc under [Paths] in the character's config to its full path and restart.
 
-Each ZIP contains its full README with step-by-step manual/profile instructions and a folder example. The same guides are attached separately as Mario-README.md and Olimar-README.md.
+Each ZIP contains its full README with step-by-step instructions and a folder example.
 '@
 }
 $notes | Set-Content -LiteralPath $notesPath -Encoding UTF8

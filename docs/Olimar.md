@@ -1,8 +1,8 @@
-> Modern 0.2.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
+> Modern 0.2.1 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Olimar for Risk of Rain 2
 
-Version 0.2.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.2.1 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -28,13 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Olimar-modern-0.2.0-win-x64.zip**. Run the included installer, pointing it at the folder containing `BepInEx`:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\install.ps1 -InstallDir "D:\Games\Risk of Rain 2"
-   ```
-
-   With a mod manager, use its active profile directory as `-InstallDir` and launch the game through that profile. Add `-WhatIf` to preview. The installer checks hashes and copies the two mod DLLs; it preserves existing configs, assets, disc images and other mods.
+2. Unzip **Olimar-modern-0.2.1-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
