@@ -1,199 +1,136 @@
 # Ship Repair mode — rules and design
 
-Status: implemented as the 0.3.0 feature preview on `feature/ship-part-mode`, based
-on `modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
+Implemented as the 0.3.1 feature preview on `feature/ship-part-mode`, based on
+`modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
 in-game playtesting is pending. See [current status](ShipPartMode-Status.md),
-[baseline research](ShipPartMode-Research.md), and the
+[baseline research](ShipPartMode-Research.md) and the historical
 [implementation plan](ShipPartMode-Implementation.md). Tuning remains provisional.
 
-## The pitch
+## Objective and mode selection
 
-Repair the S.S. Dolphin while surviving a normal Risk of Rain 2 stage loop.
-Start with a broken ship, find scattered parts, assign Pikmin to carry them to
-the Dolphin, and watch it rebuild itself. Deliver the thirtieth unique
-part to win. The central choice is how long to search and haul before taking
-the teleporter and letting the remaining parts appear on a later stage.
+Repair the S.S. Dolphin while surviving the normal RoR2 stage loop. Start with a
+wreck, find parts, fight for drops and assign Pikmin to haul them home. The first
+player to fit all thirty unique identities wins. No Mithrix fight is required.
 
-## Making the mode available
+Select **Ship Repair** in the solo extra-mode menu or multiplayer mode picker.
+All participating players choose Olimar; artifacts are off. The host controls
+`[ShipRepair] CompetitiveMode`, default **true**, locked when the run starts.
+False switches to shared cooperative repair. The old `Dolphin.ShipPartsMode`
+placeholder is ignored. Classic, Eclipse and Simulacrum keep normal objectives
+and their repaired Dolphin presentation.
 
-Add **Ship Repair** as a separate mode alongside Classic, Eclipse, and
-Simulacrum, using the game's mode selection flow. Use normal difficulty selection
-and normal stage progression as its foundation. The installed modern game exposes
-`ContentPack.gameModePrefabs` and `Run.userPickable`; a fourth tile is the intended
-UX. Registration, menu presentation, and network spawning still need an in-game
-spike; the catalog alone does not prove the menu will add a tile automatically.
+## Competitive progress and hauling
 
-Suggested description: "The Dolphin is wrecked. Recover 30 unique ship parts
-with your Pikmin to escape. Parts left behind can appear on later stages."
+Each player owns a thirty-bit recovered set and ordered delivery journal across
+stages. Delivering a new identity repairs only that player's Dolphin. A part may
+already be fitted by one racer and still be needed by another. Parts are physical,
+shared and contestable; whoever killed the enemy does not automatically own its
+drop. The carrying majority's captain determines the destination; ties keep the
+first carrier's captain. A nearer opponent's Dolphin never steals delivery credit.
 
-For v1, require every participating player to select Olimar. Disable Ready with
-a clear explanation if a player has another survivor selected; do not silently
-replace their choice. This gives every player the tools to recover the objective.
-Mixed survivor co-op can follow after its delivery and disconnect rules are proven.
+The sim routes new parts to that captain's landed Dolphin. Whistling and existing
+multi-captain recruitment can change a carrier team and its destination. If the
+receiver becomes unavailable, put the part down and release the carriers. The
+server validates the current stage epoch, physical pellet, part and receiver
+before accepting a delivery. Duplicate or stale receipts cannot advance progress.
 
-The selected mode is host-owned and visible to all lobby players. Lock its rules
-when the run starts. The existing `Dolphin.ShipPartsMode` config is an unfinished
-placeholder; it must not activate or disable this run type. Retire it with a
-migration message when the mode ships. Classic, Eclipse, and Simulacrum continue
-to use their normal objectives and repaired Dolphin presentation.
+If your Dolphin already has the part, your Pikmin haul it to **your landed Onion**.
+The Onion ingests it with the normal suction/emission effects and pays **twice
+the part's carrier weight in seeds**: 20–100, split over the three colours. Salvage
+is tracked separately and never counts toward thirty. If an active rival still
+needs the identity, the physical part returns to its original validated map site
+after five seconds. This intentionally allows repeated interception and salvage.
+The marker identifies duplicates as `Onion salvage`. A flying Onion must land
+before it can receive these parts; automatic loose-pellet vacuum shortcuts do not
+collect ship parts.
 
-## Stage loop
+With competitive false, every accepted new identity fits all Dolphins and counts
+toward a single team set. Already recovered IDs stop spawning in cooperative mode.
+There is no duplicate salvage in that ruleset.
 
-1. The Dolphin lands, Olimar beams down, and the Onion releases the squad on
-   **every gameplay stage**, including supported hidden realms, showing the team's
-   current repairs. The first arrival is a wreck with no recovered parts. A damaged
-   ship can still make these short hops; all 30 parts are needed for the final escape.
-2. Offer up to **10 distinct uncollected parts**: normally seven scattered on
-   reachable ground and three dropped by powerful enemies/minibosses. Drops use
-   this same budget and require hauling. With fewer than ten IDs remaining,
-   reserve `min(3, remaining / 3)` enemy parts. Finding a part reveals its name,
-   carrier requirement, and a persistent team marker.
-3. Throw or swarm Pikmin onto a part. Once it has enough carriers, they haul it
-   to a landed Dolphin. Fight, gather items, and manage the squad as usual.
-4. At the end of Dolphin suction, record the part, update `Parts recovered: N/30`,
-   and play the Dolphin's fitting/repair animation. Collection gives no seeds,
-   items, experience, or money in v1; it advances the objective.
-5. Use the teleporter normally to reach another stage. Taking it is allowed with
-   parts still on the map. Show `Leaving X unrecovered parts — they can return`.
-6. On delivery 30, secure the win immediately, stop the repair clock, play the
-   final repair and celebration, then show results. No final boss is required.
+## Stage supply and soft cap
 
-Use the existing starting squad and Onion economy for the first prototype. Tune
-part carry requirements only after testing the real extracted weights against
-the squad and RoR2 terrain. Never choose a required weight above the supported
-squad carrying capacity; report incompatible tuning before a run starts.
+Initial supply per eligible normal stage:
 
-## Which parts appear
+| Source | Competitive | Cooperative |
+| --- | --- | --- |
+| Shared map pickups | 2 | 2 |
+| Stage-boss reward | 1 across the boss group | 1 across the boss group |
+| Other powerful-enemy rewards | 7 × participating players | 7 for the team |
 
-There are **30 identities**, matching the native ship's part IDs. The run owns a
-set of recovered IDs, not a counter that can be increased by duplicate parts.
-At each eligible stage, sample without replacement from its uncollected set:
+That gives ten initial opportunities solo, seventeen with two racers and thirty-one
+with four. Near completion, remaining demand can shrink this supply. IDs are chosen
+from active racers' missing sets with a dedicated seeded stream; copies can repeat
+when multiple racers need an identity. No new drop is chosen solely for identities
+every active player has already recovered.
 
-`stage parts = seeded sample(uncollected IDs, min(10, uncollected count))`
+The first qualifying stage-boss death releases its reserved part; multiple members
+do not multiply that reward. Other champions/minibosses, enemies with base health
+at least 600, and elites with base health at least 200 release one reserved part
+per death. Stage bosses never consume the separately scaled ordinary enemy quota.
 
-An ID appears at most once on a stage. An uncollected ID can appear again on any
-later eligible stage. A recovered ID never spawns again. Delivery to any Dolphin
-counts for the whole team; each player's Dolphin reflects the same recovered set.
-Use a dedicated seeded random stream so placement does not consume the game's
-normal chest or enemy random sequence.
+After the ordinary quota, each qualifying non-stage-boss death has a **20% bonus
+part chance**. There is no lifetime cap on parts from a stage. Players can stay
+and farm or leave; increasing difficulty supplies the pressure. Consumed tracking
+slots are reused for further drops; a technical limit of 451 simultaneous records
+keeps objective packets bounded. This is not a total-earned cap.
 
-Examples: recover 7 on stage one; stage two samples 10 of the remaining 23 and
-may include the 3 left behind. Arrive with 26 recovered; spawn exactly the final
-4. Three stages is the theoretical minimum at the default setting. Missing parts
-extends the run through the ordinary loop without permanently losing progress.
+If an eligible death cannot place its part safely, use its validated safe site.
+Any undropped guaranteed rewards become physical wreckage when the teleporter
+charges, covering missing/unusable combat callbacks. This fallback still requires
+a haul. Normal stage routes loop; Bazaar and Void Fields preserve progress without
+parts. Unsupported terminal destinations redirect to an eligible first-tier stage.
 
-Only normal combat stages with a working onward teleporter route are eligible.
-Hidden realms and intermission scenes preserve progress and spawn no parts.
-The mode must retain a looping route rather than require a terminal boss realm.
-If a terminal or unsupported scene is reached through a portal, preserve progress
-and provide a return to normal stages; block entry with an explanation where
-that return cannot be implemented. Never let an alternate ending replace the
-30-part objective. Scene eligibility and route handling are release requirements.
+## Placement, recovery and departure
 
-## Placement and hauling
+Wait for the Dolphin to land and navigation to be ready. Spread initial sites
+outside arrival, check ground/slope/clearance and a carryable route to an actual
+Dolphin intake goal. Do not consume chest/interactable RNG or credits. Placement
+retries are bounded and spread over frames; fewer safe sites means fewer initial
+parts, with a logged explanation rather than free progress.
 
-Spawn parts independently of interactable credits, after ground and navigation
-are ready. Spread them across the reachable stage, outside the arrival zone,
-with space for their model and carrier ring. Validate a carryable route to a
-safe Dolphin intake area, slope, clearance, and kill-plane distance. Do not place
-parts behind a paid interaction, a survivor-specific jump, or an optional portal.
+Discovery shows the part's name, disc carrier weight and marker. Native weights
+are 10–50; players must grow their squad through the existing Onion economy.
+A sustained hauling jam offers a recovery prompt; a void fall returns the part
+to safe ground. Recovery releases carriers and never grants progress.
 
-Placement uses bounded retries. If fewer than 10 safe sites exist, place fewer,
-log the reason, and show the actual stage total. Never award missing parts for
-free or block stage departure. A fall into a kill plane returns an undelivered
-part to its last verified safe location and releases its carriers. A jammed route
-gets a visible recovery prompt after a sustained timeout; recovery moves the part
-to its last safe position and never increments progress or teleports it to a Dolphin.
+Departure is allowed with unfinished parts. Only completed recoveries persist;
+remaining identities stay eligible on later stages. Accept receipts before the
+server closes the stage, reject them after it. Ordinary corpse and pellet rewards
+continue feeding the Onion.
 
-Choose the nearest reachable landed Dolphin when hauling begins. Pin that
-destination while the team travels; if it becomes unavailable, put the part down
-safely and release the carriers. The movable Onion continues to receive ordinary
-pellets and corpses; ship parts cannot use its automatic pickup shortcuts.
+## Original repair feedback and arrival
 
-Boss/champion deaths can release the remaining three reserved parts. Other powerful
-enemies (base health at least 600, or elites with at least 200) release one. If an
-eligible death does not occur, remaining reserved parts become physical wreckage
-at their validated safe sites when the teleporter charges. Unsafe death positions
-also use those sites. These fallbacks never grant a part directly.
+Use the user's extracted thirty part models and original carry/fitting bundles,
+Dolphin wreck/root poses, repair motions, lights, SFX and particles. There are
+five exterior shape-changing parts, eleven other attachments and fourteen internal
+parts; an internal recovery does not add an invented exterior model.
 
-At departure, only completed deliveries persist. Undelivered parts and carry jobs
-are discarded with that stage; their IDs return to the sampling pool. Preserve
-the mod's current squad/storage transfer rules in v1 and make clear that leaving
-a part does not complete its haul. A delivery committed before the server closes
-the stage counts; one arriving after that boundary does not.
+Queue fittings in delivery order, keep combat running and show a toast per recovery.
+Restore personal parts silently before each new stage's arrival. Stage entry,
+respawn and late join must not replay old collection sounds or repair animations.
+Arrival plays once per player per stage; the existing music sting remains local,
+first-stage-only and once per run. Same-stage respawns use short re-entry.
 
-## Repair feedback and arrival
+## Victory, failure and reporting
 
-Every delivery gets a short name/count toast and map-marker removal. Queue part
-addition animations in server delivery order; simultaneous deliveries must not
-overwrite each other. Keep ordinary play running while parts are fitted. Offer
-a small optional ship view later if watching repairs proves hard from across the map.
+The server atomically accepts the first thirtieth unique recovery and secures the
+race. Freeze repair time and stop departure, enemy spawning and damage. Finish
+queued repairs, play the extracted complete-ending farewell music, celebrate with
+original `RotJump`/`WaveJmp` motions and launch the winning Dolphin. Cooperative
+victory launches all Dolphins. Normally this takes twelve seconds; pending fitting
+queues can extend it, with a bounded fallback and host skip. Missing presentation
+must not prevent successful results.
 
-Restore all recovered parts before a new stage's arrival animation starts. Do not
-replay their collection sounds or fitting animations on stage entry, respawn, or
-late join. The original ship has exterior and internal parts: **not every part
-adds a visible attachment**. Use the original fittings, upgrade motions, lights,
-and effects, with a toast for every delivery. Do not substitute an arbitrary
-10/20/30 cosmetic progression for the disc's repair data.
+Keep RoR2's normal run report and add winner, standings, unique-part/salvage counts,
+repair time, stages, seed and difficulty. Save detailed rules and journals in
+`BepInEx/config/OlimarShipRepairReports`. No combined numeric score is defined yet.
 
-The arrival animation and music have separate gates. Run the stage arrival for
-each Olimar, once per stage. Keep the existing music sting restricted to each
-machine's first local arrival on **stage one**, once per run. Repeated body spawns
-on the same stage use a short re-entry and never restart the stage arrival or sting.
-Verify the repeated-stage animation in the game; initial-body state registration
-alone does not prove the game enters it after every stage transition.
+Time starts when first-stage arrivals release gameplay, counts subsequent arrivals
+and hidden-realm play, follows pause semantics, and excludes loading/celebration.
+It freezes at the winning delivery or team wipe. Death/respawn retains progress;
+leaving the run discards it. The first prototype needs manual host/client, late
+join, disconnect, simultaneous delivery, terrain, routing and sound-balance tests.
 
-## Victory, failure, and scoring
-
-The server atomically accepts the final unique delivery and enters a winning
-state. Stop objective interactions, stage departure, enemy spawning, and damage
-so players cannot lose during the celebration. Finish queued repairs, play the
-Olimar victory music, let the squad celebrate, and launch the completed Dolphin.
-Target an approximately 8–12 second sequence with a hard timeout and a host skip.
-Missing music or animation must still end in a successful results screen.
-
-There are native happy jump and spin-jump motions worth auditioning for the
-Pikmin celebration. Use real disc motions with staggered timing rather than
-promise an unverified dance. The preview uses extracted `RotJump` for Pikmin and
-`WaveJmp` for Olimar. Music is `compend0.stx`, traced from GoodEndingWave's actual
-audio configuration to stream 11; playback and timing still need in-game listening.
-
-Team wipe is failure. Show parts recovered and elapsed time even on failure.
-Ordinary deaths and revives preserve the recovered set. Disconnects do not reduce
-progress or leave a part attached to a removed Dolphin. With no connected players,
-end or tear down according to the normal session lifecycle; do not leave an
-unattended repair run advancing. Leaving the run discards its progress; save/resume
-is outside v1.
-
-Keep the normal RoR2 run report and available score/stat fields. Add a mode summary:
-outcome, parts recovered, **repair time**, stages visited, difficulty, seed, and
-the rules used. Repair time starts at first-stage gameplay release after arrivals,
-runs during subsequent arrivals and hidden-realm visits, follows the run's actual
-pause semantics, and stops at final delivery or failure. It excludes loading and
-the celebration. All first-stage players are released together, with a bounded
-arrival timeout; joining later never resets or delays the clock.
-
-For comparisons, completed runs rank above failures, then faster repair time wins;
-failures rank by parts recovered, then shorter elapsed time. Display native score
-alongside these metrics, and use it as a tie-break only where the game supplies a
-meaningful comparable field. Do not invent a combined numeric score before
-playtesting. Separate results by difficulty, player count, and rules so changing
-parts-per-stage or enabling gameplay modifiers does not look like a standard run.
-
-## First playable scope
-
-Include mode/lobby selection, all-Olimar solo and friends co-op, normal stage loops,
-seeded placement, enemy drops, Dolphin hauling, shared 30-part progress, repairs, repeated arrivals,
-HUD, victory/failure, and results. Prototype with 10 parts per stage and a fixed
-30-part goal; a developer override for spawn count marks the result as custom.
-
-Defer mixed-survivor teams, achievements/unlocks, online leaderboards, save/resume,
-new hazards, bespoke part powers, and new Pikmin economies. Artifact combinations
-need a later compatibility pass; disable their selection in this mode's v1 lobby
-and enforce that rule on the host. Keep the three standard difficulties available.
-
-Playtesting must answer whether 10 recoveries per stage gives interesting routes,
-whether native weights make early hauling too slow, whether the enemy quota
-gives interesting combat choices, and whether repairs are visible enough during combat.
-The first prototype should record discovery, hauling, delivery, and stage-departure
-times so these choices can be tuned from actual runs.
+Pikmin enemies, mixed-survivor teams, artifacts, online leaderboards, save/resume,
+new hazards and bespoke part powers remain deferred.
