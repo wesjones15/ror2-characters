@@ -1,6 +1,6 @@
 # Ship Repair mode — rules and design
 
-Implemented as the 0.3.1 feature preview on `feature/ship-part-mode`, based on
+Implemented as the 0.3.2 feature preview on `feature/ship-part-mode`, based on
 `modern/1.5.0` and retaining the 0.2.3 hotfix. Automated validation passes;
 in-game playtesting is pending. See [current status](ShipPartMode-Status.md),
 [baseline research](ShipPartMode-Research.md) and the historical
@@ -39,7 +39,7 @@ The Onion ingests it with the normal suction/emission effects and pays **twice
 the part's carrier weight in seeds**: 20–100, split over the three colours. Salvage
 is tracked separately and never counts toward thirty. If an active rival still
 needs the identity, the physical part returns to its original validated map site
-after five seconds. This intentionally allows repeated interception and salvage.
+after at least five seconds, once that site is clear. This intentionally allows repeated interception and salvage.
 The marker identifies duplicates as `Onion salvage`. A flying Onion must land
 before it can receive these parts; automatic loose-pellet vacuum shortcuts do not
 collect ship parts.
@@ -69,6 +69,13 @@ do not multiply that reward. Other champions/minibosses, enemies with base healt
 at least 600, and elites with base health at least 200 release one reserved part
 per death. Stage bosses never consume the separately scaled ordinary enemy quota.
 
+Ordinary drops have a **30-second independent cooldown per player**, configurable
+through `[ShipRepair] EnemyPartIntervalSeconds` and locked at run start. Pikmin and
+minion kills resolve to their owning player. The first eligible kill can drop
+immediately; another player's drop never starts this player's timer. Kills during
+cooldown consume no quota and are not queued. The guaranteed stage-boss reward
+bypasses this timer. Successful physical placement starts the killer's cooldown.
+
 After the ordinary quota, each qualifying non-stage-boss death has a **20% bonus
 part chance**. There is no lifetime cap on parts from a stage. Players can stay
 and farm or leave; increasing difficulty supplies the pressure. Consumed tracking
@@ -88,6 +95,12 @@ outside arrival, check ground/slope/clearance and a carryable route to an actual
 Dolphin intake goal. Do not consume chest/interactable RNG or credits. Placement
 retries are bounded and spread over frames; fewer safe sites means fewer initial
 parts, with a logged explanation rather than free progress.
+
+Keep at least **25 metres of horizontal separation** from undelivered physical
+parts. Enemy deaths in a crowded kill zone use a clear validated site elsewhere;
+if none is available, no drop or cooldown is consumed. Fallback wreckage and
+recycled salvage also wait for clear sites. This prevents localized piles without
+coupling the players' drop timers.
 
 Discovery shows the part's name, disc carrier weight and marker. Native weights
 are 10–50; players must grow their squad through the existing Onion economy.

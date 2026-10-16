@@ -1,8 +1,8 @@
-> Modern 0.3.1 feature preview for the modern/1.5.0 game compatibility line. Ship Repair's in-game validation is pending; see Known limitations.
+> Modern 0.3.2 feature preview for the modern/1.5.0 game compatibility line. Ship Repair's in-game validation is pending; see Known limitations.
 
 # Olimar for Risk of Rain 2
 
-Version 0.3.1 (modern preview). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.3.2 (modern preview). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -28,7 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Olimar-modern-0.3.1-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip **Olimar-modern-0.3.2-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
@@ -198,6 +198,7 @@ The host's config controls the rule, locked at run start:
 ```ini
 [ShipRepair]
 CompetitiveMode = true
+EnemyPartIntervalSeconds = 30
 ```
 
 Set `CompetitiveMode = false` for shared cooperative progress. Competitive is the default.
@@ -209,6 +210,13 @@ There is no lifetime stage cap: stay and farm at the cost of rising difficulty, 
 Undropped guaranteed parts become physical wreckage when the teleporter finishes. Fewer
 parts are needed near completion, so the initial supply can shrink.
 
+Ordinary enemy drops have an independent cooldown for each player: 30 seconds between
+successful drops by default. Another player's kill/drop never starts your timer. The first
+eligible kill can drop immediately, and stage-boss rewards bypass this timer. Kills during
+cooldown do not consume supply or queue later rewards. Your Pikmin/minion kills count as yours.
+New drops stay at least 25 metres from loose parts; a crowded kill spot uses a clear safe
+site elsewhere. Recycled salvage and fallback wreckage also wait for a clear site.
+
 Assign enough Pikmin to haul each new part to **your landed Dolphin**. The carrying majority
 determines the destination; an opponent's nearer ship does not receive your haul. Parts use
 their disc weights (10–50 carriers). The original fitting animations, repair states, lights,
@@ -216,7 +224,7 @@ particles and sounds show your repairs. Internal parts do not add an exterior at
 
 Already have that part? Your Pikmin take it to **your landed Onion** for twice its weight in
 seeds (20–100), split across the three colours. Salvage does not advance the 30-part goal.
-If an active rival still needs it, the part returns to its original map site after five
+If an active rival still needs it, the part returns to its original map site after at least five
 seconds. Its marker says `Onion salvage` for players who have fitted it. Ordinary pellets
 also continue feeding the Onion. In cooperative mode, recovered identities stop spawning.
 

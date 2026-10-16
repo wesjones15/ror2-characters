@@ -1,7 +1,7 @@
 # Ship Repair mode — implementation and validation plan
 
 Status: this is the original milestone plan, with delivery corrected to the
-Dolphin. The 0.3.1 preview implements its first playable scope and supersedes its
+Dolphin. The 0.3.2 preview implements its first playable scope and supersedes its
 original shared-only rules with default competitive racing, duplicate Onion
 salvage and a scalable soft cap; see
 [current implementation and validation](ShipPartMode-Status.md). Follow the
