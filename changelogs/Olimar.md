@@ -2,6 +2,16 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 31 from 0.3.1; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
+## 0.3.2 - 2026-10-15
+
+Ship Repair pacing preview. Native ABI 31 / objective protocol 3; all players need this matching build.
+
+- Add a 30-second cooldown per player between successful ordinary enemy part drops. One player's drop never starts another player's timer. Pikmin/minion kills resolve to their owning player; unattributed kills do not drain the ordinary quota.
+- Expose `[ShipRepair] EnemyPartIntervalSeconds = 30` as a host rule locked at run start. The guaranteed stage-boss reward bypasses the cooldown.
+- Require 25 metres of horizontal separation from existing undelivered physical parts. Crowded kill spots use a clear validated map site; failed placement consumes neither quota nor cooldown. No delayed kill-reward queue builds up.
+- Apply clear-site checks to fallback wreckage and recycled salvage, preventing those paths from making piles too.
+- Add headless tests for independent player gates, exact boundaries, stage resets and sustained four-player kill bursts. Managed build and tests pass; in-game validation remains pending.
+
 ## 0.3.1 - 2026-10-15
 
 Competitive Ship Repair preview. Install both DLLs; all players need ABI 31 / objective protocol 3.

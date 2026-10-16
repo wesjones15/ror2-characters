@@ -1,4 +1,4 @@
-# Ship Repair 0.3.1 preview — implementation and validation
+# Ship Repair 0.3.2 preview — implementation and validation
 
 Branch: `feature/ship-part-mode`, based on `modern/1.5.0` with the 0.2.3 ground-wait
 hotfix retained. Native ABI 31; objective protocol 3. This is a local feature
@@ -21,13 +21,19 @@ preview, not a published release. No game launch or deployment was performed.
   No lifetime stage cap; up to 451 simultaneous tracking records, with consumed
   slots reused for further bonus drops. Teleporter-charge fallback reveals any
   undropped guaranteed physical parts.
+- Independent per-player ordinary drop cooldown, default 30 seconds through
+  `[ShipRepair] EnemyPartIntervalSeconds`, locked at run start. Owning players
+  receive attribution for Pikmin/minion kills. No cooldown-kill queue or quota
+  consumption; the stage-boss reward bypasses the gate. All spawn paths check
+  25-metre horizontal spacing from loose parts, relocating crowded enemy drops
+  to clear safe sites and waiting when a salvage/fallback site is occupied.
 - Original 10–50 carrier weights. Parts are hauled to the nearest reachable
   **owner's landed Dolphin**, chosen by the carrier majority. Ordinary pellets and
   corpses still feed the Onion. Enemy kills never directly award objective progress.
 - Duplicate hauls go to the owner's **landed Onion** for twice the carrier weight
   in seeds, split among the three colours. Salvage does not count toward 30. If an
   active rival still needs the identity, the physical part returns to its original
-  validated map site after five seconds. Each racer can salvage it again.
+  validated map site after at least five seconds once clear. Each racer can salvage it again.
 - Placement waits for the Dolphin's landing and checks paths to its actual intake
   goal. Retries are bounded and spread across frames. Discovery markers, sustained
   jam recovery, void recovery and stage departure warnings are included.
@@ -86,6 +92,9 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
   invalid state and pending/spawned enemy objective records. New race checks cover
   independent duplicate identities, salvage without progress, first winner,
   scaling, near-completion demand, winner packets and recycled map parts.
+- Pacing checks pass for independent players, exact 30-second boundaries,
+  unattributed kills/invalid clock rejection, stage reset and sustained
+  four-player kill bursts without queued rewards.
 - Shared multiplayer and run-audio headless checks pass.
 - Managed Release build succeeds against the installed DLC4 reference assemblies.
   Existing warnings remain: BepInEx reference architecture and unused
@@ -101,6 +110,8 @@ cargo run --offline -p libpikmin-assets --example ship_mode_audit -- assets/ship
    hull grounding, lights, SFX and particles during simultaneous deliveries.
 3. Check two map/one boss/seven-per-player enemy supply, 20% post-quota bonus drops,
    multi-boss single reward, four-player scaling, fallback wreckage,
+   independent player cooldowns/Pikmin kill attribution, crowded kill-zone
+   relocation and blocked salvage/fallback sites,
    discovery markers, 10–50 carrier rings, slopes, gaps, jams and void recovery
    across the installed normal stages. Fewer safe sites should log and remain
    playable without granting progress.
