@@ -2,6 +2,17 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
 
+## 0.2.3 - 2026-10-15
+
+Fixes 0.2.2 and 0.2.2.1, which held Mario still as Commando for 10 seconds after he left the drop pod
+before turning him into Mario. Skip those two.
+
+- The wait for the stage's ground (added in 0.2.2 against falling through a stage whose floor hadn't
+  loaded) took a pod exit for a missing floor, because the body stands slightly sunk into it. It now
+  looks from just above his feet as well, and stops waiting the moment any part of the stage is within
+  2 m of him, so a normal stage start doesn't wait at all.
+- When a stage really has nothing around him yet, it gives up after 5 seconds instead of 10.
+
 ## 0.2.2.1 - 2026-10-15
 
 No change in play. The wait for the stage's ground that 0.2.2 added to Mario now lives in the shared
