@@ -2,6 +2,14 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
 
+## 0.2.3 - 2026-10-15
+
+Fixes 0.2.2.1, whose wait for the stage's ground could hold Olimar still for 10 seconds after he left
+the drop pod. Skip 0.2.2.1.
+
+- The wait now looks from just above his feet as well, stops the moment any part of the stage is within
+  2 m of him, and gives up after 5 seconds instead of 10, so a normal stage start doesn't wait at all.
+
 ## 0.2.2.1 - 2026-10-15
 
 - Olimar now waits for the stage's ground before he is placed, the way Mario does since 0.2.2. A stage's
