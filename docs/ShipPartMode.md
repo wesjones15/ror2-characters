@@ -18,9 +18,10 @@ the teleporter and letting the remaining parts appear on a later stage.
 
 Add **Ship Repair** as a separate mode alongside Classic, Eclipse, and
 Simulacrum, using the game's mode selection flow. Use normal difficulty selection
-and normal stage progression as its foundation. The exact catalog and menu hooks
-need a spike against the installed modern game; a fourth tile is the intended UX,
-not a verified API capability.
+and normal stage progression as its foundation. The installed modern game exposes
+`ContentPack.gameModePrefabs` and `Run.userPickable`; a fourth tile is the intended
+UX. Registration, menu presentation, and network spawning still need an in-game
+spike; the catalog alone does not prove the menu will add a tile automatically.
 
 Suggested description: "The Dolphin is wrecked. Recover 30 unique ship parts
 with your Pikmin to escape. Parts left behind can appear on later stages."
