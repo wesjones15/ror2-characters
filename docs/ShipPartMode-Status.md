@@ -2,7 +2,26 @@
 
 Branch: `feature/ship-part-mode`, based on `modern/1.5.0` with the 0.2.3 ground-wait
 hotfix retained. Native ABI 33; objective protocol 3. This is a local feature
-preview, not a published release. No game launch or deployment was performed.
+preview, not a published release. Local Steam deployment is recorded below;
+in-game validation is still pending.
+
+## Targeting integration and Steam deployment — 2026-10-16
+
+- Integrated Claude's shared targeting fixes from `eecfdee` and `a93b558` into
+  `feature/ship-part-mode`: visibility checks use world geometry only, on-screen
+  targets take priority, and off-screen targeting/cycling remains available.
+- `EnemyLockCheck` passes against the actual shared targeting code: entity hulls
+  do not block lock-on, world walls still do, target selection/cycling respects
+  visibility, and life/team/range/no-camera behavior remains intact.
+- Managed Release build, `ShipRepairCheck`, shared renderer checks and
+  `NativeCheck` pass. Native checks use the Steam installation's existing asset
+  cache, including ship delivery, duplicate salvage, victory PCM and stage music.
+- Deployed Olimar 0.3.4 and matching native ABI 33 to
+  `D:\SteamLibrary\steamapps\common\Risk of Rain 2`. Mario, configuration, asset
+  pointers and spawn audio are preserved. Previous Olimar DLLs and the verified
+  deployment manifest are in `dist/ship-repair-targeting-20261016-214203/`.
+- Select **Ship Repair** in the game-mode menu; the old `ShipPartsMode` config
+  toggle is retired. Co-op players need the same Ship Repair build.
 
 ## Implemented
 
