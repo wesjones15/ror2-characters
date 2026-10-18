@@ -1,4 +1,4 @@
-> Modern 0.2.3 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Mario 0.3.0 and Olimar 0.3.5 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
 
 # RoR2 Characters
 
@@ -8,8 +8,8 @@ Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super
 
 | Character | Release tag | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | `modern-v0.2.3` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | `modern-v0.2.3` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Mario | `modern-mario-v0.3.0` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | `modern-olimar-v0.3.5` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
 
 ## Download
 
@@ -45,3 +45,10 @@ This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or 
 ## For maintainers
 
 Building from source, deploying and publishing releases are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
+
+Olimar 0.3.5 includes **Ship Repair**:
+recover 30 unique parts and carry them to your Dolphin near the teleporter to rebuild
+it. Dolphins relocate after drop-off, and original Pikmin stage music accompanies
+exploration while RoR2 boss music remains active during teleporter fights. See the
+[rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md).
+Its in-game visual and multiplayer validation remains pending.

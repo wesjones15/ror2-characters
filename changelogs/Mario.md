@@ -2,6 +2,18 @@
 
 Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
 
+## 0.3.0 - 2026-10-18
+
+- Lunar coins play Sunshine's actual blue-coin pickup sound (`MSD_SE_SY_BLUE_COIN_GET`)
+  instead of the puzzle-solved chime. The old `Hud.LunarCoinSecret` option is ignored,
+  including in existing configs. `SpawnMusic.Cues` still controls playback.
+- Bound remote Mario replay to four simulation steps per update after a stall while
+  preserving every network frame in order. Reset replay state cleanly on a new stream.
+- Avoid re-decoding the local player's echoed movement frames, reuse static coin
+  geometry and effect materials, and reduce repeated coin and combat scans.
+- Add opt-in ten-second CPU, frame, network backlog and correction diagnostics with
+  `Debug.PerformanceLog`.
+
 ## 0.2.3 - 2026-10-15
 
 Fixes 0.2.2 and 0.2.2.1, which held Mario still as Commando for 10 seconds after he left the drop pod
