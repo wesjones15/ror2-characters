@@ -16,7 +16,7 @@ $sources = Join-Path $PSScriptRoot 'sources'
 if ($Character -eq 'Mario') {
     $native = 'libsms'; $hostRepo = 'ror2-mario'; $plugin = 'MarioTest'; $dll = 'sms.dll'; $abi = 26
 } else {
-    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 29
+    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 35
 }
 $changelog = Get-Content -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Raw
 if ($changelog -notmatch "(?m)^## $([regex]::Escape($Version)) - ") { throw "Add a $Version entry to changelogs/$Character.md first." }
@@ -65,7 +65,7 @@ $relativePaths = @('README.md', 'CHANGELOG.md', "BepInEx/plugins/$plugin/$plugin
 $files = @($relativePaths | ForEach-Object { [ordered]@{ path = $_; sha256 = (Get-FileHash -LiteralPath (Join-Path $package $_) -Algorithm SHA256).Hash.ToLowerInvariant() } })
 $manifest = [ordered]@{
     schema = 1; character = $Character; version = $Version; nativeAbi = $abi
-    channel = 'modern'; sourceBranch = 'modern/1.5.0'; parentCommit = (& git -C $PSScriptRoot rev-parse HEAD)
+    channel = 'modern'; sourceBranch = (& git -C $PSScriptRoot branch --show-current); parentCommit = (& git -C $PSScriptRoot rev-parse HEAD)
     game = 'Risk of Rain 2'; gameVersion = 'DLC4 (2026)'; unity = '2021.3.45f2'; platform = 'win-x64'
     bepinex = '5.4.21.0'; ror2BepInExPack = '1.46.0'; sourceCommits = $commits
     toolchain = [ordered]@{ rust = (& rustc --version); dotnet = (& dotnet --version) }

@@ -1,6 +1,96 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.5 - 2026-10-18
+
+Ship Repair and Onion UI update. Install both DLLs; all players need the same
+Olimar build (native ABI 35, Pikmin network protocol 5).
+
+- Ship Repair keeps its vanilla gameover continuation prompt and player indicators,
+  displays a bubble-box parts/Pikmin/score card, and uses RoR2 text for ordinary UI
+  copy. Location names use Pikmin's disc-extracted bigFont with RoR2 subtitles.
+- The wrecked Dolphin emits its original smoke and electrical effects. Onion takeoff
+  smoke follows the flying Onion along the ground and thins as it climbs.
+- A landed Onion's beam shows direct button-glyph shortcuts: X empties Onion stock
+  except one, Y stores the squad, RB heals Olimar from stock, LB whistles back
+  understaffed carriers, and A sends the Onion plucker.
+- The carry gauge shows carriers above the required count. Shared movement no longer
+  lets grounded Olimar or Pikmin snag a flat floor during collision substeps.
+- Preserve Ship Repair's Olimar-only selection, competitive scoring with end-of-run
+  Pikmin bonuses, and the revised bottom HUD.
+
+Headless native, objective and managed builds pass; in-game visual and multiplayer
+validation remain pending.
+
+## 0.3.4 - 2026-10-16
+
+Teleporter dock and stage soundtrack preview. Install both DLLs; native ABI 33 / objective protocol 3.
+
+- After landing and dropping off Olimar, his Onion and squad, the Dolphin takes off and relocates near the teleporter. It stays landed there for part deliveries. Multiplayer docks reserve at least 14 metres of horizontal spacing and require clear terrain, hull clearance and a carryable route to the actual intake point. If no valid dock exists, retain the safe arrival site.
+- Keep docked Dolphins in place on same-stage respawns. Delay part placement until the arrival relocations finish, so hauling routes target the final docks.
+- Replace Ship Repair's opening sting with looping Impact Site music on stage one. Later stages select a seeded random Pikmin stage song without consecutive repeats; late join uses the same sequence.
+- Nearby RoR2 enemies drive the original Pikmin enemy-proximity music layers. Retain RoR2 teleporter boss music, pause the Pikmin song during that fight, and resume afterward. Other modes keep their soundtrack.
+- Add local `ShipRepair.StageMusic`, `AdaptiveStageMusic` and `StageMusicVolume` settings. Music uses an independent native stream and RoR2 music/master volume, with pause and teardown support. Missing music assets/output retain RoR2 music.
+- Verify all five extracted stage songs produce finite audible PCM, enemy proximity changes the original mix, the native music ABI accepts pause/stop and rejects invalid songs, and seeded policy yields to bosses/victory/other modes.
+
+Automated checks and Release builds pass. Flight paths, multiplayer dock placement, in-game mix balance and boss-track transitions still need manual playtesting.
+
+## 0.3.3 - 2026-10-15
+
+Ship-part pickup guard preview. Install both DLLs together; native ABI 32 / objective protocol 3.
+
+- Expose explicit ship-part classification to the host. Flying/following Onions ignore all ship parts when choosing automatic pickup targets, including loose duplicates and parts in any carry/suction state.
+- Keep native ground-vacuum rejection as a second guard. Ship parts enter an Onion only through the normal Pikmin carry handoff targeting that Onion, such as intentional competitive salvage.
+- Add regression checks for loose new/duplicate parts, teams targeting a Dolphin or Onion, all delivery policies, raw native classification and managed automatic-pickup filtering. Verify actual deliberate salvage still completes once.
+- Document existing Pikmin regeneration: living assigned Pikmin inherit Olimar's percentage regeneration with `Items.MinionHealScale` (default 0.5), and receive healing from nearby wards. Direct healing of Olimar is not copied to them.
+
+Build/headless checks pass; in-game validation remains pending.
+
+## 0.3.2 - 2026-10-15
+
+Ship Repair pacing preview. Native ABI 31 / objective protocol 3; all players need this matching build.
+
+- Add a 30-second cooldown per player between successful ordinary enemy part drops. One player's drop never starts another player's timer. Pikmin/minion kills resolve to their owning player; unattributed kills do not drain the ordinary quota.
+- Expose `[ShipRepair] EnemyPartIntervalSeconds = 30` as a host rule locked at run start. The guaranteed stage-boss reward bypasses the cooldown.
+- Require 25 metres of horizontal separation from existing undelivered physical parts. Crowded kill spots use a clear validated map site; failed placement consumes neither quota nor cooldown. No delayed kill-reward queue builds up.
+- Apply clear-site checks to fallback wreckage and recycled salvage, preventing those paths from making piles too.
+- Add headless tests for independent player gates, exact boundaries, stage resets and sustained four-player kill bursts. Managed build and tests pass; in-game validation remains pending.
+
+## 0.3.1 - 2026-10-15
+
+Competitive Ship Repair preview. Install both DLLs; all players need ABI 31 / objective protocol 3.
+In-game validation remains pending.
+
+- Add `[ShipRepair] CompetitiveMode = true` as a host-owned rule locked at run start. Each player repairs their own Dolphin; first to 30 unique parts wins. Set false for shared cooperative repair.
+- Carry teams use their captain's Dolphin, regardless of opponents' nearer ships. Part identities can recur for players who still need them. HUD and results show each racer's progress and the winner.
+- Duplicate parts go to the carrier owner's landed Onion for twice their weight in seeds (20–100), split across the three colours. Salvage never advances the 30-part goal. If a rival still needs the part, it returns to its original map site after five seconds.
+- Start with up to two shared map parts, one guaranteed stage-boss part, and seven other powerful-enemy drops per player (seven per team in cooperative mode). Stage bosses have a separate one-part quota across their group.
+- After the ordinary enemy quota, powerful enemies have a 20% bonus-drop chance with no lifetime stage cap. Consumed tracking slots can be reused. Leaving for another stage remains optional.
+- Add headless coverage for independent progress, secured winners, salvage, player-count scaling, replicated race state, and physical native hauling to the correct Dolphin/Onion.
+
+## 0.3.0 - 2026-10-15
+
+Feature preview on `feature/ship-part-mode`; automated checks pass, in-game validation pending.
+Install both DLLs together. All co-op participants need this preview and their own extracted assets.
+
+- Add Ship Repair mode to the solo extra-mode menu and multiplayer mode picker. All players choose Olimar; artifacts must be off.
+- Start with a wrecked Dolphin. Recover 30 unique parts as a team; each stage offers up to seven ground parts and three powerful-enemy drops. Missed parts may return on later stages.
+- Pikmin carry parts to a landed Dolphin. Use original disc weights, part models, fitting motions, progressive hull repairs, lights, sounds and particles. Every player's Dolphin reflects the shared recovered set.
+- Repeat arrival on each stage, retaining the arrival music sting only on stage one. Restore fitted parts without replaying deliveries.
+- Add reachable ground navigation, discovery markers, stuck-part recovery, repair timer, departure warnings and results summaries alongside the normal RoR2 report.
+- At 30 deliveries, secure victory, play the complete-ending farewell music and original Pikmin/Olimar celebration motions, then launch the Dolphin. Preserve the music through results.
+- Retire the old `Dolphin.ShipPartsMode` placeholder. Classic, Eclipse and Simulacrum retain normal objectives and a repaired Dolphin.
+
+See [validation status](../docs/ShipPartMode-Status.md) for checks and the manual playtest checklist.
+
+## 0.2.3 - 2026-10-15
+
+Fixes 0.2.2.1, whose wait for the stage's ground could hold Olimar still for 10 seconds after he left
+the drop pod. Skip 0.2.2.1.
+
+- The wait now looks from just above his feet as well, stops the moment any part of the stage is within
+  2 m of him, and gives up after 5 seconds instead of 10, so a normal stage start doesn't wait at all.
 
 ## 0.2.3 - 2026-10-15
 
