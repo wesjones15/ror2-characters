@@ -143,6 +143,7 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 | `Shine.Seconds` | 6.3 | seconds from the pose to the stage ending |
 | `Shine.Camera` | on | fly the camera along Sunshine's Shine Get path |
 | `Hud.LunarCoinBlueCoin` | on | lunar coins in the world show as Sunshine's blue coin (for you alone) |
+| `Hud.SunshineLayout` | on | Sunshine-style life meter, health numbers, FLUDD, items and cooldown placement |
 | `Hud.CoinCounters` | on | Sunshine's coin counters in place of RoR2's gold and lunar coins |
 | `Hud.CoinX`, `Hud.CoinY`, `Hud.CoinScale` | -1, -1, 0.4 | where the counters sit (negative: where RoR2's own are) and their size |
 | `Coins.Gold` | 1 | RoR2 gold each yellow coin is worth |

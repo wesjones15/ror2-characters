@@ -4,6 +4,11 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 ## 0.3.0 - 2026-10-18
 
+- Restore Sunshine's HUD layout: the larger Shine health meter and smaller RoR2
+  damage-font health numbers, FLUDD in the corner, coin-counter paint backplates,
+  and RoR2 items and cooldowns in their adjusted positions. `Hud.SunshineLayout`
+  controls the arrangement.
+- Remove the red game-over layer immediately before the black screen fades.
 - Lunar coins play Sunshine's actual blue-coin pickup sound (`MSD_SE_SY_BLUE_COIN_GET`)
   instead of the puzzle-solved chime. The old `Hud.LunarCoinSecret` option is ignored,
   including in existing configs. `SpawnMusic.Cues` still controls playback.
