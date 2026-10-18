@@ -1,6 +1,27 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 33 from 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+## 0.3.5 - 2026-10-18
+
+Ship Repair and Onion UI update. Install both DLLs; all players need the same
+Olimar build (native ABI 35, Pikmin network protocol 5).
+
+- Ship Repair keeps its vanilla gameover continuation prompt and player indicators,
+  displays a bubble-box parts/Pikmin/score card, and uses RoR2 text for ordinary UI
+  copy. Location names use Pikmin's disc-extracted bigFont with RoR2 subtitles.
+- The wrecked Dolphin emits its original smoke and electrical effects. Onion takeoff
+  smoke follows the flying Onion along the ground and thins as it climbs.
+- A landed Onion's beam shows direct button-glyph shortcuts: X empties Onion stock
+  except one, Y stores the squad, RB heals Olimar from stock, LB whistles back
+  understaffed carriers, and A sends the Onion plucker.
+- The carry gauge shows carriers above the required count. Shared movement no longer
+  lets grounded Olimar or Pikmin snag a flat floor during collision substeps.
+- Preserve Ship Repair's Olimar-only selection, competitive scoring with end-of-run
+  Pikmin bonuses, and the revised bottom HUD.
+
+Headless native, objective and managed builds pass; in-game visual and multiplayer
+validation remain pending.
 
 ## 0.3.4 - 2026-10-16
 
