@@ -16,7 +16,7 @@ $sources = Join-Path $PSScriptRoot 'sources'
 if ($Character -eq 'Mario') {
     $native = 'libsms'; $hostRepo = 'ror2-mario'; $plugin = 'MarioTest'; $dll = 'sms.dll'; $abi = 26
 } else {
-    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 33
+    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 35
 }
 $changelog = Get-Content -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Raw
 if ($changelog -notmatch "(?m)^## $([regex]::Escape($Version)) - ") { throw "Add a $Version entry to changelogs/$Character.md first." }
