@@ -14,9 +14,9 @@ function Invoke-Checked([string]$Program, [string[]]$Arguments) {
 $RoR2Dir = (Resolve-Path -LiteralPath $RoR2Dir).Path
 $sources = Join-Path $PSScriptRoot 'sources'
 if ($Character -eq 'Mario') {
-    $native = 'libsms'; $hostRepo = 'ror2-mario'; $plugin = 'MarioTest'; $dll = 'sms.dll'; $abi = 26
+    $native = 'libsms'; $hostRepo = 'ror2-mario'; $plugin = 'MarioTest'; $dll = 'sms.dll'; $abi = 28
 } else {
-    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 35
+    $native = 'libpikmin'; $hostRepo = 'ror2-olimar'; $plugin = 'OlimarTest'; $dll = 'pikmin.dll'; $abi = 37
 }
 $changelog = Get-Content -LiteralPath (Join-Path $PSScriptRoot "changelogs/$Character.md") -Raw
 if ($changelog -notmatch "(?m)^## $([regex]::Escape($Version)) - ") { throw "Add a $Version entry to changelogs/$Character.md first." }
