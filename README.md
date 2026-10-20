@@ -1,19 +1,20 @@
-> Mario 0.3.0 and Olimar 0.3.5 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Mario 0.3.7, Olimar 0.3.14 and Melee 0.3.0 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
 
 # RoR2 Characters
 
-Mario and Olimar as playable survivors in **Risk of Rain 2**. Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin. Each character is a separate BepInEx mod. Both start at 0.1.0 in each compatibility line: modern and legacy.
+Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin; and the Melee mod adds eight Super Smash Bros. Melee fighters (Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong). Each is a separate BepInEx mod and can be installed with the others.
 
-**Offline and friends-only co-op only.**
+**Offline and friends-only co-op only** (Melee is single-player and host-only).
 
-| Character | Release tag | Guide (install, controls) | Changelog |
+| Mod | Version | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | `modern-mario-v0.3.0` | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | `modern-olimar-v0.3.5` | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Mario | 0.3.7 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | 0.3.14 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Melee | 0.3.0 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
 
 ## Download
 
-Get the character ZIP from the [releases page](https://github.com/wesjones15/ror2-characters/releases). Pick the release by its character tag (`mario-v…` or `olimar-v…`): GitHub's single repository-wide Latest label does not identify the latest release of both characters. Each ZIP contains a README with the full guide, a changelog and a checksum manifest, and the `BepInEx` folder to install. Both characters can be installed together.
+Get the ZIP from the [releases page](https://github.com/wesjones15/ror2-characters/releases). A release holds all three mods, each in its own folder under `BepInEx/plugins`, plus `README.md` (install and what's new), `CHANGELOG.md`, the guides in `docs/`, and `release.json` with the SHA-256 of every file and the source commits it was built from. The latest release is the one marked Latest; earlier ones (such as the per-character `modern-mario-v0.3.0` releases and the hotfix releases) stay available.
 
 ## Requirements
 
@@ -24,31 +25,26 @@ Get the character ZIP from the [releases page](https://github.com/wesjones15/ror
 | RoR2BepInExPack | **1.46.0** |
 | Mario: a Super Mario Sunshine disc image | your own `.iso`, `.gcm` or `.ciso` (any region) |
 | Olimar: a Pikmin disc image | your own `.iso`, `.gcm` or `.ciso` |
+| Melee: a Super Smash Bros. Melee disc image | your own NTSC-U revision 2 (`GALE01`) `.iso`, `.gcm` or `.ciso` |
 
 Other game builds are not supported. VR is not supported in these releases.
 
 ## Install
 
 1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0 into Risk of Rain 2 DLC4 (2026).
-2. Unzip the character release and copy its `BepInEx` folder into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy it into the active profile folder instead.
+2. Unzip the release and copy the folders you want from its `BepInEx/plugins` into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy them into the active profile folder instead.
+3. Launch the game once, set `Paths.Disc` in each mod's config file to your own disc image, and launch again.
 
-3. Launch the game once, set `Paths.Disc` in the character's config file to your own disc image, and launch again.
-
-The character's README in the ZIP has the details, controls and troubleshooting.
+Each mod's guide has the details, controls and troubleshooting. **Upgrading from Samus 0.2.x:** Melee replaces it; delete `BepInEx/plugins/MeleeSamus` first (see the Melee guide).
 
 ## Your disc, not ours
 
-Both mods extract their models, textures and audio from **your own GameCube disc image** on first launch. The ZIPs contain no disc images, extracted game assets, generated music, game DLLs or dependency DLLs; only the two mod DLLs, the documentation and a manifest. Please don't share extracted assets.
+The mods extract their models, textures and audio from **your own GameCube disc images** on first launch. The ZIPs contain no disc images, extracted game assets, generated music, game DLLs or dependency DLLs; only the mod DLLs, the documentation and a manifest. Please don't share extracted assets.
 
-This is an unofficial fan project, not affiliated with Nintendo, Hopoo Games or Gearbox.
+This is an unofficial fan project, not affiliated with Nintendo, HAL Laboratory, Hopoo Games or Gearbox.
 
 ## For maintainers
 
-Building from source, deploying and publishing releases are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
+Building from source and publishing a release are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
 
-Olimar 0.3.5 includes **Ship Repair**:
-recover 30 unique parts and carry them to your Dolphin near the teleporter to rebuild
-it. Dolphins relocate after drop-off, and original Pikmin stage music accompanies
-exploration while RoR2 boss music remains active during teleporter fights. See the
-[rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md).
-Its in-game visual and multiplayer validation remains pending.
+Olimar includes **Ship Repair**: recover 30 unique parts and carry them to your Dolphin near the teleporter to rebuild it (Mario can play it too, carrying parts by hand). See the [rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md). Its in-game visual and multiplayer validation remains pending.

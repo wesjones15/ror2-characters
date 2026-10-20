@@ -1,8 +1,8 @@
-> Modern 0.3.0 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
+> Modern 0.3.7 for the modern/1.5.0 game compatibility branch. See Known limitations for remaining manual validation.
 
 # Mario for Risk of Rain 2
 
-Version 0.3.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.3.7 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -27,7 +27,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Mario. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip **Mario-modern-0.3.0-win-x64.zip**. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip the release ZIP (**release-20261020.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Super Mario Sunshine ISO beside the two character DLLs**, directly in `BepInEx/plugins/MarioTest/`:
 
    ```text
@@ -48,7 +48,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Super Mario Sunshine.iso
    ```
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 26.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 29.
 
 ## First run
 
@@ -201,13 +201,27 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 - **Falling off the map** plays "TOO BAD!" and its jingle as soon as Mario is 20 m below where
   he last stood with no ground under him for a long way (`Hud.TooBadDrop`), and he is put back
   where he last stood, unhurt, a little later, when the stage's kill zone takes him (or he is
-  150 m down). He cannot be hurt while the screen is black. A long drop onto lower ground, as on
+  150 m down). Leaving the map through the top puts him back without the "TOO BAD!" screen. He cannot be hurt while the screen is black. A long drop onto lower ground, as on
   a tall stage, is not a fall off the map.
 - **Walls**: if the sim lets him through a wall (a hit's knock-back against one, a corner), he is
   put back where he stood (`Mario put back` in the log).
 - **Unstuck**: if Mario stays wedged in place for three seconds while fallen, sliding or
   falling, he is moved to safe ground (`Mario unstuck after 3 seconds` in the log).
-- **Character select**: Mario jumps on the spot with a "wahoo".
+- **Corkscrew** (a full stick circle in the air): in a plain dive it is a corkscrew at the dive's own speed, once per
+  dive. With the Turbo held in any jump the circle is the Turbo corkscrew, which flies 1.25 s at its own held speed,
+  glides and steers, and keeps its height for as long as you keep circling (up to 6 s) before it dives. It throws the
+  wet slide's spray, and the dive lands as a wet slide. After 4 seconds of circling it is in flames and its one hit is
+  the super blow, `Damage.SuperCorkscrew` (2000%), which bonks Mario over and costs him `Damage.SuperCorkscrewRecoil`
+  (4% of max health). A burning corkscrew lands in a blazing slide that keeps its speed and fire for 2 s and hits as a
+  corkscrew (`Damage.Corkscrew`, 700%).
+- **Rocket spin**: a stick circle during the Rocket's climb doubles the climb and sets the spin burning while it rises;
+  each enemy above Mario takes `Damage.RocketSpin` (1000%).
+- **Ship Repair**: with the Olimar plugin from this release installed and its Ship Repair mode chosen, Mario gets a
+  Dolphin landed at the teleporter. B next to a ship part picks it up the way Sunshine picks things up, and he carries
+  it in front of him; he puts it down or throws it with Sunshine's own put and throw, and a part that lands in the
+  Dolphin's receiver is delivered. Without the Olimar plugin there is no Ship Repair, and Mario plays as before.
+- **Pause menu**: a window beside RoR2's pause menu lists Mario's controls for the pad and for keyboard and mouse.
+- **Character select**: Mario jumps on the spot with a "wahoo", turned a little toward you.
 - **Arrival**: about 2.5 seconds of Delfino Plaza play once per run as he leaves the pod.
 
 ## Configuration
@@ -220,7 +234,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 26`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 29`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check

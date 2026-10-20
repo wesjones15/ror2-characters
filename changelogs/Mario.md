@@ -1,6 +1,73 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 26.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+
+Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.3.7 - 2026-10-20
+
+Ship Repair, a reworked corkscrew and the pause-menu controls window. Install both DLLs (`MarioTest.dll`, `sms.dll`, native ABI 29).
+
+- **Mario plays Ship Repair.** When the Olimar plugin (this release) runs the mode, Mario gets a Dolphin
+  landed at the teleporter and can carry its ship parts: B next to a part picks it up with Sunshine's own
+  grab, carry pose and lift sound; the part is held in front of him; putting it down or throwing it
+  into the Dolphin's receiver hands it back to the mode. The two plugins meet through the Olimar plugin's
+  `ShipRepairApi` by reflection, so Mario still runs without Olimar installed (and then has no Ship Repair).
+- **Corkscrew rework.** A stick circle in a plain dive is a corkscrew at the dive's own speed, once per dive. A circle
+  with the Turbo held in any jump is the Turbo corkscrew: it flies 1.25 s at its own held speed past the dive's cap,
+  glides and steers, and the Turbo sprays nothing in a spin. It keeps its height for as long as the stick keeps
+  circling (up to 6 s), then dives. The spin and the dive throw the wet slide's spray, the drawn body is tipped and
+  rolled with the spin swirl, and there is one spin call-out and then quiet.
+- **Super corkscrew.** After 4 seconds a corkscrew is in flames, and its one hit is the super blow: `Damage.SuperCorkscrew`
+  (20, i.e. 2000%) at the cost of `Damage.SuperCorkscrewRecoil` (4% of max health) when it bonks Mario over. A burning
+  corkscrew lands in a blazing slide that keeps its flight speed and fire for 2 s and hits as a corkscrew (700%), then
+  becomes the plain wet slide.
+- **Rocket spin.** A stick circle during the Rocket's climb doubles the climb and sets the spin burning while it rises;
+  each enemy above Mario takes `Damage.RocketSpin` (10, i.e. 1000%).
+- Going out through the top of the map puts Mario back without the TOO BAD screen.
+- Mario's controls are listed in the window beside RoR2's pause menu, and his portrait in the character select is turned
+  45 degrees and a little closer, head kept in frame.
+- Cheaper in play: the replay of other players' Marios is bounded after a stall and allocates less, and
+  poses and rendering avoid per-frame allocations and hidden geometry work.
+
+Headless native, boundary and host checks pass. None of this was played in game before release.
+
+## 0.3.6 - 2026-10-18
+
+- The Turbo corkscrew dive (a full stick circle out of a Turbo dash jump) plays the spin jump's pose laid flat, head first,
+  spinning along his length for two turns before the plain dive. It adds a dive's speed on top of the Turbo's and hits enemies
+  for `Damage.Corkscrew` (700% by default) with a harder shove.
+- The rocket or hover is spent for the whole jump: spinning out of it no longer gives a second use before he lands.
+- Falling off the map ("TOO BAD" and the far-drop rescue) only counts below the stage's lowest ground. The stage's own
+  out-of-bounds zones and the under-map recovery are unchanged.
+- A body that never stood safely since it was placed (a crash pod that landed on a scene object and put it under the map)
+  returns to the nearest player spawn point after 5 seconds of falling or inside an out-of-bounds zone.
+
+## 0.3.5 - 2026-10-18
+
+Mario's multiplayer frame format changed: an older Mario and this one ignore each other's frames.
+
+- Health is 160 + 48 per level by default (was Commando's 110 + 33); `Body.MaxHealth` and `Body.HealthPerLevel` change it.
+- A hit or a wall no longer takes him out of a ground pound (the hit still counts).
+- A full stick circle spins him out of a rocket nozzle's thrust and climb, out of a Turbo dash once the spray is let go, and
+  in any fall. The spray he still holds does not start the rocket again.
+- The stick turns him in the rocket's thrust and in the climb after it, instead of only pushing him along his facing.
+- A full stick circle out of a Turbo dash jump is a corkscrew dive: thrown forward head first, rolling two full turns about its
+  length, then the plain dive.
+- Other players' Marios replay with the wet-ground state their own machine used, so a friend's wet slide is not shown as
+  fast running (for example to a dead spectator).
+
+## 0.3.3 - 2026-10-18
+
+Includes 0.3.2 (0.3.4 was never published).
+
+- RoR2's pause menu stops Mario's sounds where they are.
+- The replay of other players' Marios is time-budgeted instead of capped at four steps per frame, which was the client lag
+  and drift. Marios slide on each other's wet spots and pick up each other's coins, and Backup Magazine starts with its charge.
+
+## 0.3.1 - 2026-10-18
+
+- The coin-counter and full-pressure Spray changes from the 2026-10-18 test build (`quick-20261018-animated-effects`).
 
 ## 0.3.0 - 2026-10-18
 
