@@ -1,6 +1,92 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 41 from 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+
+Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.3.14 - 2026-10-20
+
+Ship Repair for Mario, Pikmin enemies, the pause-menu controls window and fixes. Install both DLLs
+(`OlimarTest.dll`, `pikmin.dll`; native ABI 41, Pikmin network protocol 5). Versions 0.3.12 and 0.3.13 were never
+published; their changes are included here.
+
+**Ship Repair**
+- Guest characters can play Ship Repair. The new `ShipRepairApi` lands a Dolphin at the teleporter for each guest
+  (Mario, from this release) and lets them hold, put and throw parts into its receiver; it is server-run, with
+  messages from clients. A guest's Dolphin waits beside them.
+- The Dolphin cannot fly to the teleporter until the Main Engine is fitted. Until then the engine lies near every player
+  when a stage opens (one for the crew when shared).
+- **Pikmin enemies.** Dwarf Bulborbs (common) and Spotty Bulborbs (rare, big) appear as monster bodies drawn from your
+  disc, with director cards. Their corpses become pellets from the disc's own config, and a big one always drops a part for
+  its killer. The `Enemies` config section sets `Enabled`, `SmallWeight` (6), `BigWeight` (2), `SmallCost` (25),
+  `BigCost` (250), `BigMinStagesCleared` (0), `HealthScale` (1), `SpeedScale` (1.5), `DamageScale` (1) and
+  `CorpseCarrierScale` (1).
+- Hand delivery reaches 100 units (4 m), so a character carrying a part by hand can put it into a ship from a little away.
+
+**Olimar and the squad**
+- Fixed the stutter step in Olimar's run, a regression of 0.3.8's timed body smoothing: frames were drawn past the newest
+  sim step for part of every tick and then jumped.
+- The Onion's ally card has its own portrait on the back. A dormant Onion has no body to target.
+- When an Olimar dies with a friend alive, his Onion sleeps and his Pikmin join the friend or walk home first.
+  Olimar is invincible while plucking.
+- Retired Pikmin slots are reused and replica rendering does less work; the pose budget is enforced natively (ABI 38).
+- Adaptive culling applies only to the world's Pikmin view, not the lobby Olimar and his portrait; it could skip re-posing
+  them while the game was slow to load.
+
+**Interface**
+- Olimar's controls are listed in the window beside RoR2's pause menu; his bottom HUD, carry gauges and Ship Repair HUD
+  are hidden while the pause menu is up.
+- His portrait in the character select is turned 45 degrees and a little closer, head kept in frame.
+
+Headless native, objective and managed checks pass. None of this was played in game before release.
+
+## 0.3.11 - 2026-10-18
+
+- Falling off the map and the under-the-map recovery are the same shared code as Mario 0.3.6: a fall only counts below the
+  stage's lowest ground, and a body that never stood safely since it was placed returns to the nearest player spawn point
+  after 5 seconds of falling or inside an out-of-bounds zone.
+
+## 0.3.10 - 2026-10-18
+
+- Ship Repair panels are drawn under the text on the same canvas: the lobby description, leaderboard names and results are
+  readable again. Artifacts are allowed in Ship Repair. A Classic run no longer shows the last Ship Repair run's results.
+- RoR2's level text and experience bar are hidden with its health bar under the Pikmin row (`Look.HideRoR2HealthBar`).
+- Each throw restarts Olimar's throw animation, so rapid lock-on throws animate. Locked on, any Pikmin following him can be
+  thrown, however far.
+- A hovering Onion's beam stretches down to the ground below it.
+
+## 0.3.9 - 2026-10-18
+
+Older Olimar builds refuse to connect to this one.
+
+- Ship Repair in multiplayer: the host's objective message was 1103 bytes, over the 1100-byte limit, so it was never delivered
+  and clients saw no parts. It is now compact.
+- Ship Repair puts ten parts on the map each stage (was two), on top of the stage boss's part and enemy drops. Placement tries
+  harder, and any enemy has a 4% chance of dropping one (still limited by the per-player drop interval).
+- The Ship Repair leaderboard sits below RoR2's objective list instead of covering its text.
+- Olimar can no longer fall forever: 8 seconds airborne and 40 m or more below his last footing brings him back with his squad.
+- Other players' Pikmin sounds now come from where those Pikmin are; their personal sounds are no longer played in your ears.
+- Pikmin whistled off a pellet they cannot lift are not auto-carried back to it for 30 seconds.
+- Each throw restarts Olimar's throw animation. A hovering Onion's beam stretches down to the ground below it.
+- Weak machines: far or off-screen Pikmin are re-posed less often, only while the game runs under about 28 fps. A run's slow
+  stretches are logged automatically; `Debug.PerformanceLog` still logs every 10 s.
+- New `Input.StickDeadzone` (default 0, no change): raise to 0.2-0.3 if a worn stick drifts Olimar or his aim.
+
+## 0.3.8 - 2026-10-18
+
+- A client's own Olimar no longer stutters when running: his body is drawn by sim time, so it keeps gliding through the
+  frames between physics steps and through several sim ticks that land between two drawn frames on a slow machine.
+- Cheaper on weak machines: no per-frame scene searches for drivers, and enemies are gathered only on steps where the sim ticks.
+  RoR2's pause menu now stops the Pikmin's sounds. New opt-in `Debug.PerformanceLog` (fps, worst frame, CPU ms per part, ticks
+  per step).
+
+## 0.3.7 - 2026-10-18
+
+- Jump-pad launches make Pikmin cry as when thrown, and the squad repeats one throw and follows Olimar after landing instead
+  of walking back to the pad.
+- The Onion popup is one small panel on the right with its text on top (no more dimmed glyphs).
+- RoR2's health bar is hidden under the Pikmin HUD row (`Look.HideRoR2HealthBar`).
+- A flying Onion lands its beam on the ground to collect pellets.
 
 ## 0.3.5 - 2026-10-18
 

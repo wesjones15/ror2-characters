@@ -13,42 +13,54 @@ cd ror2-characters
 
 The five Git submodules under `sources/` pin the exact source commits used together. To initialize an existing checkout, run `git submodule update --init --recursive`. To update a component, check out its desired commit and commit the updated submodule pointer here. Releases record the source commits and SHA-256 hashes in `release.json`.
 
-## Build a character
+## Build the mods
 
-Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.1`. The build uses your local RoR2 DLC4 (2026) installation and its BepInEx 5.4.21.0 reference assemblies. Install the runtime requirements in the character guide first. Players using release ZIPs do not need these build tools.
+Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.1`. The build uses your local RoR2 DLC4 (2026) installation and its BepInEx 5.4.21.0 reference assemblies (the workspace copy `2026 Mod Stuff\RiskOfRain2_DLC4` by default). Building needs no Nintendo disc or extracted assets and does not install into a live game folder.
 
-For the local DLC4 loader, install the RoR2BepInExPack files together under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Its preloader deletes the obsolete exact folder `BepInEx/plugins/RoR2BepInExPack` at startup, including any dependencies stored there. Keep `Newtonsoft.Json.dll`, `GameAssetPaths.bin`, and `lrapi_returns.json` with the pack DLL. Verify the startup log actually loads the pack and both characters; file presence before launch alone does not prove the loader keeps them.
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\build.ps1 -Character Mario -Version 0.2.3 -RoR2Dir "D:\Games\Risk of Rain 2"
-powershell -ExecutionPolicy Bypass -File .\build.ps1 -Character Olimar -Version 0.2.3 -RoR2Dir "D:\Games\Risk of Rain 2"
-```
-
-Outputs are `dist/Mario-modern-0.2.3-win-x64.zip` and `dist/Olimar-modern-0.2.3-win-x64.zip`, with unpacked copies alongside them. Building requires no Nintendo disc or extracted assets and does not install into the game. Update the character's versioned changelog before building a new version. The script refuses dirty or unpinned source checkouts and verifies the documented plugin/ABI versions against the source.
-
-## Deploy one or both
-
-A user unzips a release and copies its `BepInEx` folder into the game folder. To do the same from the unpacked packages:
+Work happens in the source repositories next to this one, on `modern/1.5.0` (Melee: `main`). Each has its own build script:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\deploy.ps1 -InstallDir "D:\Games\Risk of Rain 2" -MarioPackage .\dist\Mario-modern-0.2.3-win-x64 -OlimarPackage .\dist\Olimar-modern-0.2.3-win-x64
+# Mario: builds sms.dll and MarioTest.dll into ror2-mario\dist\MarioTest
+powershell -ExecutionPolicy Bypass -File ..\ror2-mario\build.ps1 -NoInstall
+# Olimar: builds pikmin.dll and OlimarTest.dll into ror2-olimar\dist\OlimarTest
+powershell -ExecutionPolicy Bypass -File ..\ror2-olimar\build.ps1 -NoInstall
+# Melee: runs the libssbm tests and the C# checks, builds Samus.dll and ssbm.dll, and with -Deploy stages them
+powershell -ExecutionPolicy Bypass -File ..\ror2-samus\build.ps1 -Deploy
 ```
 
-Use `-WhatIf` to preview installation. Deployment copies the selected packages' `BepInEx` folders into the game's, and so only their two DLLs. It preserves your existing configuration, assets, ISO, and other mods. For a mod manager, use the active profile folder containing `BepInEx` as `-InstallDir` and launch through that profile. The target game must still be DLC4 (2026).
+`-Deploy` (and Olimar's default install) stage the DLLs under the workspace's `target\BepInEx\plugins\<Plugin>\`; copy them from there into the game by hand. Nothing is ever deployed into a live game folder.
 
-## Publish the compatibility line
+Run each library's tests before a release: `cargo test --workspace --offline --no-fail-fast` in `libsms`, `libpikmin` and `libssbm`, and the check projects under `ror2-common\tests`, `ror2-mario\tests` and `ror2-olimar\tests` (`dotnet run --project <dir> -c Release`). Some extractor tests write to `%TEMP%`; if that location is read-only for your shell, set `TEMP` and `TMP` to a folder inside the repository first.
 
-Push the pinned source commits and this repository first, then:
+## Prepare a release
+
+Releases are made on GitHub directly, from the release worktree of this repository (`release-worktrees\modern\ror2-characters` on `modern/1.5.0`).
+
+1. Bump each plugin's `BepInPlugin` version in its repository (`ror2-mario\MarioTest\Plugin.cs`, `ror2-olimar\OlimarTest\Plugin.cs`, `ror2-samus\Samus\Plugin.cs`) and commit. Every source repository must be clean and committed.
+2. Add the new version's entry to `changelogs\Mario.md`, `Olimar.md` and `Melee.md`. An entry lists only what changed since that mod's previous published version.
+3. Update the guides in `docs\` and the table in `README.md`, and write the release notes in `releases\<tag>.md` (they become the package's `README.md` and the release body).
+4. Build everything as above, then package:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\publish-line.ps1 -Channel modern -Version 0.2.3
+powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-20261020 -NotesFile .\releases\release-20261020.md
 ```
 
-Publishing requires an authenticated GitHub CLI, a clean committed parent repository, and matching current builds. It verifies both packages, their hashes, all five source pins and the remote compatibility branches. The combined release includes both ZIPs, guides, changelogs, checksums and source manifests. Existing tags/releases are never overwritten.
+This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). It works in Windows PowerShell 5.1 and never pushes or publishes.
 
-Both characters start at version 0.1.0 in each game compatibility line. Modern source branches
-are modern/1.5.0; legacy branches are legacy/1.2.4.4. The combined release tags are modern-v0.1.0
-and legacy-v0.1.0. A tag pins the parent commit, which pins all five source submodules. The release
-also attaches the exact source-commit manifest. Branch names express game compatibility, not
-character mod versions. deploy.ps1 copies the packages' BepInEx folders (install.ps1 was dropped in 0.2.1).
-Use publish-line.ps1 -ValidateOnly to check both packages before publishing.
+5. Pin the sources in this repository (`git -C sources/<name> fetch ..\..\<name> modern/1.5.0`, check out the released commit, `git add sources`), and commit the docs and pins.
+
+## Publish
+
+Publishing is a deliberate, separate step. Push the source repositories (`ror2-common`, `ror2-mario`, `ror2-olimar`, `libsms`, `libpikmin`, and `ror2-samus` / `libssbm` for Melee) and this repository's `modern/1.5.0`, then:
+
+```powershell
+gh release create release-20261020 .\release-20261020.zip .\release-20261020.zip.sha256 --repo wesjones15/ror2-characters --target modern/1.5.0 --title "Mario 0.3.7, Olimar 0.3.14, Melee 0.3.0 (RoR2 DLC4 (2026))" --notes-file releases\release-20261020.md
+```
+
+Add `--draft` to look at it on GitHub first. Existing tags and releases are never overwritten.
+
+Branch names express game compatibility, not mod versions: modern source branches are `modern/1.5.0`; legacy branches are `legacy/1.2.4.4`, frozen at 0.1.0.
+
+## Older scripts
+
+`build.ps1`, `deploy.ps1`, `publish.ps1` and `publish-line.ps1` in this repository are the first release flow (per-character ZIPs under `dist\`, one tag per character). They are not used for current releases and are kept for the 0.1.0 to 0.3.x history.
