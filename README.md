@@ -10,7 +10,7 @@ Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's mo
 | --- | --- | --- | --- |
 | Mario | 0.3.7 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
 | Olimar | 0.3.14 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
-| Melee | 0.3.0 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
+| Melee (Samus, Fox, Luigi; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not ready) | 0.3.0 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
 
 ## Download
 
