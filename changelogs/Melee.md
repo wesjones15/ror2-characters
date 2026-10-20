@@ -7,8 +7,9 @@ Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin wi
 ## 0.3.0 - 2026-10-20
 
 A single **Melee** plugin with eight survivors. Install `Samus.dll` and `ssbm.dll` (native ABI 5) from one ZIP.
-Only Samus had been played in game before this release; the seven new fighters are covered by headless tests against the
-disc and native-boundary checks, not by a playtest.
+**Samus, Fox and Luigi are the most complete. Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: not
+complete and not ready.** Their attacks still need to be finished and tuned, and other per-character details are missing or
+rough. They are covered by headless tests against the disc and native-boundary checks, not by a playtest.
 
 **Upgrading from Samus 0.2.x: read this first.** The plugin has a new identity.
 
@@ -25,12 +26,12 @@ the five-skill layout RT / LT / RB / LB / B; the skin unlocks follow stages 1, 2
   is a frame-1 area burst with damage and outward knockback around Fox.
 - **Luigi** (4): bouncing Fireball (spammable, a despawn puff when it expires, it dies on walls and ceilings), Green
   Missile charged from 250% to 1600%, Super Jump Punch and Luigi Cyclone.
-- **Pikachu** (4): see below.
-- **Captain Falcon** (6): Falcon Punch, Raptor Boost, Falcon Dive and Falcon Kick with the disc's hitboxes.
-- **Link** (5): Hero's Bow (hold to draw, charge scales damage and speed), Boomerang, Spin Attack and Bomb. The arrow,
+- **Pikachu** (4, first pass): see below.
+- **Captain Falcon** (6, first pass): Falcon Punch, Raptor Boost, Falcon Dive and Falcon Kick with the disc's hitboxes.
+- **Link** (5, first pass): Hero's Bow (hold to draw, charge scales damage and speed), Boomerang, Spin Attack and Bomb. The arrow,
   boomerang and bomb speeds are prototype values.
-- **Yoshi** (6): Egg Lay (tongue grab), Egg Roll, Egg Throw (lobs an egg and hops) and Yoshi Bomb.
-- **Donkey Kong** (5): Giant Punch, Headbutt, Spinning Kong and Hand Slap.
+- **Yoshi** (6, first pass): Egg Lay (tongue grab), Egg Roll, Egg Throw (lobs an egg and hops) and Yoshi Bomb.
+- **Donkey Kong** (5, first pass): Giant Punch, Headbutt, Spinning Kong and Hand Slap.
 
 **Pikachu** (RT Thunder Shock, LT A, **RB Thunder**, LB Quick Attack, B Skull Bash):
 - *Thunder Shock* is shot along the crosshair and bounces and reflects off surfaces, ending after ten ground bounces, like

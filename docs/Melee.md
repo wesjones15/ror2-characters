@@ -1,4 +1,4 @@
-> Modern 0.3.0 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: only Samus has been played in game before; see Known limitations.
+> Modern 0.3.0 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
@@ -8,6 +8,10 @@ moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter ph
 with the disc's own models, animations, effects and voices.
 
 **Offline play only.** Do not run this online.
+
+## Status
+
+**Melee is not finished.** **Samus, Fox and Luigi** are the most complete. **Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: they are not complete and not ready.** Their attacks still have to be finished and tuned, and other per-character details are missing or rough, so expect wrong, missing or placeholder moves, hitboxes, effects and numbers. They are included so they can be tried and so feedback can shape them, not as finished characters.
 
 ## Requirements and dependency mods
 
@@ -81,16 +85,16 @@ RoR2 choices. Moves, hitboxes, animations and effects come from the disc.
 | **Samus** | Charge Shot (tap again to fire, jump to store) | Missile; a quick direction fires a Super Missile | Screw Attack | Bomb |
 | **Fox** | Blaster | Fox Illusion | Fire Fox | Reflector (area burst) |
 | **Luigi** | Fireball (bounces) | Green Missile (hold to charge) | Super Jump Punch | Luigi Cyclone |
-| **Pikachu** | Thunder Shock | **Thunder** | Quick Attack | Skull Bash (hold to charge) |
-| **Captain Falcon** | Falcon Punch | Raptor Boost | Falcon Dive | Falcon Kick |
-| **Link** | Hero's Bow (hold to draw) | Boomerang | Spin Attack | Bomb |
-| **Yoshi** | Egg Lay (tongue grab) | Egg Roll | Egg Throw | Yoshi Bomb |
-| **Donkey Kong** | Giant Punch | Headbutt | Spinning Kong | Hand Slap |
+| **Pikachu** (first pass) | Thunder Shock | **Thunder** | Quick Attack | Skull Bash (hold to charge) |
+| **Captain Falcon** (first pass) | Falcon Punch | Raptor Boost | Falcon Dive | Falcon Kick |
+| **Link** (first pass) | Hero's Bow (hold to draw) | Boomerang | Spin Attack | Bomb |
+| **Yoshi** (first pass) | Egg Lay (tongue grab) | Egg Roll | Egg Throw | Yoshi Bomb |
+| **Donkey Kong** (first pass) | Giant Punch | Headbutt | Spinning Kong | Hand Slap |
 
 Samus keeps her grapple (X: tether to enemies, pull a boss toward her, pummel and throw a captured enemy) and
 stored Charge Shot.
 
-**Pikachu in detail**
+**Pikachu in detail** (first pass)
 - *Thunder Shock* flies along your crosshair, bounces off the ground (it ends after ten ground bounces), reflects off walls
   and ceilings, and hits the first enemy it touches: 10% in flight, 6% once it has bounced.
 - *Skull Bash*: hold B to charge up to 90 frames, release to lunge; damage runs from 4% and distance grows with the charge. It
@@ -138,8 +142,9 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.0 registered` ea
 
 ## Known limitations
 
-- Only Samus (earlier releases) has been played in game. Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are
-  verified by headless tests against the disc and by native-boundary checks, not by a playtest.
+- Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: their attacks and per-character details still need
+  to be finished and tuned. They are verified only by headless tests against the disc and native-boundary checks, not by a
+  playtest. Samus, Fox and Luigi are the most complete.
 - Multiplayer is not supported: a Melee survivor controlled from a client falls back to Commando.
 - Link's arrow, boomerang and bomb speeds, and some travel scales, are prototype values; shield tilt, powershield reflection,
   hitlag and percent-based knockback are not implemented.
