@@ -32,7 +32,7 @@ Other game builds are not supported. VR is not supported in these releases.
 ## Install
 
 1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0 into Risk of Rain 2 DLC4 (2026).
-2. Unzip the release and copy the folders you want from its `BepInEx/plugins` into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy them into the active profile folder instead.
+2. Right-click the downloaded ZIP, open Properties and tick **Unblock** (otherwise Windows asks "These files might be harmful" when you copy the DLLs; OK is safe). Unzip the release and copy the folders you want from its `BepInEx/plugins` into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy them into the active profile folder instead.
 3. Launch the game once, set `Paths.Disc` in each mod's config file to your own disc image, and launch again.
 
 Each mod's guide has the details, controls and troubleshooting. **Upgrading from Samus 0.2.x:** Melee replaces it; delete `BepInEx/plugins/MeleeSamus` first (see the Melee guide).

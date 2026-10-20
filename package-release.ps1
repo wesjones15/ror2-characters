@@ -113,6 +113,14 @@ foreach ($item in $payload + $docs) {
     Copy-Item -LiteralPath $candidate -Destination $target
     $files.Add($item.To)
 }
+# A file that came from a download or an archive extracted from one carries a Zone.Identifier stream, and Windows
+# then asks "These files might be harmful" when the folder is copied into a game install. Build outputs should
+# not have one; clear it on the staged copies (never on the sources) and say so, so the cause gets fixed.
+$marked = @(Get-ChildItem -LiteralPath $out -Recurse -File | Where-Object { Get-Item -LiteralPath $_.FullName -Stream Zone.Identifier -ErrorAction SilentlyContinue })
+foreach ($file in $marked) {
+    Write-Warning ("{0} carried a web-download mark (Zone.Identifier); cleared it on the packaged copy. Check where that build output came from." -f $file.FullName.Substring($out.Length + 1))
+    Unblock-File -LiteralPath $file.FullName
+}
 [IO.File]::WriteAllText((Join-Path $out 'README.md'), [IO.File]::ReadAllText($notes), (New-Object Text.UTF8Encoding($false)))
 [IO.File]::WriteAllText((Join-Path $out 'CHANGELOG.md'), $changelog, (New-Object Text.UTF8Encoding($false)))
 $files.Add('README.md'); $files.Add('CHANGELOG.md')
@@ -133,6 +141,8 @@ $expected = @($files) + @('release.json')
 $actual = @(Get-ChildItem -LiteralPath $out -File -Recurse | ForEach-Object { $_.FullName.Substring($out.Length + 1).Replace('\', '/') })
 $diff = @(Compare-Object ($expected | Sort-Object) ($actual | Sort-Object))
 if ($diff.Count -ne 0) { throw "Package contents differ from the allowlist: $($diff | Out-String)" }
+$stillMarked = @(Get-ChildItem -LiteralPath $out -Recurse -File | Where-Object { Get-Item -LiteralPath $_.FullName -Stream Zone.Identifier -ErrorAction SilentlyContinue })
+if ($stillMarked.Count -ne 0) { throw 'Packaged files still carry a web-download mark.' }
 foreach ($bad in @('assets_dir.txt', '.iso', '.ciso', '.gcm', '.wav', '.ssm', '.sem', '.dat')) {
     if ($actual | Where-Object { $_.EndsWith($bad, [StringComparison]::OrdinalIgnoreCase) }) { throw "Package contains $bad data." }
 }
