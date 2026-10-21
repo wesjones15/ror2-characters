@@ -1,8 +1,8 @@
-> Modern 0.3.1 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
+> Modern 0.3.2 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.3.1 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.3.2 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -33,7 +33,7 @@ with the disc's own models, animations, effects and voices.
 2. **If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
    `BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`, folder `Melee`),
    and the two cannot run together: both would register Samus.
-3. Unzip the release ZIP (**release-20261021.zip**). It holds Mario, Olimar and Melee, each in its own folder under
+3. Unzip the release ZIP (**hotfix-20261021-melee-multiplayer.zip**). It holds Mario, Olimar and Melee, each in its own folder under
    `BepInEx/plugins`; copy the `Melee` folder (`Samus.dll` and `ssbm.dll`) into the same place in your game folder, or your
    mod manager's profile. Install the two DLLs together.
 4. Launch once to create `BepInEx/config/com.libssbm.melee.cfg`, quit, and set `Paths.Disc` to the full path of your disc image:
@@ -109,6 +109,22 @@ stored Charge Shot.
 - *Thunder*: a cloud and bolt come down on Pikachu; the bolt shocks enemies in its column, then the strike electrifies
   everything around him (17%).
 
+## Multiplayer
+
+Melee works in offline, friends-only co-op. **Everyone who plays or sees a Melee fighter needs the same Melee release**
+(`Samus.dll` and `ssbm.dll` from one ZIP) **and that fighter's disc assets extracted on their own machine**; a player
+without the mod sees a Commando, and a different build is refused with one line in the log.
+
+- A player's machine runs their fighter, so they play without lag. The other players' machines run a copy of it from the calls
+  it recorded: the same model, animations, sounds (they fade with distance), effects, KO and recovery.
+- Their hits land through the host as that player's: their damage stat, crits, on-hit items and kill credit. So do grabs,
+  Yoshi's egg, Donkey Kong's bury and slap, Luigi's Cyclone pull, Fox's Reflector and the invulnerability after a KO.
+- **Not yet:** shots and other move objects (Fox's lasers, Link's arrows, boomerang and bombs, Samus's shots, Yoshi's eggs and
+  stars, Pikachu's Thunder) are drawn only on the machine that fired them, though their damage is real. A shield's meter is
+  each machine's own.
+- **It has never been played between two machines.** The recording and replay are tested for all eight fighters; the network
+  messages are not. If something is wrong, send both players' `BepInEx/LogOutput.log`.
+
 ## Costumes
 
 Each fighter has his disc costumes (Samus 5, Fox 4, Luigi 4, Pikachu 4, Captain Falcon 6, Link 5, Yoshi 6, Donkey Kong 5).
@@ -135,8 +151,8 @@ Each entry has a description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.1 registered` early and, after the game loads,
-`Melee 0.3.1 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
+Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.2 registered` early and, after the game loads,
+`Melee 0.3.2 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
 - *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.
@@ -148,7 +164,7 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.1 registered` ea
 - Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: their attacks and per-character details still need
   to be finished and tuned. They are verified only by headless tests against the disc and native-boundary checks, not by a
   playtest. Samus, Fox and Luigi are the most complete.
-- Multiplayer is not supported: a Melee survivor controlled from a client falls back to Commando.
+- Multiplayer is new and has never been played between two machines (see Multiplayer above). Shots and other move objects are drawn only on the machine that fired them.
 - Link's arrow, boomerang and bomb speeds, and some travel scales, are prototype values; shield tilt, powershield reflection,
   hitlag and percent-based knockback are not implemented.
 - Pikachu: the Quick Attack's body tilt and Skull Bash's wall rebound are not done, and the particles for the Thunder

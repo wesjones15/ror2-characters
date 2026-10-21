@@ -4,6 +4,16 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.3.9 - 2026-10-21
+
+One fix, to 0.3.8's lock. Install both DLLs (`MarioTest.dll`, `sms.dll`; native ABI 29, unchanged).
+
+- **Mario is locked only in Ship Repair.** 0.3.8 locked him in every mode whenever the Olimar plugin was installed. Now the lock
+  belongs to the Ship Repair mode alone: he is unlocked in every other mode, and in a Ship Repair lobby he needs the win as
+  Olimar ("Repair the Dolphin in Ship Repair as Olimar."). Nothing else changed.
+
+Headless checks pass. None of this was played in game before release.
+
 ## 0.3.8 - 2026-10-21
 
 One change. Install both DLLs (`MarioTest.dll`, `sms.dll`; native ABI 29, unchanged).
