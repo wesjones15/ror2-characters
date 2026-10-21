@@ -1,8 +1,8 @@
-> Modern 0.3.0 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
+> Modern 0.3.1 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.3.0 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.3.1 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -33,7 +33,7 @@ with the disc's own models, animations, effects and voices.
 2. **If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
    `BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`, folder `Melee`),
    and the two cannot run together: both would register Samus.
-3. Unzip the release ZIP (**release-20261020.zip**). It holds Mario, Olimar and Melee, each in its own folder under
+3. Unzip the release ZIP (**release-20261021.zip**). It holds Mario, Olimar and Melee, each in its own folder under
    `BepInEx/plugins`; copy the `Melee` folder (`Samus.dll` and `ssbm.dll`) into the same place in your game folder, or your
    mod manager's profile. Install the two DLLs together.
 4. Launch once to create `BepInEx/config/com.libssbm.melee.cfg`, quit, and set `Paths.Disc` to the full path of your disc image:
@@ -68,6 +68,9 @@ The same five-skill layout for every fighter. Pad buttons are read by position, 
 | Down special, or Shield / Air Feint | B | C |
 | Grab (Samus: tether) | X, unless a RoR2 interact prompt is up | Interact |
 
+- **Jab combo and rapid jab.** Tap LT to jab, and tap again inside the combo window for jab 2 (and jab 3 for Luigi,
+  Captain Falcon and Link). Fox, Captain Falcon and Link also have a **rapid jab**: every press and release of LT counts, and enough
+  taps at the right moment start it; keep tapping to keep it going. A held button is a single jab.
 - **Camera as direction.** With the stick held, camera pitch picks up attacks (20 degrees above level) and down attacks
   (50 degrees below) for LT.
 - **Shield / Air Feint.** Choose it in the fifth loadout row to replace B's down special with a ground shield and one
@@ -95,8 +98,8 @@ Samus keeps her grapple (X: tether to enemies, pull a boss toward her, pummel an
 stored Charge Shot.
 
 **Pikachu in detail** (first pass)
-- *Thunder Shock* flies along your crosshair, bounces off the ground (it ends after ten ground bounces), reflects off walls
-  and ceilings, and hits the first enemy it touches: 10% in flight, 6% once it has bounced.
+- *Thunder Shock* leaves along your crosshair (40 degrees down when you aim level), then crawls along the floor, walls
+  and ceilings it touches until it hits an enemy (200 m or 10 s at most): 10% in flight, less once it has touched a surface.
 - *Skull Bash*: hold B to charge up to 90 frames, release to lunge; damage runs from 4% and distance grows with the charge. It
   stops on whatever it hits.
 - *Quick Attack*: two zips. It homes on your **lock-on**, the enemy nearest where the camera points (preferring ones in front,
@@ -124,7 +127,7 @@ that fighter. Pick them in the loadout's skin row.
 ## Configuration
 
 `BepInEx/config/com.libssbm.melee.cfg`: `Paths.AssetsDir`, `Paths.Disc`, `Sim.MetresPerUnit` (0.1: world metres per Melee unit;
-movement, reach and model share it), `Sim.JumpScale`, `Combat.Armor` (20), `Combat.StaggerDuration`,
+movement, reach and model share it), `Sim.JumpScale`, `Sim.SpeedScale` (1.37: walk and run speed), `Visuals.RimLight` (the glow some moves give), `Combat.Armor` (20), `Combat.StaggerDuration`,
 `Combat.LockRangeMetres` (Pikachu's lock-on), Samus's `Combat.MissileRangeMetres`, `Combat.MissileDamageScale` and
 `Combat.ChargeShotHitboxScale`, `Controls.HoldCharge` (Samus: hold and release to fire, instead of tap to start and tap again to fire) and
 `Debug.LogEffects`.
@@ -132,8 +135,8 @@ Each entry has a description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.0 registered` early and, after the game loads,
-`Melee 0.3.0 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
+Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.1 registered` early and, after the game loads,
+`Melee 0.3.1 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
 - *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.
@@ -148,8 +151,13 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.0 registered` ea
 - Multiplayer is not supported: a Melee survivor controlled from a client falls back to Commando.
 - Link's arrow, boomerang and bomb speeds, and some travel scales, are prototype values; shield tilt, powershield reflection,
   hitlag and percent-based knockback are not implemented.
-- Pikachu: the Quick Attack's body tilt, Skull Bash's wall rebound and the Thunder cloud model are not done, and the
-  particles for the Thunder Shock's bounce and fizzle are best guesses.
+- Pikachu: the Quick Attack's body tilt and Skull Bash's wall rebound are not done, and the particles for the Thunder
+  Shock's contact and fizzle are best guesses.
+- Voices: smash grunts, hurt cries and the KO voice play. A hurt cry depends on how much of your health the hit took (the
+  original uses knockback): a twentieth for a light cry, a fifth for a heavy one. The ledge, tech, item and star-KO voices are
+  not played because the port has no such states.
+- The angled tilts and smashes and Link's second smash hit are unreachable.
+- Yoshi's egg and Link's bomb explosions still use RoR2's effects. The rim glow follows the silhouette, not the light.
 - VR is not supported.
 
 ## Legal

@@ -1,8 +1,41 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 41 from 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.3.15 - 2026-10-21
+
+Every Pikmin 1 enemy in Ship Repair, and Olimar leads the character select. Install both DLLs (`OlimarTest.dll`,
+`pikmin.dll`; native ABI 44, Pikmin protocol 5 and repair protocol 5). Everyone in a multiplayer game needs this build.
+
+- **Olimar leads the survivor list, and winning Ship Repair as Olimar unlocks Mario** (the Mario 0.3.8 plugin registers the
+  unlock; "Mario unlocked." appears in chat).
+- **Pikmin enemies run their own AI.** The enemy strategies are ported from Pikmin's own code (`libpikmin-teki`) and drive
+  RoR2 bodies: they keep the borrowed monster's health and hurt boxes, so Pikmin latch on, Mario can stomp them and items
+  work, but they walk, jump, fly, attack and die the way the original states do. Your disc's models, animations, sounds and
+  particle effects are drawn on them, sized to the disc's, with death smoke and souls.
+- **Every Pikmin 1 enemy with usable disc files is in:** Dwarf and Spotty Bulborbs and Bulbears, Wollywogs, the Armored Cannon
+  Beetle (it fires Rolling Boulders), the Fiery Blowhog, the Swooping Snitchbug, the three Sheargrubs, the Wogpole, the
+  Puffstool, the Puffy Blowhog, the Mamuta, the Smoky Progg (it also hatches from Giant Eggs, which burst when a player is
+  near) and the Water Dumple. Placed in the stage rather than chosen by the director: Honeywisps (a hit drops nectar),
+  waterborne enemies (the Wogpole and Water Dumple spawn in the stage's water), Fire Geysers, Pellet Posies (kill one for a
+  pellet) and, after the first stage, a Pearly Clamclamp whose pearl is a ship part. On the first stage a Breadbug always
+  drops a ship part.
+- **The Mamuta buries.** Its punch plants a Pikmin as a flower sprout and roots a player for four seconds; a buried player
+  calms it.
+- **Enemy config.** Under `[Enemies]`: `FitSizes` (true), `HoneywispsPerPlayer` (1), `WaterEnemiesPerPlayer` (1),
+  `PelletPosiesPerPlayer` (1), `FireGeysersPerStage` (2), `ClamclampEveryStage` (true), and a `Weight` and `Cost` for every
+  kind, beside the existing `Enabled`, `BigMinStagesCleared`, `HealthScale`, `SpeedScale`, `DamageScale` and
+  `CorpseCarrierScale`.
+- Older extractions are topped up with the enemy files on the next launch, from your disc.
+- Multiplayer: the host runs the enemies and sends named sounds and directed effects to clients (two new messages).
+
+Headless tests (`libpikmin-teki`, the managed Ship Repair checks) pass. **None of this was played in game**: how the
+bodies follow the strategies up and down (jumps, flights), the effects, sounds, hatching, the boulder and burn damage, the
+placement of geysers, posies and the shell, and two-player replication are all unseen. `DOCS/pikmin-enemies.md` in the Olimar
+source lists what differs from the original (no route graphs, Onions or bridges; Puffstool spores hurt rather than turn
+Pikmin into Puffmin).
 
 ## 0.3.14 - 2026-10-20
 

@@ -4,6 +4,57 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.3.1 - 2026-10-21
+
+Every fighter's specials finished as the disc's own move chains, a jab 3 and rapid jab, voices, hit sparks, glows and more
+effects. Install `Samus.dll` and `ssbm.dll` (native ABI 5). Config entries added: `Sim.SpeedScale` and `Visuals.RimLight`.
+**Samus, Fox and Luigi are the most complete. Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are still a first
+pass, and none of this was played in game before release.**
+
+**All fighters**
+- **Jab 3 and the rapid jab.** Jab, jab, jab again (Luigi, Captain Falcon and Link have a third jab) inside each jab's combo window.
+  Every press and every release of A counts toward the rapid jab; once the move allows it (Fox's second jab, Captain
+  Falcon's third, Link's second) enough taps start it, and it goes round again at each beat only while you keep tapping.
+  A held button is one jab. Yoshi and Donkey Kong stop at jab 2; Pikachu plays his one jab again.
+- **Voices.** Smash attacks grunt (one of the fighter's smash voices, picked at random), a hit that costs a fifth of your health
+  or more plays a heavy hurt cry (a twentieth, a light one; Samus has none, Falcon and Donkey Kong no light one, as on the
+  disc) with the common hit sounds, and the blast-zone KO plays the fighter's KO voice. Jump voices were already in.
+- **Effects and presentation.** Hit sparks for every fighter's hits and shots; effects now load for Captain Falcon, Link
+  and Donkey Kong, play the special-move cues and follow the joint they are bound to; Link's sword trail; faces that
+  change with the animation (Fox's and Yoshi's eyes also react to knockback); colour glows and flashes (Fire Fox,
+  Falcon Punch, electric flashes, Donkey Kong's punch charge, Yoshi's roll and more); and a rim glow that Luigi's fireball
+  launch and Captain Falcon's smash attacks give (a Fresnel-emission approximation; `Visuals.RimLight` turns it off).
+- Attacks that repeat (Blaster, Fireball, Thunder Shock, the bow, Falcon Punch, Egg Lay and Throw, Giant Punch, Hand Slap)
+  have no cooldown, and a neutral special plays its clips once instead of twice.
+- Grab: every fighter but Samus (who keeps her tether) has a generic enemy grab with hold, pummel and four throws.
+- The controls window is generated from each fighter's real skills. Walking keeps its cycle in the legs under a mobile
+  attack for every fighter. Models are scaled by the disc's own size factor (Luigi and Link grow, Samus and Pikachu shrink).
+- `Sim.SpeedScale` (1.37) lifts the slowest walker, Captain Falcon, to Commando's walk speed and keeps the relative speeds.
+- Shots share one surface-contact budget and despawn at 200 m. Select-screen position of Pikachu no longer collides with
+  Captain Falcon's.
+
+**Fox**: the Blaster has its gun model; the Reflector reflects enemy projectiles while it is held, stuns bosses, can be
+cancelled by a jump and has no recharge; the Fire Fox select-screen intro.
+**Luigi**: Green Missile charges, can misfire and flies; Super Jump Punch follows the clip's own motion and ends in the
+special fall and landing lag; Luigi Cyclone hits repeatedly, pulls enemies in and rises with air taps; coins are gold; each
+special's force is its own.
+**Pikachu**: Thunder Shock leaves 40 degrees down and crawls along floors, walls and ceilings (200 m or 10 s at most) until it
+hits something; Thunder stuns bosses and plays its bolt animation. Forward smash works again.
+**Captain Falcon**: Raptor Boost follows the clip's motion, with an uppercut or a spike on contact; Falcon Dive catches
+enemies (bosses too) and explodes and rebounds; Falcon Kick travels; the specials hit harder; Falcon Punch has its flame.
+**Link**: the bow charges for damage and speed, the boomerang flies out and returns, the bomb is carried, thrown or dropped
+and used to bomb-jump; the forward tilt and smash work again.
+**Yoshi**: the flutter jump with armor and its feather effect; Egg Lay swallows enemies (bosses too, bigger than a large
+enemy but not boss-sized), Egg Roll steers, Egg Throw lobs arced eggs, and the Yoshi Bomb throws stars.
+**Donkey Kong**: Giant Punch stores its swings, Headbutt buries, Spinning Kong steers, and Hand Slap goes on without limit with
+shockwaves and a stunlock that holds bosses.
+
+Known: the ledge teeter, tech, ledge-grab, item-pickup and star-KO voices are not played (the port has no such states);
+Yoshi's egg and Link's bomb explosions still use RoR2 effects; angled tilts and smashes and Link's second smash hit are
+unreachable; the rim glow follows the silhouette, not the light's direction; the hurt-voice thresholds are a health
+fraction (the original uses knockback), so they will need tuning in play. Headless tests against the disc and the native
+boundary pass; see `docs/Melee.md`.
+
 ## 0.3.0 - 2026-10-20
 
 A single **Melee** plugin with eight survivors. Install `Samus.dll` and `ssbm.dll` (native ABI 5) from one ZIP.
