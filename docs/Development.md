@@ -42,7 +42,7 @@ Releases are made on GitHub directly, from the release worktree of this reposito
 4. Build everything as above, then package:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-20261020 -NotesFile .\releases\release-20261020.md
+powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-20261021 -NotesFile .\releases\release-20261021.md
 ```
 
 This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). It works in Windows PowerShell 5.1 and never pushes or publishes.
@@ -54,7 +54,7 @@ This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`
 Publishing is a deliberate, separate step. Push the source repositories (`ror2-common`, `ror2-mario`, `ror2-olimar`, `libsms`, `libpikmin`, and `ror2-samus` / `libssbm` for Melee) and this repository's `modern/1.5.0`, then:
 
 ```powershell
-gh release create release-20261020 .\release-20261020.zip .\release-20261020.zip.sha256 --repo wesjones15/ror2-characters --target modern/1.5.0 --title "Mario 0.3.7, Olimar 0.3.14, Melee 0.3.0 (RoR2 DLC4 (2026))" --notes-file releases\release-20261020.md
+gh release create release-20261021 .\release-20261021.zip .\release-20261021.zip.sha256 --repo wesjones15/ror2-characters --target modern/1.5.0 --title "Mario 0.3.8, Olimar 0.3.15, Melee 0.3.1 (RoR2 DLC4 (2026))" --notes-file releases\release-20261021.md
 ```
 
 Add `--draft` to look at it on GitHub first. Existing tags and releases are never overwritten.

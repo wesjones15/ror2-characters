@@ -4,6 +4,17 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.3.8 - 2026-10-21
+
+One change. Install both DLLs (`MarioTest.dll`, `sms.dll`; native ABI 29, unchanged).
+
+- **Mario is a reward for Ship Repair.** He now sits after Olimar in the character select, and while the Olimar plugin is
+  installed he is locked until you win Ship Repair as Olimar ("Repair the Dolphin in Ship Repair as Olimar."; the win
+  unlocks him with a chat message, and every machine in a multiplayer game unlocks it for its own players). Without the Olimar
+  plugin nothing could ever unlock him, so then he is available from the start.
+
+Headless native, boundary and host checks pass. None of this was played in game before release.
+
 ## 0.3.7 - 2026-10-20
 
 Ship Repair, a reworked corkscrew and the pause-menu controls window. Install both DLLs (`MarioTest.dll`, `sms.dll`, native ABI 29).
