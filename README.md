@@ -1,16 +1,16 @@
-> Mario 0.3.8, Olimar 0.3.15 and Melee 0.3.1 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Mario 0.3.9, Olimar 0.3.15 and Melee 0.3.2 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
 
 # RoR2 Characters
 
 Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin; and the Melee mod adds eight Super Smash Bros. Melee fighters (Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong). Each is a separate BepInEx mod and can be installed with the others.
 
-**Offline and friends-only co-op only** (Melee is single-player and host-only).
+**Offline and friends-only co-op only.** Melee multiplayer is new and has never been played between two machines.
 
 | Mod | Version | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | 0.3.8 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Mario | 0.3.9 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
 | Olimar | 0.3.15 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
-| Melee (Samus, Fox, Luigi; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not ready) | 0.3.1 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
+| Melee (Samus, Fox, Luigi; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not ready) | 0.3.2 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
 
 ## Download
 

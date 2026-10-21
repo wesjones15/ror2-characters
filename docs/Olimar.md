@@ -28,7 +28,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip the release ZIP (**release-20261021.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip the release ZIP (**hotfix-20261021-melee-multiplayer.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
@@ -221,7 +221,7 @@ pellets your Pikmin can carry, a big one always drops a part for whoever killed 
 Clamclamp's pearl are parts too. The `[Enemies]` config section sets `Enabled`, a `Weight` and `Cost` for each kind,
 `BigMinStagesCleared`, `HealthScale`, `SpeedScale`, `DamageScale`, `CorpseCarrierScale`, `FitSizes` and how many Honeywisps,
 water enemies and Pellet Posies come per player and Fire Geysers per stage. See the changelog; none of the enemies has been
-played in game yet. Olimar leads the character select, and winning Ship Repair as him unlocks Mario.
+played in game yet. Olimar leads the character select, and winning Ship Repair as him unlocks Mario, who is locked only while Ship Repair is the selected mode.
 Each normal stage offers up to two shared map pickups, one guaranteed stage-boss part, and
 seven other powerful-enemy drops per participating player. That's 10 initial opportunities
 solo and 31 with four players. Cooperative mode uses seven enemy drops for the team.

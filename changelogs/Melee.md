@@ -4,6 +4,27 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.3.2 - 2026-10-21
+
+**Multiplayer.** Install `Samus.dll` and `ssbm.dll` (native ABI 5, new exports for recording and replaying a sim). Everyone in a
+game needs this build and, for each Melee fighter they play or see, that fighter's disc assets extracted on their own machine.
+**Never played between two machines**: the recording and replay are tested for all eight fighters, the network messages are not.
+
+- **A client can play any Melee fighter.** Until now a Melee fighter chosen by a client fell back to Commando. The client's
+  machine runs its fighter's real simulation, so it plays without lag, and its attacks land through the host.
+- **Other players see the fighter.** Each other machine runs a copy of the owner's simulation from the calls the owner recorded
+  (about 20 messages a second): the same model, animations, sounds (fading with distance), effects, KO and recovery. A player
+  without the mod sees a Commando; a different build is refused with one line in the log.
+- **Hits land as the player's.** A client's hits go to the host, which deals them as that player's: their damage stat, crits,
+  on-hit items and kill credit. So do grabs and throws, Yoshi's egg, Donkey Kong's bury and slap, Luigi's Cyclone pull, Fox's
+  Reflector turning enemy shots, and the invulnerability after a KO.
+- The attack code of all eight fighters now asks "does this machine own the fighter?" instead of "is this the host?", so every
+  fighter works the same way.
+
+Known: shots and other move objects (Fox's lasers, Link's arrows, boomerang and bombs, Samus's shots, Yoshi's eggs and stars,
+Pikachu's Thunder, Luigi's fireballs) are drawn only on the machine that fired them, though their damage is real; hit sparks
+and explosions likewise; a shield's meter is each machine's own; a late joiner sees a fighter from the next batch of calls.
+
 ## 0.3.1 - 2026-10-21
 
 Every fighter's specials finished as the disc's own move chains, a jab 3 and rapid jab, voices, hit sparks, glows and more
