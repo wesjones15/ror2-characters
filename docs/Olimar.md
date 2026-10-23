@@ -174,7 +174,8 @@ lifts off and follows you.
   seconds. A kill refunds its cooldown. Set `Combat.StrikeDamage` to 0 for Pikmin 1's
   dismissal instead.
 - **Getting hurt**: an enemy hit also hurts the Pikmin near where it landed. Pikmin health is a
-  share of Olimar's max health, and Pikmin that fall into a void are lost. When an enemy starts
+  share of Olimar's max health. Pikmin that fall off the map are not lost: like Olimar they are put back beside
+  their captain unharmed (a carrier or a latched Pikmin lets go first). When an enemy starts
   an attack, latched Pikmin are shaken off (those latched for under 2 s hold on).
 - **Corpses**: a dead enemy leaves a 1, 5, 10 or 20 pellet by size, in a random colour. Pikmin
   carry it to the Onion, which turns it into seeds. Sprouts grow from leaf to bud to flower
