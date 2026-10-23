@@ -1,3 +1,5 @@
+> **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
+
 # Hotfix: nothing extra to install (Mario 0.3.10, Olimar 0.3.17, Melee 0.3.3; Risk of Rain 2 DLC4)
 
 This is release-20261022 with one fix, in one ZIP with all three mods, for Risk of Rain 2 **DLC4 (2026)** with BepInEx
