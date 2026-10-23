@@ -4,13 +4,19 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
-## 0.3.16 - 2026-10-22
+## 0.3.17 - 2026-10-22
 
-Install both DLLs (`OlimarTest.dll`, `pikmin.dll`; native ABI 44, unchanged).
+Install both DLLs (`OlimarTest.dll`, `pikmin.dll`; native ABI 44, unchanged). 0.3.16 was never published; its change is here.
 
-- **Character select order:** Olimar is first in Ship Repair, and Mario is first in every other mode. Nothing else changed.
+- **Pikmin that fall off the map come back instead of dying.** Until now a Pikmin more than 60 m below Olimar was killed.
+  Now, like Olimar, it is put back beside its captain unharmed. That covers Pikmin carrying a load, latched to an
+  enemy, flattened, swallowed, drinking or blooming when they go over the edge: they let go of what they were doing
+  first. A Pikmin standing about, following or knocked about also comes back from more than 40 m below onto lower
+  ground, the same distance as Olimar's own "fell too long" rescue. Pikmin in Olimar's hand or climbing an Onion are not
+  affected.
+- **Character select order:** Olimar is first in Ship Repair, and Mario is first in every other mode.
 
-Headless checks pass. The new order was not checked on the select screen before release.
+Headless checks pass. Neither change was played in game before release.
 
 ## 0.3.15 - 2026-10-21
 
