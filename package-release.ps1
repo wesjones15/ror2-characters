@@ -79,7 +79,12 @@ $payload = @(
 $docs = @(
     @{ To = 'docs/Mario.md'; From = 'docs\Mario.md' },
     @{ To = 'docs/Olimar.md'; From = 'docs\Olimar.md' },
-    @{ To = 'docs/Melee.md'; From = 'docs\Melee.md' }
+    @{ To = 'docs/Melee.md'; From = 'docs\Melee.md' },
+    # Each plugin's settings at this release's defaults (generated from its Config.Bind calls). Replacing an
+    # older file resets every setting, including Paths; BepInEx adds any key the file leaves out at its default.
+    @{ To = 'BepInEx/config/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
+    @{ To = 'BepInEx/config/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
+    @{ To = 'BepInEx/config/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' }
 )
 
 # --- The changelog sections of the versions being released -------------------------------------------------------
@@ -106,7 +111,7 @@ foreach ($pair in @(@('Mario', 'Mario'), @('Olimar', 'Olimar'), @('Melee', 'Mele
 New-Item -ItemType Directory -Path $out | Out-Null
 $files = New-Object System.Collections.Generic.List[string]
 foreach ($item in $payload + $docs) {
-    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $Workspace $item.From }
+    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $Workspace $item.From }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw "Missing build output: $candidate" }
     $target = Join-Path $out ($item.To -replace '/', '\')
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null

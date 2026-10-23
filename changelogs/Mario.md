@@ -4,6 +4,19 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.3.10 - 2026-10-22
+
+Install both DLLs (`MarioTest.dll`, `sms.dll`; native ABI 29, unchanged).
+
+- **Mario leads the character select** in every mode except Ship Repair, where Olimar stays first and Mario second (locked
+  until earned).
+- **The Shine Sprite hangs above Mario's head**, so he jumps up into it.
+- **FLUDD aims toward the camera** when the target is behind Mario.
+- **LT crouch and the L-button camera aim are removed.**
+- **FLUDD's fallback spray** pitched the wrong way; fixed. The FLUDD squat stance, which never triggered, is removed.
+
+Headless checks pass. None of this was played in game before release.
+
 ## 0.3.9 - 2026-10-21
 
 One fix, to 0.3.8's lock. Install both DLLs (`MarioTest.dll`, `sms.dll`; native ABI 29, unchanged).
