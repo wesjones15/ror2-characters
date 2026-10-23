@@ -4,6 +4,14 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.3.16 - 2026-10-22
+
+Install both DLLs (`OlimarTest.dll`, `pikmin.dll`; native ABI 44, unchanged).
+
+- **Character select order:** Olimar is first in Ship Repair, and Mario is first in every other mode. Nothing else changed.
+
+Headless checks pass. The new order was not checked on the select screen before release.
+
 ## 0.3.15 - 2026-10-21
 
 Every Pikmin 1 enemy in Ship Repair, and Olimar leads the character select. Install both DLLs (`OlimarTest.dll`,

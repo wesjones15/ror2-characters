@@ -1,4 +1,4 @@
-> Modern 0.3.2 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: Samus, Fox and Luigi are the most complete; Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass, not complete or ready.
+> Modern 0.3.3 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: only Samus plays as intended; the other seven fighters have known broken moves (see Status).
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
@@ -11,7 +11,29 @@ with the disc's own models, animations, effects and voices.
 
 ## Status
 
-**Melee is not finished.** **Samus, Fox and Luigi** are the most complete. **Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: they are not complete and not ready.** Their attacks still have to be finished and tuned, and other per-character details are missing or rough, so expect wrong, missing or placeholder moves, hitboxes, effects and numbers. They are included so they can be tried and so feedback can shape them, not as finished characters.
+**Melee is not finished.** The whole roster was played for the first time on 2026-10-22. Only **Samus** plays as intended
+(one known issue: her side-B missile's trail ends before the missile does). The other seven fighters have broken or missing
+moves, listed below. Melee 0.3.3 fixes some of what that play-test found (chained attacks dealing no damage, Fox's Blaster
+and Yoshi's egg dealing no damage, GAME!, Thunder Jolt, Donkey Kong's idle and walk), but **those fixes have not been played
+in game yet**. Earlier notes called Fox and Luigi "most complete"; the play-test showed that was wrong.
+
+Known broken, from that play-test:
+
+- **Everyone except Samus:** the Z grab does not catch enemies, and close-range repeat attacks do not stunlock.
+- **Fox:** Fire Fox's flame stays after the move, and in testing it had no fire, knockback or stagger. Blaster shots are
+  drawn as white boxes, and the Blaster does not fire while moving. No KO light when he is knocked out.
+- **Luigi:** extra Cyclone presses queue up and then do nothing. Super Jump Punch (up-B) does not start on the ground.
+- **Captain Falcon:** Falcon Kick's fire is not on his leg and flickers. Falcon Punch has no forward drive. Raptor Boost
+  (up-B) is weak. His character-select move has no sound.
+- **Link:** the boomerang is drawn vertical. The bow is invisible and fires a bomb instead of an arrow. He cannot jump while
+  drawing. The hookshot has no model. The bomb uses the wrong model and can only be pulled out or dropped, not thrown.
+- **Pikachu:** Quick Attack has no effect and zips once when there is no target. The Thunder Jolt bolt does not animate.
+  Thunder has no sound, leaves square artifacts, and its bolt has a black outline.
+- **Yoshi:** the tongue looks short and does not catch or eat enemies, so Egg Lay never happens. Egg Roll's egg is not
+  drawn, the roll cannot be cancelled, and its damage felt negligible.
+- **Donkey Kong:** his tie goes through his head. The grab does not pick enemies up or carry them. Spinning Kong does not
+  keep him in the air (and on the select screen it neither spins nor plays sound). Headbutt buries instead of stunning.
+  Giant Punch's effects fly off and linger. His health is low for his size.
 
 ## Requirements and dependency mods
 
@@ -161,9 +183,7 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.2 registered` ea
 
 ## Known limitations
 
-- Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong are a first pass: their attacks and per-character details still need
-  to be finished and tuned. They are verified only by headless tests against the disc and native-boundary checks, not by a
-  playtest. Samus, Fox and Luigi are the most complete.
+- See Status above for the moves known to be broken. Only Samus plays as intended.
 - Multiplayer is new and has never been played between two machines (see Multiplayer above). Shots and other move objects are drawn only on the machine that fired them.
 - Link's arrow, boomerang and bomb speeds, and some travel scales, are prototype values; shield tilt, powershield reflection,
   hitlag and percent-based knockback are not implemented.

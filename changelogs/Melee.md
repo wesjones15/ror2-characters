@@ -4,6 +4,32 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.3.3 - 2026-10-22
+
+Install `Samus.dll` and `ssbm.dll` (native ABI 5, unchanged; one new export). These fixes come from the first real
+play-test of the roster. Headless checks pass. **None of them has been played in game yet**, and seven of the eight fighters
+still have broken moves (see the guide's Status section).
+
+- **Chained attacks deal damage.** A move dealt damage only if its skill slot still held a charge when it started, so a
+  combo's later hits, the rapid jab, or a move started right after another could hit for nothing. This is the likely cause
+  of Fox's attacks dealing no damage and of Fire Fox working on one run and not the next. Every fighter now uses one rule:
+  a move the controls allowed may hit, as long as the slot holds the fighter's own skill. Fox, Link and Yoshi use the
+  shared hit tracker.
+- **Fox's Blaster and Yoshi's Egg Throw deal damage.** A shot lost its damage when it hit something unless an explosion
+  supplied new damage, so Fox's laser and Yoshi's egg hit for nothing. They now deal their Melee damage.
+- **Blaster rate:** every tap fires (at most one shot per 0.12 s); holding fires at Melee's own rate, 6 shots a second.
+- **GAME! plays for every fighter** at the end of a run, with that fighter's voice. Only Samus ever had it.
+- **Thunder Jolt bounces again.** 0.3.2 launched it at a fixed downward angle and made it crawl along surfaces. It now flies
+  toward the crosshair and bounces like Luigi's fireball, fizzling after ten contacts. Fired upward from the ground,
+  Pikachu uses his airborne throw pose.
+- **Donkey Kong idles and walks in his own pose**, not the carry pose, also on the character select screen. **Luigi's up
+  and down smash** use their own animations; they were playing angled forward smashes.
+- **Pause menu:** every fighter gets one short page in the style of Olimar's and Mario's: specials by name, attacks, grab
+  and moving. The text no longer shrinks.
+- **The fifth skill icon** sits in the skill row instead of above it.
+- **New setting `Debug/Diagnostics`** (on by default): writes `[MeleeDiag]` lines to `BepInEx/LogOutput.log` for each move
+  start, hit and GAME!. Include them in bug reports, or turn the setting off.
+
 ## 0.3.2 - 2026-10-21
 
 **Multiplayer.** Install `Samus.dll` and `ssbm.dll` (native ABI 5, new exports for recording and replaying a sim). Everyone in a
