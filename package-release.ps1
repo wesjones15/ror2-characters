@@ -152,6 +152,42 @@ foreach ($bad in @('assets_dir.txt', '.iso', '.ciso', '.gcm', '.wav', '.ssm', '.
     if ($actual | Where-Object { $_.EndsWith($bad, [StringComparison]::OrdinalIgnoreCase) }) { throw "Package contains $bad data." }
 }
 
+# --- Guard: the native DLLs must not need the Visual C++ Redistributable ------------------------------------------
+# A player without it gets "module not found" (Win32 error 126) loading the DLL, and the plugin then registers
+# nothing (no character, no mode, "incompatible mods" in multiplayer). The cores link the C runtime statically
+# (.cargo/config.toml in each core); this reads each DLL's import table and refuses a package that still imports it.
+function Get-PeImports([string]$path) {
+    $b = [IO.File]::ReadAllBytes($path)
+    $pe = [BitConverter]::ToInt32($b, 0x3c)
+    $sections = [BitConverter]::ToUInt16($b, $pe + 6)
+    $opt = $pe + 24
+    $dir = $opt + $(if ([BitConverter]::ToUInt16($b, $opt) -eq 0x20b) { 112 } else { 96 })
+    $importRva = [BitConverter]::ToUInt32($b, $dir + 8)
+    $table = $opt + [BitConverter]::ToUInt16($b, $pe + 20)
+    $map = @(for ($i = 0; $i -lt $sections; $i++) {
+        $s = $table + $i * 40
+        [pscustomobject]@{ Va = [BitConverter]::ToUInt32($b, $s + 12); Size = [Math]::Max([BitConverter]::ToUInt32($b, $s + 8), [BitConverter]::ToUInt32($b, $s + 16)); Raw = [BitConverter]::ToUInt32($b, $s + 20) }
+    })
+    function ToOffset([uint32]$rva) { foreach ($s in $map) { if ($rva -ge $s.Va -and $rva -lt $s.Va + $s.Size) { return [int]($rva - $s.Va + $s.Raw) } } return 0 }
+    $names = @()
+    $at = ToOffset $importRva
+    while ($at -ne 0) {
+        $nameRva = [BitConverter]::ToUInt32($b, $at + 12)
+        if ($nameRva -eq 0) { break }
+        $n = ToOffset $nameRva
+        $e = $n; while ($b[$e] -ne 0) { $e++ }
+        $names += [Text.Encoding]::ASCII.GetString($b, $n, $e - $n).ToLowerInvariant()
+        $at += 20
+    }
+    return $names
+}
+foreach ($dll in @($actual | Where-Object { $_.EndsWith('/pikmin.dll') -or $_.EndsWith('/sms.dll') -or $_.EndsWith('/ssbm.dll') })) {
+    $imports = Get-PeImports (Join-Path $out ($dll -replace '/', '\'))
+    if ($imports.Count -eq 0) { throw "Could not read the import table of $dll." }
+    $runtime = @($imports | Where-Object { $_ -match '^(vcruntime|msvcp|concrt|ucrtbase)' -or $_ -match '^api-ms-win-crt-' })
+    if ($runtime.Count -ne 0) { throw "$dll needs the Visual C++ runtime ($($runtime -join ', ')); build it with the core's .cargo/config.toml (crt-static)." }
+}
+
 # --- Zip with forward-slash entry names (Compress-Archive in 5.1 writes backslashes) ------------------------------
 $archive = [IO.Compression.ZipFile]::Open($zip, [IO.Compression.ZipArchiveMode]::Create)
 try {
