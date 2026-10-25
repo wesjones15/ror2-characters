@@ -4,6 +4,20 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.0 - 2026-10-24
+
+**Samus, Fox, Luigi and Yoshi are the most complete Melee fighters.** Pikachu, Captain Falcon, Link and Donkey Kong are still in progress.
+
+- **Samus: bomb, roll and keep moving.** Morph Ball Bomb combines a startup bomb with a held roll, jumping and enemy bounces. Its armor absorbs damage up to 25% of maximum health; release or armor break returns her to normal. Charge Shot can stay held through a jump, full charge hits harder, and shots and missiles travel faster with improved camera aiming.
+- **Fox: steer and extend your specials.** Hold Illusion and Fire Fox to extend their movement, steer Illusion with the stick, and follow uphill ground more reliably. Illusion has blue afterimages; Fire Fox ends with a fire impact and clears its launch flame.
+- **Luigi: bring a Super Scope.** Choose it as the Fireball alternate, tap for rapid fire or hold a charge, and move or jump while charging. It has visible charge feedback, muzzle effects and ground smoke. Fireball placement, grounded Super Jump Punch and Cyclone behavior also improve.
+- **Yoshi: catch, swallow and bowl through enemies.** The tongue follows the crosshair, reaches farther and stops at terrain. Catch several enemies and lay their eggs one at a time; eggs fall and can be knocked around. Egg Roll shows the rolling egg, hits repeatedly, and ends on release, armor break or its time limit.
+- **Pikachu: more useful movement and lightning.** Quick Attack follows the camera/stick direction and has two independent charges; another press can queue the next charge. Thunder Shock travels level before arcing, with one blue arc per bounce. Thunder has a cloud, sound and a clearer yellow bolt, plus a close electric burst; overhead cover blocks it. Egg Lay is available as an alternate.
+- **More readable skills and controls.** Updated pause sheets show binding glyphs. A attacks move to the B face button; down specials and Shield use LT. Skill descriptions are shorter, and native-model skill portraits are generated and cached from your disc.
+- All fighters can cancel a special fall or airborne hit-fall into an A attack. Goobo Jr. clones can use each fighter's own moves and gummy appearance. Fighters keep their own death presentation, and Donkey Kong's tie stays in its intended pose.
+
+Install both DLLs for this mod from this release. New gameplay changes have headless checks; in-game validation remains pending.
+
 ## 0.3.3 - 2026-10-22
 
 Install `Samus.dll` and `ssbm.dll` (native ABI 5, unchanged; one new export). These fixes come from the first real

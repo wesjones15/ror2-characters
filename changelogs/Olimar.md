@@ -1,8 +1,20 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.4.0 - 2026-10-24
+
+- **Less network traffic with large squads.** Pikmin snapshots are smaller, targeting the heavy update traffic when a squad grows past 100 Pikmin. Multiplayer performance still needs an in-game check.
+- **Lock onto the job at hand.** Aim at pellets, corpses and ship parts as well as enemies. The free cursor follows the camera and can aim much closer to Olimar.
+- **A more useful Onion.** The hovering Onion offers its beam menu, and arrival placement gives it more room beside Olimar and the Dolphin.
+- **A clearer Ship Repair field.** Parts show their in-game names; once Pikmin carry a part, its carrier count gets the space. Pikmin and carried parts route around the landed Dolphin, and carriers animate at their carrying pace.
+- **More deliberate squad attacks.** Dismiss strikes send Pikmin jumping onto enemies ahead, and attached Pikmin stay closer to the enemy's visible body.
+- Corpses come from Olimar, Pikmin and allied minion kills by default; their pellet color follows the Pikmin that made the kill.
+- **New skill portraits and clearer controls.** Pluck, Throw, Whistle, Onion and Strike have cached native-model portraits. Sprouts sit properly in the soil, Onion flight sparkles are closer to the source, and Olimar keeps his own fallen pose at game over.
+
+Install both DLLs for this mod from this release. New gameplay changes have headless checks; in-game validation remains pending.
 
 ## 0.3.17 - 2026-10-22
 

@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.3.3 for the modern/1.5.0 game compatibility line (native ABI 5). An offline prototype: only Samus plays as intended; the other seven fighters have known broken moves (see Status).
+> Modern 0.4.0 for the modern/1.5.0 game compatibility line. See release-20261024 for the latest changes and validation status.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.3.2 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.4.0 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -13,29 +13,11 @@ with the disc's own models, animations, effects and voices.
 
 ## Status
 
-**Melee is not finished.** The whole roster was played for the first time on 2026-10-22. Only **Samus** plays as intended
-(one known issue: her side-B missile's trail ends before the missile does). The other seven fighters have broken or missing
-moves, listed below. Melee 0.3.3 fixes some of what that play-test found (chained attacks dealing no damage, Fox's Blaster
-and Yoshi's egg dealing no damage, GAME!, Thunder Jolt, Donkey Kong's idle and walk), but **those fixes have not been played
-in game yet**. Earlier notes called Fox and Luigi "most complete"; the play-test showed that was wrong.
+**Samus, Fox, Luigi and Yoshi are the most complete Melee fighters.** Pikachu, Captain Falcon, Link and Donkey Kong are still in progress, with unfinished moves, effects and tuning.
 
-Known broken, from that play-test:
+Version 0.4.0 improves Samus's Morph Ball and Charge Shot, Fox's movement specials, Luigi's Super Scope and Yoshi's tongue, eggs and Egg Roll. The release notes and changelog describe the new behavior. The new gameplay changes have automated checks, not a release playtest; Melee multiplayer still needs a two-machine playtest.
 
-- **Everyone except Samus:** the Z grab does not catch enemies, and close-range repeat attacks do not stunlock.
-- **Fox:** Fire Fox's flame stays after the move, and in testing it had no fire, knockback or stagger. Blaster shots are
-  drawn as white boxes, and the Blaster does not fire while moving. No KO light when he is knocked out.
-- **Luigi:** extra Cyclone presses queue up and then do nothing. Super Jump Punch (up-B) does not start on the ground.
-- **Captain Falcon:** Falcon Kick's fire is not on his leg and flickers. Falcon Punch has no forward drive. Raptor Boost
-  (up-B) is weak. His character-select move has no sound.
-- **Link:** the boomerang is drawn vertical. The bow is invisible and fires a bomb instead of an arrow. He cannot jump while
-  drawing. The hookshot has no model. The bomb uses the wrong model and can only be pulled out or dropped, not thrown.
-- **Pikachu:** Quick Attack has no effect and zips once when there is no target. The Thunder Jolt bolt does not animate.
-  Thunder has no sound, leaves square artifacts, and its bolt has a black outline.
-- **Yoshi:** the tongue looks short and does not catch or eat enemies, so Egg Lay never happens. Egg Roll's egg is not
-  drawn, the roll cannot be cancelled, and its damage felt negligible.
-- **Donkey Kong:** his tie goes through his head. The grab does not pick enemies up or carry them. Spinning Kong does not
-  keep him in the air (and on the select screen it neither spins nor plays sound). Headbutt buries instead of stunning.
-  Giant Punch's effects fly off and linger. His health is low for his size.
+Older playtest findings are development history, not a current statement that only Samus is playable. The roster still needs further gameplay validation.
 
 ## Requirements and dependency mods
 
@@ -57,7 +39,7 @@ Known broken, from that play-test:
 2. **If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
    `BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`, folder `Melee`),
    and the two cannot run together: both would register Samus.
-3. Unzip the release ZIP (**hotfix-20261021-melee-multiplayer.zip**). It holds Mario, Olimar and Melee, each in its own folder under
+3. Unzip the release ZIP (**release-20261024.zip**). It holds Mario, Olimar and Melee, each in its own folder under
    `BepInEx/plugins`; copy the `Melee` folder (`Samus.dll` and `ssbm.dll`) into the same place in your game folder, or your
    mod manager's profile. Install the two DLLs together.
 4. Launch once to create `BepInEx/config/com.libssbm.melee.cfg`, quit, and set `Paths.Disc` to the full path of your disc image:
