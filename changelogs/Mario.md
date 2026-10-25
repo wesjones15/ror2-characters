@@ -1,8 +1,20 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.4.0 - 2026-10-24
+
+- **Keep spraying through dives and slides.** With Spray selected, FLUDD now works during a B dive and belly slide. Jumping out of a slide lets you press B to dive again.
+- **Quicker water feedback.** Spray water travels 20% faster while keeping its curved, continuous stream, damage and water use; measured range stays within 1% of the previous stream.
+- **More reliable FLUDD movement.** Extra Rocket and Hover uses granted by items can be spent again in the same jump. Backup Magazine sets Air Pump's available stock correctly.
+- **Finish your ground pound.** Hits no longer interrupt the pound or its landing recovery.
+- **Clearer aiming and controls.** Free spray aim avoids Mario's own colliders and stays closer to the camera direction. The pause sheet shows current pad and keyboard controls, with the ship-part row only in Ship Repair.
+- **New skill portraits.** FLUDD, nozzles, Ground Pound and Wet Slide have portraits made from your extracted game models, generated on first use and cached for later starts.
+- Goobo Mario aims his spray at his target, and Mario now keeps his own death animation instead of the inherited Commando ragdoll.
+
+Install both DLLs for this mod from this release. New gameplay changes have headless checks; in-game validation remains pending.
 
 ## 0.3.10 - 2026-10-22
 
