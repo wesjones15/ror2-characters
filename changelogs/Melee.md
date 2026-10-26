@@ -11,7 +11,7 @@ Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin wi
 - **Pikachu's Thunder matches the disc again.** The source's 0x24C cloud is back, the clap uses the extracted sample, the extra Jolt flash is gone, and a Thunder Jolt no longer vanishes from a map-zone test; its arc is drawn along its path.
 - **Quick Attack can chain its two charges again.** Its recovery is short enough to spend the second charge in the same hop.
 - **Smaller fixes.** Yoshi's own jaw-tongue no longer shows beside the drawn lash, a charging fighter no longer catches on terrain, and ground-only hits reach a laid egg.
-- Egg Lay is now a shared service, so other characters (Mario's Luigi) can use their own version of it.
+- Egg Lay is now a shared service, so other characters can use their own version of it.
 
 Install both DLLs for this mod from this release.
 

@@ -233,10 +233,10 @@ particles, his own FLUUD (it leans to the spray side to clear his head), a pitch
 (`Sim.LuigiJumpHeight`, 1.2) and his name and quip in the pause sheet. Every one of Mario's moves is his, including the
 hidden one: press **dpad-up** to lash Yoshi's tongue and lay what it catches in an egg.
 
-He is unlocked by collecting **2401 coins** (the gold the coin counter shows) in a single run as Mario. Spending does not
-take the count back and it runs across stages; until then the loadout shows the lock and the line **"L is real 2401"**.
-Luigi's statue arrival shows him, and the spin jump's swirl spark, the ground pound's smear and the super ground pound's
-fireball burn green.
+He is unlocked by holding at least **2401 coins** (the gold the coin counter shows) at one time as Mario. It is the
+counter itself, not a running total; until then the loadout shows the lock and the line **"L is real 2401"**. Luigi's
+statue arrival shows him, and the spin jump's swirl spark, the ground pound's smear and the super ground pound's fireball
+burn green.
 
 ## Configuration
 
