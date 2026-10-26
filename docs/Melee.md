@@ -146,19 +146,28 @@ that fighter. Pick them in the loadout's skin row.
   Melee KO; at the end of a run the **GAME!** banner and voice play.
 - Melee A attacks stagger a non-boss enemy for `Combat.StaggerDuration` (0.25 s).
 
+## Items
+
+RoR2 items adapted to Melee's movement, each with an `[Items]` setting (1 is RoR2's value, 0 turns it off):
+
+- **Wax Quail**: a sprinting jump gets the item's boost (`Items.WaxQuail`).
+- **H3AD-5T v2**: with no jumps left, jump in the air to slam down and blast the landing (`Items.Headstompers`).
+- **Attack speed** (Soldier's Syringe, Mocha, ...): speeds up move playback (`Items.AttackSpeed`).
+
 ## Configuration
 
 `BepInEx/config/com.libssbm.melee.cfg`: `Paths.AssetsDir`, `Paths.Disc`, `Sim.MetresPerUnit` (0.1: world metres per Melee unit;
 movement, reach and model share it), `Sim.JumpScale`, `Sim.SpeedScale` (1.37: walk and run speed), `Visuals.RimLight` (the glow some moves give), `Combat.Armor` (20), `Combat.StaggerDuration`,
 `Combat.LockRangeMetres` (Pikachu's lock-on), Samus's `Combat.MissileRangeMetres`, `Combat.MissileDamageScale` and
-`Combat.ChargeShotHitboxScale`, `Controls.HoldCharge` (Samus: hold and release to fire, instead of tap to start and tap again to fire) and
+`Combat.ChargeShotHitboxScale`, `Controls.HoldCharge` (Samus: hold and release to fire, instead of tap to start and tap again to fire), the
+`Items.WaxQuail`, `Items.Headstompers` and `Items.AttackSpeed` scales (see Items above) and
 `Debug.LogEffects`.
 Each entry has a description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.2 registered` early and, after the game loads,
-`Melee 0.3.2 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
+Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.3 registered` early and, after the game loads,
+`Melee 0.4.3 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
 - *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.
@@ -167,7 +176,8 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.3.2 registered` ea
 
 ## Known limitations
 
-- See Status above for the moves known to be broken. Only Samus plays as intended.
+- See Status above for the moves known to be broken. Samus, Fox, Luigi and Yoshi are the most complete; the other four are
+  still in progress.
 - Multiplayer is new and has never been played between two machines (see Multiplayer above). Shots and other move objects are drawn only on the machine that fired them.
 - Link's arrow, boomerang and bomb speeds, and some travel scales, are prototype values; shield tilt, powershield reflection,
   hitlag and percent-based knockback are not implemented.

@@ -226,6 +226,18 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 - **Character select**: Mario jumps on the spot with a "wahoo", turned a little toward you.
 - **Arrival**: about 2.5 seconds of Delfino Plaza play once per run as he leaves the pod.
 
+### Luigi
+
+Luigi is Mario's alt-skin. Choose him in the loadout's skin row once he is unlocked: he has his own model, green cap
+particles, his own FLUUD (it leans to the spray side to clear his head), a pitched-up voice, a higher jump
+(`Sim.LuigiJumpHeight`, 1.2) and his name and quip in the pause sheet. Every one of Mario's moves is his, including the
+hidden one: press **dpad-up** to lash Yoshi's tongue and lay what it catches in an egg.
+
+He is unlocked by collecting **2401 coins** (the gold the coin counter shows) in a single run as Mario. Spending does not
+take the count back and it runs across stages; until then the loadout shows the lock and the line **"L is real 2401"**.
+Luigi's statue arrival shows him, and the spin jump's swirl spark, the ground pound's smear and the super ground pound's
+fireball burn green.
+
 ## Configuration
 
 `BepInEx/config/com.libsms.mariotest.cfg`. The main sections are `Look.*` (model, height,
@@ -236,7 +248,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 29`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 30`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check

@@ -4,6 +4,19 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.4.5 - 2026-10-25
+
+- **Luigi joins Mario.** Pick him as Mario's alt-skin: Luigi's own model, green cap particles, his own FLUUD (leaning to the spray side so it clears his head), a pitched-up voice, a higher jump, and his name and quip in the pause sheet. He uses every one of Mario's moves.
+- **Unlock Luigi with 2401 coins.** Collect 2401 coins (the gold the HUD's coin counter shows) in a single run as Mario. Until then the loadout shows the lock and the line "L is real 2401". Only coins earned in the run count, spending does not take them back, and the count runs across stages.
+- **Luigi's hidden move.** Press dpad-up to lash Yoshi's tongue and lay what it catches in an egg, through the same move Yoshi uses.
+- **Luigi's effects are green.** The spin jump's swirl spark, the ground pound's smear and the super ground pound's fireball turn their red parts green; white cores and blue highlights stay.
+- **The Pianta statue arrival.** On the first stage Mario's pod is the Sunshine Pianta statue with the animated M portal: the arrival sting, the portal's own exit sound, the particle reveal, the spin descent and the landing. The descent fire burns at the pedestal base, and the portal frames are pre-rendered with smoother edges.
+- **No more landing underground.** The statue's exit clip ends at the last pose above the ground, so the rider is never drawn with his feet in the dirt and is never set down under the terrain; if the exit point is buried, he steps out onto clear ground.
+- **Recovery while pinned.** Being pushed back by the collision guard no longer clears the fall and stuck timers, so a body trapped against a collider, or let out under the map, still gets rescued.
+- FLUUD's pack pumps while the Spray fires out of a dive or belly slide.
+
+Install both DLLs for this mod from this release.
+
 ## 0.4.0 - 2026-10-24
 
 - **Keep spraying through dives and slides.** With Spray selected, FLUDD now works during a B dive and belly slide. Jumping out of a slide lets you press B to dive again.

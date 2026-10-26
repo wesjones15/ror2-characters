@@ -4,6 +4,10 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.4.1 - 2026-10-25
+
+Nothing changes for Olimar in this release: no gameplay, balance or control changes, and no new options. The build is rebuilt from the same sources with the shared library that Mario and Melee changed, and the version moves so each mod in the pack carries its own number. Install both DLLs with the other mods' 0.4.x builds.
+
 ## 0.4.0 - 2026-10-24
 
 - **Less network traffic with large squads.** Pikmin snapshots are smaller, targeting the heavy update traffic when a squad grows past 100 Pikmin. Multiplayer performance still needs an in-game check.

@@ -4,6 +4,17 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.3 - 2026-10-25
+
+- **Items work in Melee.** Wax Quail boosts a sprinting jump, H3AD-5T v2 gives the airborne slam and its landing blast (jump in the air with no jumps left), and RoR2's attack speed speeds up move playback. Each has an `[Items]` setting (`WaxQuail`, `Headstompers`, `AttackSpeed`; 1 is RoR2's, 0 turns it off).
+- **Egg Lay works on every enemy again.** Yoshi's and Pikachu's Egg Lay reads the target's hurtbox before its body, so enemies with a separate hurt box are edible again.
+- **Pikachu's Thunder matches the disc again.** The source's 0x24C cloud is back, the clap uses the extracted sample, the extra Jolt flash is gone, and a Thunder Jolt no longer vanishes from a map-zone test; its arc is drawn along its path.
+- **Quick Attack can chain its two charges again.** Its recovery is short enough to spend the second charge in the same hop.
+- **Smaller fixes.** Yoshi's own jaw-tongue no longer shows beside the drawn lash, a charging fighter no longer catches on terrain, and ground-only hits reach a laid egg.
+- Egg Lay is now a shared service, so other characters (Mario's Luigi) can use their own version of it.
+
+Install both DLLs for this mod from this release.
+
 ## 0.4.0 - 2026-10-24
 
 **Samus, Fox, Luigi and Yoshi are the most complete Melee fighters.** Pikachu, Captain Falcon, Link and Donkey Kong are still in progress.
