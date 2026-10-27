@@ -4,6 +4,13 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.4.2 - 2026-10-27
+
+- The Rust libraries now use `libcommon` for GameCube disc and binary readers, texture decoding, Hermite animation sampling, AFC audio decoding and TEV material arithmetic. Decoder baseline checks preserve the pre-migration audio output. The shared implementation is compiled into `pikmin.dll`.
+- No intentional gameplay, balance, control or unlock changes. Native ABI 46 is unchanged.
+
+Install both Olimar DLLs together. Automated checks cover the migration; RoR2 playtesting remains pending.
+
 ## 0.4.1 - 2026-10-25
 
 Nothing changes for Olimar in this release: no gameplay, balance or control changes, and no new options. The build is rebuilt from the same sources with the shared library that Mario and Melee changed, and the version moves so each mod in the pack carries its own number. Install both DLLs with the other mods' 0.4.x builds.

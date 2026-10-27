@@ -13,3 +13,12 @@
 [submodule "ror2-olimar"]
 	path = sources/ror2-olimar
 	url = https://github.com/wesjones15/ror2-olimar.git
+[submodule "sources/libcommon"]
+	path = sources/libcommon
+	url = https://github.com/wesjones15/libcommon.git
+[submodule "sources/libssbm"]
+	path = sources/libssbm
+	url = https://github.com/wesjones15/libssbm.git
+[submodule "sources/ror2-samus"]
+	path = sources/ror2-samus
+	url = https://github.com/wesjones15/ror2-samus.git

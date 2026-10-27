@@ -4,14 +4,14 @@ For maintainers. Players should use the [release ZIPs](https://github.com/wesjon
 
 ## Get the source
 
-Only needed to build. The five source repositories are private until they are made public, so submodule checkout works only for accounts with access; everyone else should use the release ZIPs. With access, authenticate to GitHub, then:
+Only needed to build. The source repositories require access until they are made public; everyone else should use the release ZIPs. With access, authenticate to GitHub, then:
 
 ```powershell
 git clone --branch modern/1.5.0 --recurse-submodules https://github.com/wesjones15/ror2-characters.git
 cd ror2-characters
 ```
 
-The five Git submodules under `sources/` pin the exact source commits used together. To initialize an existing checkout, run `git submodule update --init --recursive`. To update a component, check out its desired commit and commit the updated submodule pointer here. Releases record the source commits and SHA-256 hashes in `release.json`.
+The eight Git submodules under `sources/` pin the exact source commits used together, including shared `libcommon`, `libssbm` and `ror2-samus`. To initialize an existing checkout, run `git submodule update --init --recursive`. To update a component, check out its desired commit and commit the updated submodule pointer here. Releases record all eight source commits and file SHA-256 hashes in `release.json`.
 
 ## Build the mods
 
@@ -47,11 +47,13 @@ powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-2026
 
 This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). It works in Windows PowerShell 5.1 and never pushes or publishes.
 
+For isolated release builds, build the committed `sources/` snapshots and pass `-SourceRoot .\sources -Workspace <workspace>` to the packaging script. This reads versions and DLLs from those clean snapshots while leaving unrelated local work untouched. Every source HEAD must match its staged submodule pin. Shared Rust code is linked into each native DLL; `libcommon` adds no runtime DLL.
+
 5. Pin the sources in this repository (`git -C sources/<name> fetch ..\..\<name> modern/1.5.0`, check out the released commit, `git add sources`), and commit the docs and pins.
 
 ## Publish
 
-Publishing is a deliberate, separate step. Push the source repositories (`ror2-common`, `ror2-mario`, `ror2-olimar`, `libsms`, `libpikmin`, and `ror2-samus` / `libssbm` for Melee) and this repository's `modern/1.5.0`, then:
+Publishing is a deliberate, separate step. Push all eight source repositories (`libcommon`, `ror2-common`, `ror2-mario`, `ror2-olimar`, `libsms`, `libpikmin`, `ror2-samus` and `libssbm`) and this repository's `modern/1.5.0`, then:
 
 ```powershell
 gh release create release-20261021 .\release-20261021.zip .\release-20261021.zip.sha256 --repo wesjones15/ror2-characters --target modern/1.5.0 --title "Mario 0.3.8, Olimar 0.3.15, Melee 0.3.1 (RoR2 DLC4 (2026))" --notes-file releases\release-20261021.md
