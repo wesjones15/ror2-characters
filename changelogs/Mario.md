@@ -1,8 +1,20 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 31 from 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.4.6 - 2026-10-27
+
+- **Piantissimo joins Mario's skin row.** Beat the stage-four teleporter event as a living Mario to unlock him. He uses Mario's moves and FLUDD, his own model and jump voice, pink/brown pound effects, and his name and portrait. Other voice lines use Mario's voice pitched down 14%; `Sound.PiantissimoGameVoice` selects only his own jump voice with silence for the other lines.
+- **Luigi keeps his released unlock:** hold at least 2401 coins at once as Mario (`L is real 2401`). Existing profile unlocks are retained.
+- **Catching fire triggers Sunshine's reaction:** the burning bounce, voice and panic run, with the appropriate hot face for each skin.
+- **Faster Spray:** flight speed rises from 1.2 to 1.4 times Sunshine's original speed.
+- **Statue arrival fixes:** vertical descent preserves the intended landing point, fire placement is corrected, and the portal clock resumes after the rider handoff while hidden playback is culled.
+- **Effect texture fixes:** independent mirror wrapping and the coin pickup's authored child sparkle now survive the native-to-host path.
+- The Rust library now shares disc readers, binary readers, texture decoding/sampling, Hermite animation, AFC audio decoding and TEV material arithmetic through `libcommon`. The shared code is compiled into `sms.dll`.
+
+Install both Mario DLLs together (native ABI 31). Automated checks cover this release; RoR2 playtesting remains pending.
 
 ## 0.4.5 - 2026-10-25
 

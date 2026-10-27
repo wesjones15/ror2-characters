@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.0 for the modern/1.5.0 game compatibility line. See release-20261024 for the latest changes and validation status.
+> Modern 0.4.6 for the modern/1.5.0 game compatibility line. See release-20261027 for the latest changes and validation status.
 
 # Mario for Risk of Rain 2
 
-Version 0.4.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.4.6 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -238,6 +238,14 @@ counter itself, not a running total; until then the loadout shows the lock and t
 statue arrival shows him, and the spin jump's swirl spark, the ground pound's smear and the super ground pound's fireball
 burn green.
 
+### Piantissimo
+
+Piantissimo is the third skin. Unlock him by beating the stage-four teleporter event as Mario while alive.
+He uses his Sunshine model, Mario's moves and FLUDD, pink/brown pound effects and his own jump voice.
+Other lines use Mario's voice pitched down 14%; enable `Sound.PiantissimoGameVoice` for only his original
+jump voice and silence otherwise. His model comes from the Sunshine disc already used by Mario.
+Luigi retains his 2401-held-coins unlock described above; each unlock is saved to the local profile.
+
 ## Configuration
 
 `BepInEx/config/com.libsms.mariotest.cfg`. The main sections are `Look.*` (model, height,
@@ -248,7 +256,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 30`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 31`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check

@@ -18,6 +18,7 @@ param(
     [Parameter(Mandatory = $true)][ValidatePattern('^[A-Za-z0-9][A-Za-z0-9._-]*$')][string]$Tag,
     [Parameter(Mandatory = $true)][string]$NotesFile,
     [string]$Workspace = '',
+    [string]$SourceRoot = '',
     [switch]$AllowDirty
 )
 $ErrorActionPreference = 'Stop'
@@ -35,6 +36,8 @@ if ([string]::IsNullOrWhiteSpace($Workspace)) {
     $Workspace = $probe
 }
 $Workspace = [IO.Path]::GetFullPath($Workspace)
+if ([string]::IsNullOrWhiteSpace($SourceRoot)) { $SourceRoot = $Workspace }
+$SourceRoot = [IO.Path]::GetFullPath($SourceRoot)
 $out = Join-Path $Workspace $Tag
 $zip = "$out.zip"
 foreach ($path in @($out, $zip, "$zip.sha256")) {
@@ -44,12 +47,14 @@ $notes = (Resolve-Path -LiteralPath $NotesFile).Path
 
 # --- Source repositories: commits and cleanliness ----------------------------------------------------------------
 $sources = [ordered]@{}
-foreach ($name in @('ror2-common', 'ror2-mario', 'ror2-olimar', 'ror2-samus', 'libsms', 'libpikmin', 'libssbm')) {
-    $dir = Join-Path $Workspace $name
+foreach ($name in @('libcommon', 'ror2-common', 'ror2-mario', 'ror2-olimar', 'ror2-samus', 'libsms', 'libpikmin', 'libssbm')) {
+    $dir = Join-Path $SourceRoot $name
     $commit = (& git -C $dir rev-parse HEAD).Trim()
     if ($LASTEXITCODE) { throw "Cannot read the revision of $name." }
     $dirty = @(& git -C $dir status --porcelain).Count -ne 0
     if ($dirty -and -not $AllowDirty) { throw "$name has uncommitted changes; commit them before releasing (or pass -AllowDirty)." }
+    $pin = & git -C $PSScriptRoot ls-files --stage -- "sources/$name"
+    if ($pin -notmatch "^160000 $commit 0\s") { throw "Pin sources/$name to $commit before packaging." }
     $sources[$name] = [ordered]@{ commit = $commit; dirty = $dirty }
 }
 $parent = (& git -C $PSScriptRoot rev-parse HEAD).Trim()
@@ -62,9 +67,9 @@ function Get-PluginVersion([string]$file, [string]$display) {
     return $m.Groups[1].Value
 }
 $versions = [ordered]@{
-    Mario  = Get-PluginVersion (Join-Path $Workspace 'ror2-mario\MarioTest\Plugin.cs') 'Mario'
-    Olimar = Get-PluginVersion (Join-Path $Workspace 'ror2-olimar\OlimarTest\Plugin.cs') 'Olimar'
-    Melee  = Get-PluginVersion (Join-Path $Workspace 'ror2-samus\Samus\Plugin.cs') 'Melee'
+    Mario  = Get-PluginVersion (Join-Path $SourceRoot 'ror2-mario\MarioTest\Plugin.cs') 'Mario'
+    Olimar = Get-PluginVersion (Join-Path $SourceRoot 'ror2-olimar\OlimarTest\Plugin.cs') 'Olimar'
+    Melee  = Get-PluginVersion (Join-Path $SourceRoot 'ror2-samus\Samus\Plugin.cs') 'Melee'
 }
 
 # --- Built files: plugin folder -> (source file) ------------------------------------------------------------------
@@ -111,7 +116,7 @@ foreach ($pair in @(@('Mario', 'Mario'), @('Olimar', 'Olimar'), @('Melee', 'Mele
 New-Item -ItemType Directory -Path $out | Out-Null
 $files = New-Object System.Collections.Generic.List[string]
 foreach ($item in $payload + $docs) {
-    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $Workspace $item.From }
+    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw "Missing build output: $candidate" }
     $target = Join-Path $out ($item.To -replace '/', '\')
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null

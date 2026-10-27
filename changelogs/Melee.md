@@ -4,6 +4,14 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.4 - 2026-10-27
+
+- The Rust libraries now use `libcommon` for GameCube disc reading and Hermite animation sampling, joining the shared texture implementation already in use. The shared code is compiled into `ssbm.dll`.
+- No intentional fighter move, balance, control or unlock changes. Native ABI 5 is unchanged.
+- Extraction now rejects source folders and accepts only rooted ignored cache directories within a checkout, including submodule/worktree checkouts, without requiring Git on the player's machine.
+
+Install both Melee DLLs together. Automated checks cover the migration; RoR2 playtesting remains pending.
+
 ## 0.4.3 - 2026-10-25
 
 - **Items work in Melee.** Wax Quail boosts a sprinting jump, H3AD-5T v2 gives the airborne slam and its landing blast (jump in the air with no jumps left), and RoR2's attack speed speeds up move playback. Each has an `[Items]` setting (`WaxQuail`, `Headstompers`, `AttackSpeed`; 1 is RoR2's, 0 turns it off).
