@@ -4,6 +4,19 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.5 - 2026-10-27
+
+- **Every fighter's skill icon is redone.** Each shows the real attack mid-animation, drawn from the game's own model, with its effects and held items: Samus's Charge Shot with the big charge and Screw Attack's lightning ball, Fox's Blaster beam and Illusion afterimages, Luigi's fireball and his Super Scope in his hands, Pikachu's Thunder bolt, Captain Falcon's punch and kick, Link's drawn bow, Yoshi's thrown egg and Donkey Kong's spin. Each skill has its own background colour, and every fighter's Shield skill shows the same shield bubble. The icons are cached from your disc as before.
+- **Link's Hero's Bow shows and runs properly.** The bow is drawn in his hand with its own draw, hold and release animations, and hides after the shot. He can walk or sprint while drawing it, and the arrow flies along the camera aim.
+- **Link's hookshot.** Pressing Grab fires a 15 m chain. Walls, bosses and large enemies pull Link to the anchor and restore his jumps. Other enemies are reeled into the usual capture, pummel and throw. The real launcher, chain links and hook are drawn, and a prompt shows how to release or climb.
+- **Luigi's Super Scope charge uses the disc's own effects.** The flash at the start of a charge and the ground-smoke puffs while it builds now come from the game's script, along with the recoil dust and camera kick of each shot. The `ScopeChargeSmoke` option is gone.
+- **Particle effects that mirror their picture now draw correctly.** Sprites the game draws mirrored (on one or both axes) were drawn as half or a quarter of the picture. Effect models that start their own dust or spark generators now start them, and ground dust sits on the floor slope while you are grounded.
+- **Falloff recovery effects stay on the fighter.** The blast-zone flash plays where the fighter returns instead of hanging at the spot they fell from.
+- **Yoshi and Pikachu's Egg Lay plays its grab sound on every lash.**
+- Captain Falcon's Kick flame follows his foot's position without turning with the leg.
+
+Install both Melee DLLs together (native ABI 5 is unchanged; new exports were added). Headless and native-boundary checks pass; none of these changes has been played in RoR2 yet.
+
 ## 0.4.4 - 2026-10-27
 
 - The Rust libraries now use `libcommon` for GameCube disc reading and Hermite animation sampling, joining the shared texture implementation already in use. The shared code is compiled into `ssbm.dll`.

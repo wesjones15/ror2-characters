@@ -1,6 +1,6 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.4 for the modern/1.5.0 game compatibility line. See release-20261027 for the latest changes and validation status.
+> Modern 0.4.5 for the modern/1.5.0 game compatibility line. See release-20261027b for the latest changes and validation status.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
@@ -101,7 +101,7 @@ RoR2 choices. Moves, hitboxes, animations and effects come from the disc.
 | **Donkey Kong** (first pass) | Giant Punch | Headbutt | Spinning Kong | Hand Slap |
 
 Samus keeps her grapple (X: tether to enemies, pull a boss toward her, pummel and throw a captured enemy) and
-stored Charge Shot.
+stored Charge Shot. Link's grab is a hookshot: the press fires a chain that pulls him to walls, bosses and large enemies and reels in the rest for the usual pummel and throw.
 
 **Pikachu in detail** (first pass)
 - *Thunder Shock* leaves along your crosshair (40 degrees down when you aim level), then crawls along the floor, walls
