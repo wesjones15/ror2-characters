@@ -4,6 +4,16 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.6 - 2026-10-29
+
+- **Fighters handle rough ground better.** Jumps and knockback no longer carry a fighter into a slope or overhang, a fighter stuck in geometry for 2 s is freed, moves keep their full speed along slopes and bumps, and walking up lumpy slopes no longer stutters.
+- **Skill icons are lit properly.** They were often dark silhouettes; they now get a studio light of their own.
+- **Pikachu's Thunder** rumbles at the right moment.
+- **Mario's Melee moves for the Mario mod.** The first launch with your disc also extracts Melee Mario, so the Mario mod can throw his punches with FLUDD off.
+- **One folder for every disc:** see `BepInEx/plugins/gamecube_library.txt`. Melee picks its Rev 2 disc out of the folder by reading it, whatever the file is called. Existing caches are untouched.
+
+Install both Melee DLLs together; native ABI 5. Samus, Fox, Luigi and Yoshi remain the most complete fighters. Not yet played in RoR2.
+
 ## 0.4.5 - 2026-10-27
 
 - **Every fighter's skill icon is redone.** Each shows the real attack mid-animation, drawn from the game's own model, with its effects and held items: Samus's Charge Shot with the big charge and Screw Attack's lightning ball, Fox's Blaster beam and Illusion afterimages, Luigi's fireball and his Super Scope in his hands, Pikachu's Thunder bolt, Captain Falcon's punch and kick, Link's drawn bow, Yoshi's thrown egg and Donkey Kong's spin. Each skill has its own background colour, and every fighter's Shield skill shows the same shield bubble. The icons are cached from your disc as before.

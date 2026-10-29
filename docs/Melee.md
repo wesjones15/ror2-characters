@@ -51,6 +51,9 @@ Older playtest findings are development history, not a current statement that on
 
    With `Paths.Disc` empty the plugin looks for an `.iso`, `.gcm` or `.ciso` **whose filename contains "Melee"** beside
    its DLLs, in nearby parent folders and their `iso backups` folders, and in the `SSBM_DISC` environment variable.
+   Or skip this step: write a folder's path into `BepInEx/plugins/gamecube_library.txt` (the file explains itself) and
+   put your disc images there under any names. All three mods look there, Melee picks its Rev 2 disc by reading it,
+   and a fresh cache is built in that folder's `assets\Melee`. A cache you already have stays where it is.
 5. Launch the game and let first-run extraction finish (a worker thread; the survivors are listed but wait for it).
    The cache is built in `BepInEx/plugins/Melee/assets/` and reused afterwards. Set `Paths.AssetsDir` to keep it
    elsewhere, for example to reuse the cache a Samus 0.2.x install built in `plugins/MeleeSamus/assets` (move it, or point
@@ -167,7 +170,7 @@ Each entry has a description in the file.
 ## Troubleshooting
 
 Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.3 registered` early and, after the game loads,
-`Melee 0.4.3 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
+`Melee 0.4.6 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
 - *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.

@@ -50,7 +50,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Super Mario Sunshine.iso
    ```
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 29.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 34 and Mario protocol 7.
 
 ## First run
 
@@ -61,6 +61,11 @@ reused on later launches without the disc. A cache made by an older version gets
 and the wipe pictures added when the disc is found (`Paths.Disc`); without them the game over
 screen is simply not shown. By default it is the `assets/` folder next to the
 plugin; `Paths.AssetsDir`, then `assets_dir.txt` beside the plugin, then `SMS_ASSETS`, override that.
+
+**One folder for every disc (optional).** Write a folder's path into `BepInEx/plugins/gamecube_library.txt`
+(the file explains itself) and put your disc images there, with any file names. Mario, Olimar and Melee all
+look there for their discs, and a mod with no cache yet builds it in that folder's `assets\Mario`,
+`assets\Olimar` or `assets\Melee`. A cache you already have stays where it is and keeps being used.
 
 - Mario stays registered while extraction runs, but his sim, model and coins wait for the
   complete cache. If extraction fails or there is no disc, he plays as Commando and the log
@@ -89,7 +94,7 @@ Buttons are read by their position on an Xbox-style pad through Rewired's gamepa
 | Right trigger (RT) | R | spray FLUDD. Analog: a light pull is a short splash just ahead, a half pull sprays on the move, pulling all the way in plants Mario and sprays |
 | Left trigger (LT) | L | ground pound in the air; crouch on the ground. While held, FLUDD points where the camera looks (`Controls.CameraAim`) |
 | Left bumper (LB), held | | lock onto an enemy and aim FLUDD at it, on the ground or in the air. Mario doesn't crouch for it |
-| Right bumper (RB) | X | switch nozzle: Spray, Hover, Rocket, Turbo. With LB held it steps to the next lock-on target instead |
+| Right bumper (RB) | X | tap: swap between Spray and your chosen second nozzle. Hold half a second: a wheel to choose that nozzle (stick up Hover, right Rocket, down Turbo, left No FLUDD; push the stick all the way to pick). With LB held it steps to the next lock-on target instead |
 | Right stick (while RB is pressed with LB held) | | picks the direction to cycle the lock-on (right if centred) |
 | D-pad down | | refill FLUDD's tank (`Fludd.DpadRefill`) |
 | X | | RoR2's interact (Mario uses it for nothing else) |
@@ -122,6 +127,15 @@ Your RoR2 binds stand in, since a keyboard has no spare buttons:
 | Secondary skill (right mouse) | B: dive, punch |
 | Utility skill (your bind) | L: crouch, ground pound in the air, FLUDD aimed by the camera, **and** the lock-on |
 | Special skill (R) | switch nozzle. While the utility key is held, cycles the lock-on target instead |
+
+On keyboard the Special key works like RB: tap to swap nozzles, hold half a second for the wheel, and
+move the mouse to choose.
+
+**No FLUDD and Melee punches.** With No FLUDD chosen on the wheel, Mario takes FLUDD off, and tapping RB
+or RT throws one of Melee Mario's attacks, with his voice: jab, tilts, smashes and dash attack on the
+ground, aerials in the air, picked from the stick. This needs the Melee mod installed with its cache
+built from your Melee disc; without it the button does nothing. Choose a nozzle on the wheel to put
+FLUDD back.
 
 Because the utility key is both L and the lock-on: a fresh press in the air still ground pounds,
 but Mario doesn't crouch while locked. The keys shown are RoR2's usual defaults, so check your own
@@ -240,11 +254,18 @@ burn green.
 
 ### Piantissimo
 
-Piantissimo is the third skin. Unlock him by beating the stage-four teleporter event as Mario while alive.
+Piantissimo is the next skin. Unlock him by beating the stage-four teleporter event as Mario while alive.
 He uses his Sunshine model, Mario's moves and FLUDD, pink/brown pound effects and his own jump voice.
 Other lines use Mario's voice pitched down 14%; enable `Sound.PiantissimoGameVoice` for only his original
 jump voice and silence otherwise. His model comes from the Sunshine disc already used by Mario.
 Luigi retains his 2401-held-coins unlock described above; each unlock is saved to the local profile.
+
+### Yoshi
+
+Yoshi unlocks when Mithrix's final form is defeated with you playing Mario (you don't need to be alive
+or land the last hit). He is Sunshine's Yoshi with Mario's moves and FLUDD on his back. On the ground
+he walks and runs with his own animations; in the air, press **A** again to flutter once per jump.
+His front Spray comes out of his mouth in his juice colour.
 
 ## Configuration
 
@@ -256,7 +277,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 31`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 34`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check

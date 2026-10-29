@@ -51,7 +51,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 44, Pikmin protocol 5 and repair protocol 5. Every participant needs the same build.
+Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 52, Pikmin protocol 9 and repair protocol 6. Every participant needs the same build.
 
 ## First run
 
@@ -59,6 +59,12 @@ The plugin builds its asset cache from your disc: models, animations, tuning, so
 effects, plus the Impact Site arrival clip. The cache is reused on later launches without the
 disc. By default it is the `assets/` folder next to the plugin; `Paths.AssetsDir`, then
 `assets_dir.txt` beside the plugin, then `PIKMIN_ASSETS`, override that.
+
+**One folder for every disc (optional).** Write a folder's path into `BepInEx/plugins/gamecube_library.txt`
+(the file explains itself) and put your disc images there, with any file names. Olimar, Mario and Melee all
+look there for their discs (Olimar also for Pikmin 2 and Melee, for his extra skins and enemies), and a mod
+with no cache yet builds it in that folder's `assets\Olimar`, `assets\Mario` or `assets\Melee`. A cache you
+already have stays where it is and keeps being used.
 
 - Without the cache the sim runs on code defaults, which differ from the game's tuning, and
   the log says so. Olimar's model and the Pikmin fall back to simple shapes.
@@ -194,6 +200,36 @@ lifts off and follows you.
 - **Size**: Olimar is two thirds of Commando's height (`Scale.OlimarHeight`), and everything
   scales with him.
 - **Falls**: landing damage uses RoR2's own fall rules (`Items.FallDamage`).
+- **Flying enemies**: Pikmin hanging on a flier weigh it down to the ground: 5 for a small one, 15 for a large one,
+  25 for a boss (a Purple counts as five). `Pikmin.WeighDownFliers` turns it off.
+
+### Purple and White Pikmin, and Candypop Buds
+
+With a Pikmin 2 disc (see First run), every map has **Candypop Buds** on it (14 a stage in Ship Repair, 3 in other
+modes): flowers in the five Pikmin colours, plus the odd rainbow Candypop Pop. Throw Pikmin into a bud; every 5 that
+go in, it closes and spits 5 Pikmin of its own colour back out. They land beside it, already yours, ready to whistle.
+A bud takes 25 Pikmin before it withers (`Candypop.SlotsPerBulb`; a Pikmin of the bud's own colour doesn't use one
+up). The rainbow Pop gives 5 Pikmin for every 1, in whichever colour it is showing. Buds can be locked onto with RT,
+like enemies.
+
+- **Purple Pikmin** are heavy: a thrown Purple pounds where it lands, hurting what it hits and knocking flying
+  enemies down. It carries as much as ten others.
+- **White Pikmin** are fast and poisonous: an enemy that eats one takes heavy damage (`Pikmin.WhitePoisonDamage`).
+
+Every skin's Onion stores all five colours, and Louie's squad starts with Purples and Whites.
+
+### Skins
+
+Olimar has three alt-skins, picked in the loadout's skin row. Each unlocks once on your profile, at any difficulty:
+
+- **Pianta**: Super Mario Sunshine's Pianta, from the Mario mod's Sunshine cache. Unlocks after stage 1's teleporter
+  event as Olimar.
+- **Captain Pikachu**: Melee's Pikachu, with Ice Climbers as his Pikmin. Needs the Melee mod's cache (or a Melee disc).
+  Unlocks after stage 2's teleporter event as Olimar.
+- **Louie**: from Pikmin 2, with his own squad of Purple and White Pikmin and his Hocotate Ship. Needs a Pikmin 2 disc.
+  Unlocks by recovering all 30 ship parts in one Ship Repair run.
+
+A skin whose disc files aren't found isn't offered.
 
 ## Ship Repair mode (preview)
 
@@ -219,7 +255,13 @@ The Dolphin cannot fly to the teleporter until its Main Engine is fitted; until 
 player when a stage opens (one for the crew when shared). **Pikmin enemies** join the stage's monsters: the Pikmin 1 enemies
 (Bulborbs and Bulbears, Wollywogs, the Cannon Beetle, Blowhogs, the Snitchbug, Sheargrubs, the Wogpole, Puffstool, the
 Mamuta, Smoky Progg and Giant Eggs, the Water Dumple, Honeywisps, a Breadbug, Fire Geysers, Pellet Posies and a Pearly
-Clamclamp), drawn from your disc and running the original game's own enemy states in a RoR2 body. Their corpses become
+Clamclamp), drawn from your disc and running the original game's own enemy states in a RoR2 body. With a Pikmin 2
+disc, Pikmin 2's enemies join them: Bulborb Larvae, Orange, Hairy, Dwarf Orange and Snow Bulborbs, the Fiery Bulblax,
+Skitter Leaves, Mitites, the Watery Blowhog, the Cannon Beetle Larva, Hermit Crawmads, Spectralids, Snagrets,
+Bloysters, Bomb-rocks and gas pipes, the loot-dropping Flint and Glint Beetles and Doodlebug, and bosses: the
+Empress and Emperor Bulblax, the Giant Breadbug, the Segmented Crawbster and the three Long Legs. **Pikmin 2
+treasures** are scattered over each stage as bonus objectives: carry them to your Dolphin like a part for a
+separate treasure score (worth less than a part each). Their corpses become
 pellets your Pikmin can carry, a big one always drops a part for whoever killed it, and the Breadbug of the first stage and each
 Clamclamp's pearl are parts too. The `[Enemies]` config section sets `Enabled`, a `Weight` and `Cost` for each kind,
 `BigMinStagesCleared`, `HealthScale`, `SpeedScale`, `DamageScale`, `CorpseCarrierScale`, `FitSizes` and how many Honeywisps,
@@ -290,7 +332,7 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 44`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 52`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
