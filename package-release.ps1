@@ -89,7 +89,10 @@ $docs = @(
     # older file resets every setting, including Paths; BepInEx adds any key the file leaves out at its default.
     @{ To = 'BepInEx/config/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
     @{ To = 'BepInEx/config/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
-    @{ To = 'BepInEx/config/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' }
+    @{ To = 'BepInEx/config/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' },
+    # The shared GameCube library's pointer, shipped as notes only (ror2-common GAMECUBE-LIBRARY.md): the mods
+    # ignore it until the player writes a folder into it.
+    @{ To = 'BepInEx/plugins/gamecube_library.txt'; From = 'templates\gamecube_library.txt'; Local = $true }
 )
 
 # --- The changelog sections of the versions being released -------------------------------------------------------
@@ -116,7 +119,7 @@ foreach ($pair in @(@('Mario', 'Mario'), @('Olimar', 'Olimar'), @('Melee', 'Mele
 New-Item -ItemType Directory -Path $out | Out-Null
 $files = New-Object System.Collections.Generic.List[string]
 foreach ($item in $payload + $docs) {
-    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
+    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/') -or $item.ContainsKey('Local')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw "Missing build output: $candidate" }
     $target = Join-Path $out ($item.To -replace '/', '\')
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
