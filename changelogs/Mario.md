@@ -1,8 +1,22 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 31 from 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 34 from 0.4.7; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.4.7 - 2026-10-29
+
+- **Yoshi joins Mario's skins.** Defeat Mithrix's final form while playing Mario to unlock him (you don't have to be alive or land the last hit). He runs on his own legs, flutters when you press A again in the air, and sprays FLUDD's water from his mouth in his juice colour.
+- **A nozzle wheel.** Tap RB to swap between Spray and your second nozzle; hold RB for half a second to choose that nozzle from a wheel: Hover, Rocket, Turbo or No FLUDD. On keyboard the Special key does the same, with the mouse picking.
+- **No FLUDD means Melee punches.** With FLUDD off, RB and RT throw Melee Mario's attacks: jab, tilts, smashes and dash attack on the ground, aerials in the air, with his voice. Needs the Melee mod installed with its cache built.
+- **Fire hurts like it does in Sunshine.** Catching fire sends Mario hopping with his burn voice and the flame on him. Water puts him out: a pool, your own spray or another Mario's. A wet Mario can't catch fire for a moment.
+- **FLUDD fights fire.** Water does 5x damage to burning enemies, fire elites, wisps and Magma Worms, and spraying a fire trail puts that stretch out.
+- **Sunshine's heat haze** shimmers over distant scenery. `Look.HeatHaze` turns it off.
+- **The HUD stays when you die.** Coins, life meter and the tank gauge stay up while you spectate or fly a Remote Operation drone.
+- **Smoother on rough ground.** Mario no longer sinks into slopes or gets stuck in rocks and overhangs (if wedged for 2 s he's freed), steps up small lips instead of stuttering, keeps his speed on ramps, and can start a wet slide over dry ground.
+- **One folder for every disc:** see `BepInEx/plugins/gamecube_library.txt`. Existing caches are untouched.
+
+Install both Mario DLLs together; native ABI 34. Network protocol 7: everyone needs this build. Not yet played in RoR2.
 
 ## 0.4.6 - 2026-10-27
 

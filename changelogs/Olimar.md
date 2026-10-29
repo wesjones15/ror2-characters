@@ -1,8 +1,20 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 52 from 0.4.3; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.4.3 - 2026-10-29
+
+- **Three new skins.** Pianta (from the Mario mod's Sunshine files) unlocks after stage 1's teleporter as Olimar, Captain Pikachu (with Ice Climbers for Pikmin, from Melee) after stage 2's, and Louie (Pikmin 2) for recovering all 30 ship parts in one Ship Repair run. Unlocks are saved to your profile.
+- **Purple and White Pikmin.** Purples pound where they land and knock fliers down; Whites are fast and poison whatever eats them. Every Onion holds all five colours, and Louie starts with some.
+- **Candypop Buds on every map** (with a Pikmin 2 disc): throw Pikmin in, and every 5 that go in come back out as 5 live Pikmin of the bud's colour, landing beside it as part of your squad. A bud takes 25 before it withers; the rainbow Pop gives 5 for 1. Buds can be locked onto like enemies.
+- **Pikmin weigh fliers down.** 5 Pikmin hanging on a small flier bring it to the ground, 15 on a large one, 25 on a boss.
+- **Ship Repair gets Pikmin 2.** With a Pikmin 2 disc, about thirty of its enemies join the stage, from Bulborb Larvae and Snagrets to bosses like the Empress Bulblax, the Segmented Crawbster and the Long Legs. Pikmin 2 **treasures** lie around each stage for a separate treasure score, in co-op and the race. The Toady Bloyster counts as a big enemy and drops a part.
+- **Smoother on slopes.** Olimar and his Pikmin no longer hop off downhills or restart their run animation when sprinting over hills, and a captain or squad wedged in geometry for 2 s is freed.
+- **One folder for every disc:** see `BepInEx/plugins/gamecube_library.txt`. Existing caches are untouched.
+
+Install both Olimar DLLs together; native ABI 52, Pikmin protocol 9, repair protocol 6: everyone needs this build. Pikmin 2's content needs your own Pikmin 2 disc; without it Olimar plays as before. Not yet played in RoR2.
 
 ## 0.4.2 - 2026-10-27
 
