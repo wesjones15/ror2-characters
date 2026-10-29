@@ -1,0 +1,20 @@
+# GameCube library: one folder for your disc images, shared by the Olimar, Mario and Melee mods.
+#
+# Lines starting with # are notes, and the mods ignore them. While this file holds only notes,
+# nothing changes and every mod works as it always has.
+#
+# To use it, write the folder's path on its own line at the bottom, without a # in front, e.g.
+#
+#     D:\GameCube
+#
+# Then put your own disc images (.iso, .gcm or .ciso) in that folder, or in an isos folder inside it.
+# Any file names work; each mod finds its game by reading the disc itself:
+#     Olimar: Pikmin (USA), plus optionally Pikmin 2 (Louie, treasures) and Melee Rev 2 (Captain Pikachu)
+#     Mario:  Super Mario Sunshine (any region)
+#     Melee:  Super Smash Bros. Melee (USA) Rev 2
+#
+# A mod that has never extracted its files puts them in assets\Olimar, assets\Mario or assets\Melee
+# inside that folder. A mod that already has an assets folder next to it keeps using that one; to
+# move it, move that folder to the library's assets folder and rename it after the mod.
+#
+# Installing a newer release replaces this file, so write your path in again afterwards.
