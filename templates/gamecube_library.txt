@@ -17,4 +17,6 @@
 # inside that folder. A mod that already has an assets folder next to it keeps using that one; to
 # move it, move that folder to the library's assets folder and rename it after the mod.
 #
-# Installing a newer release replaces this file, so write your path in again afterwards.
+# Installing a newer release replaces this file with these notes again. That's fine: once the mods
+# have read your path they remember it (in BepInEx\config\gamecube_library.path). To stop using the
+# library, delete your path here and delete that file.
