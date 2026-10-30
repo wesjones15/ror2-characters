@@ -4,6 +4,14 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.4.9 - 2026-10-30
+
+- **Everyone sees their own skin in character select.** Each player's pad shows the skin that player picked; before, every pad showed the local player's pick.
+- **Another player's Mario is drawn in his own skin** in the game (it was always plain Mario).
+- A line `Lobby pad for MarioTestBody: skin N (player)` in `BepInEx/LogOutput.log` shows whose loadout each pad read.
+
+Install both Mario DLLs together; native ABI 34, network protocol 7, same as 0.4.8. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
+
 ## 0.4.8 - 2026-10-29
 
 - **Falling through the floor brings Mario back.** If the floor lets him through, he goes back to where he last stood as soon as he's fully under it. Before, a sealed room under the floor (Abandoned Aqueduct's secret room) counted as ground: he landed inside and was trapped.

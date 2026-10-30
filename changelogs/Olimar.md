@@ -4,6 +4,13 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.4.4 - 2026-10-30
+
+- **Everyone sees their own skin in character select.** Each player's pad shows the skin that player picked; before, every pad showed the local player's pick.
+- A line `Lobby pad for OlimarTestBody: skin N (player)` in `BepInEx/LogOutput.log` shows whose loadout each pad read.
+
+Native ABI 52, same as 0.4.3. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
+
 ## 0.4.3 - 2026-10-29
 
 - **Three new skins.** Pianta (from the Mario mod's Sunshine files) unlocks after stage 1's teleporter as Olimar, Captain Pikachu (with Ice Climbers for Pikmin, from Melee) after stage 2's, and Louie (Pikmin 2) for recovering all 30 ship parts in one Ship Repair run. Unlocks are saved to your profile.
