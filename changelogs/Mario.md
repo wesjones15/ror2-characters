@@ -4,6 +4,15 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.4.8 - 2026-10-29
+
+- **Falling through the floor brings Mario back.** If the floor lets him through, he goes back to where he last stood as soon as he's fully under it. Before, a sealed room under the floor (Abandoned Aqueduct's secret room) counted as ground: he landed inside and was trapped.
+- **The Turbo corkscrew catches fire after 1 second** of circling (was 4 s), with its super blow.
+- **Catching fire throws Mario less often.** After one burn reaction, burns in the next 15 seconds only hurt (`Knockdown.BurnPanicCooldown`).
+- **No more slipping on small bumps.** Lumpy ground (Wetland Aspect's roots, rocks and mud) no longer slips Mario over on every little lip. Real steep slopes still slip him.
+- **The dive corkscrew keeps going** as long as you keep circling the stick. Only the Turbo corkscrew still stops at 6 s.
+
+Install both Mario DLLs together; native ABI 34, network protocol 7, same as 0.4.7. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
 ## 0.4.7 - 2026-10-29
 
 - **Yoshi joins Mario's skins.** Defeat Mithrix's final form while playing Mario to unlock him (you don't have to be alive or land the last hit). He runs on his own legs, flutters when you press A again in the air, and sprays FLUDD's water from his mouth in his juice colour.

@@ -218,15 +218,15 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
   he last stood with no ground under him for a long way (`Hud.TooBadDrop`), and he is put back
   where he last stood, unhurt, a little later, when the stage's kill zone takes him (or he is
   150 m down). Leaving the map through the top puts him back without the "TOO BAD!" screen. He cannot be hurt while the screen is black. A long drop onto lower ground, as on
-  a tall stage, is not a fall off the map.
+  a tall stage, is not a fall off the map. Falling *through* a floor is: once he is all the way under it he goes back where he last stood, even when there is more map below (a sealed room), and no "TOO BAD!" (`Mario fell through the floor` in the log).
 - **Walls**: if the sim lets him through a wall (a hit's knock-back against one, a corner), he is
   put back where he stood (`Mario put back` in the log).
 - **Unstuck**: if Mario stays wedged in place for three seconds while fallen, sliding or
   falling, he is moved to safe ground (`Mario unstuck after 3 seconds` in the log).
 - **Corkscrew** (a full stick circle in the air): in a plain dive it is a corkscrew at the dive's own speed, once per
-  dive. With the Turbo held in any jump the circle is the Turbo corkscrew, which flies 1.25 s at its own held speed,
+  dive, holding its height for as long as you keep circling. With the Turbo held in any jump the circle is the Turbo corkscrew, which flies 1.25 s at its own held speed,
   glides and steers, and keeps its height for as long as you keep circling (up to 6 s) before it dives. It throws the
-  wet slide's spray, and the dive lands as a wet slide. After 4 seconds of circling it is in flames and its one hit is
+  wet slide's spray, and the dive lands as a wet slide. After 1 second of circling it is in flames and its one hit is
   the super blow, `Damage.SuperCorkscrew` (2000%), which bonks Mario over and costs him `Damage.SuperCorkscrewRecoil`
   (4% of max health). A burning corkscrew lands in a blazing slide that keeps its speed and fire for 2 s and hits as a
   corkscrew (`Damage.Corkscrew`, 700%).
