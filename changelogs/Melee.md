@@ -4,6 +4,13 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.7 - 2026-10-30
+
+- **Everyone sees their own costume in character select.** Each player's pad shows the costume that player picked; before, every pad showed the local player's pick (all eight fighters).
+- A line `Lobby pad for MeleeSamusBody: skin N (player)` (or the fighter's own body name) in `BepInEx/LogOutput.log` shows whose loadout each pad read.
+
+libssbm ABI 5, same as 0.4.6. Not yet played in RoR2.
+
 ## 0.4.6 - 2026-10-29
 
 - **Fighters handle rough ground better.** Jumps and knockback no longer carry a fighter into a slope or overhang, a fighter stuck in geometry for 2 s is freed, moves keep their full speed along slopes and bumps, and walking up lumpy slopes no longer stutters.
