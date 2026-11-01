@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.9 - 2026-11-01
+
+- Generate and cache idle character portraits with the common 45-degree-left framing; keep original CSS pictures as fallbacks.
+- Cache generated skill pictures instead of rerendering and writing review images each launch.
+- Require main/modern sources when staging.
+
 ## 0.4.8 - 2026-10-31
 
 - **Items on the fighters.** `Visuals.ItemDisplays` (off) draws RoR2's cosmetic item displays - glasses, syringes, crowns and the rest - on the fighters' animated bodies instead of hiding them with Commando. With them on, a fighter's KO corpse is his own: the hidden Commando body no longer reappears.
