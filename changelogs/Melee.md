@@ -4,6 +4,17 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.8 - 2026-10-31
+
+- **Items on the fighters.** `Visuals.ItemDisplays` (off) draws RoR2's cosmetic item displays - glasses, syringes, crowns and the rest - on the fighters' animated bodies instead of hiding them with Commando. With them on, a fighter's KO corpse is his own: the hidden Commando body no longer reappears.
+- **A client's fighter starts at its stage spawn** instead of falling under the map at stage starts from stage 2, or being rescued to a distant spot on the Moon.
+- **Other players' fighters move smoothly.** A shadow fighter now replays one step per physics step and is drawn between its last two steps, instead of moving three steps every third step (a jerky 20 Hz).
+- **A client's extra A attack no longer makes the host throw an error.**
+- **Character-select pads find their player in more cases**, so a pad shows its own costume instead of falling back to the local pick.
+- **Fixed:** fall recovery no longer pulls a fighter back while he slides downhill past a prop edge, and the floating item-pickup icon is no longer empty.
+
+libssbm ABI 5, unchanged. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
+
 ## 0.4.7 - 2026-10-30
 
 - **Everyone sees their own costume in character select.** Each player's pad shows the costume that player picked; before, every pad showed the local player's pick (all eight fighters).

@@ -1,8 +1,25 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 34 from 0.4.7; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 41 and network protocol 12 from 0.5.0; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.5.0 - 2026-10-31
+
+- **Carry and throw your friends.** B next to a teammate on your team lifts him like fruit; B puts him down, and running and pressing B throws him on Sunshine's arc. A carried player breaks free with his own A and Mario stumbles. `Carry.CarryTeammates` picks who can be lifted: 0 nobody, 1 (the default) Olimar, the Melee fighters and other Marios, 2 any player. A carried Mario flails in the fire-hop pose (no yell, flames or damage), and thrown or dropped players take no fall damage for 8 s.
+- **Carry Pikmin pellets.** With the Olimar plugin running a Pikmin world, B also lifts any loose pellet. Throw one into the Dolphin's receiver to deliver a ship part, and anything you put down becomes a loose pellet again.
+- **Sunshine's flowers turn up on stages.** About two stages in three get a set: a ring of 4 to 8 flowers that pays a coin per flower when you spray them all open (2.5 s before the open ones wilt), a lone flower worth a coin, a ring of hopping flower enemies, or a flower tower that bursts out of the ground and bites. A stomp or pound kills a flower enemy (5 coins for a tower, 2 for a head), water freezes a tower, and each bloom, bite and death plays the disc's own pollen and dust. `[Flowers]` sets how often they appear and how hard they bite (10% of Mario's health and a knockdown by default). The host owns them and every player sees them, but only a Mario wakes them.
+- **The nozzle wheel slides out of the tank.** Hold RB (Special) for half a second and the wheel grows from the nozzle head above FLUDD's water tank. Segments read Hover, Rocket, No FLUDD, Turbo clockwise; choosing Hover, Rocket or Turbo fits it at once (even from Spray, and from No FLUDD it gives FLUDD back), and only the wheel's choice plays Sunshine's pickup sparkle and sounds while the quick RB tap stays silent. After a choice or a cancel the wheel stays shut until RB is released.
+- **Coins behave like Sunshine's.** Yellow coins lie for 30 s (`Coins.Seconds`) and blink over their last 3 s, pop up and bounce on a fixed path, the counters stack blue above yellow as in the game, and lunar coins show as Sunshine's blue coin lying on the ground (`Hud.LunarCoinBlueCoin`). Teammates pick your coins up for the same heal and gold (`Coins.TeammatesCollect`).
+- **FLUDD's water turns back shots.** `Fludd.SprayDeflects` (on) makes airborne droplets a shield: an enemy projectile that flies through them is turned back at whoever fired it, and enemy bullets and laser blasts stop at the water.
+- **The entrance hands straight over to the player camera.** Control starts from the intro's own shot - position, look, distance and field of view carry over with no reframe - and the shot aims through the landing point, so Mario is centred from the first frame. The gate's image fades in over 0.8 s and out over about 1.7 s (Sunshine's pace) instead of snapping, and Mario now leaves the statue where its exit animation stopped instead of snapping back to the pod's old point.
+- **The Turbo corkscrew goes on as long as you keep circling the stick** (the 6 s cap is gone), and both corkscrews steer with the camera: tilting it up or down from the start of the roll changes the flight angle by 35% of the change, up to 15 degrees.
+- **Water hits flash and sound.** FLUDD's water on an enemy shows Sunshine's yellow hit marker and plays its enemy-water-hit sound (`Look.Effects` turns it off); other players see and hear it on a remote Mario without the damage counting twice.
+- **Items on Mario:** `Look.ItemDisplays` (off) draws RoR2's cosmetic items - glasses, syringes, crowns and the rest - on whichever body he is wearing, and reattaches them when he starts driving again.
+- **Mario's fire cries finish** before movement and landing voices cut in.
+- **Fixed:** a client's Mario starts at his stage spawn instead of falling under the map from stage 2; floor recovery no longer pulls him back mid-slide on long descents; the floating item-pickup icon is no longer empty; and character-select pads find their player in more cases.
+
+Install both Mario DLLs together; native ABI 41, network protocol 12. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
 
 ## 0.4.9 - 2026-10-30
 
@@ -21,6 +38,7 @@ Install both Mario DLLs together; native ABI 34, network protocol 7, same as 0.4
 - **The dive corkscrew keeps going** as long as you keep circling the stick. Only the Turbo corkscrew still stops at 6 s.
 
 Install both Mario DLLs together; native ABI 34, network protocol 7, same as 0.4.7. Everyone in a multiplayer game needs this build. Not yet played in RoR2.
+
 ## 0.4.7 - 2026-10-29
 
 - **Yoshi joins Mario's skins.** Defeat Mithrix's final form while playing Mario to unlock him (you don't have to be alive or land the last hit). He runs on his own legs, flutters when you press A again in the air, and sprays FLUDD's water from his mouth in his juice colour.
