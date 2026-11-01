@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.5.1 - 2026-11-01
+
+- Persist character/skin portraits and generate missing skin-specific FLUDD, ground-pound and slide pictures once. Air Pump keeps its shared cached artwork.
+- Character select shows the selected skin name and skill art; HUD cooldown slots use their own character's skin art.
+- Separate overview <!> notes with blank lines. Require modern sources when staging.
+
 ## 0.5.0 - 2026-10-31
 
 - **Carry and throw your friends.** B next to a teammate on your team lifts him like fruit; B puts him down, and running and pressing B throws him on Sunshine's arc. A carried player breaks free with his own A and Mario stumbles. `Carry.CarryTeammates` picks who can be lifted: 0 nobody, 1 (the default) Olimar, the Melee fighters and other Marios, 2 any player. A carried Mario flails in the fire-hop pose (no yell, flames or damage), and thrown or dropped players take no fall damage for 8 s.

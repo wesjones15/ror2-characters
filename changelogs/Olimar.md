@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.5.1 - 2026-11-01
+
+- Persist captain/skin portraits and generate missing skin-specific throw, whistle and dismiss-strike pictures once. Onion Ride and sprout artwork remain shared.
+- Character select shows the selected skin name and skill art; HUD cooldown slots use their own captain's skin art.
+- Separate overview <!> notes with blank lines. Require modern sources when staging.
+
 ## 0.5.0 - 2026-10-31
 
 - **A new controller layout.** LT locks on (LT + RB cycles targets, LT + A throws rapidly at the locked one), RT is the alternate-command modifier (RT + B whistle, RT + right stick swarm, RT + X dumps a flying Onion, RT + Y fills it), LB recentres the camera, and holding X for 0.6 s raises or lowers the Onion. The old double-tap X dump and the RT top-down view are gone; RB still strikes.

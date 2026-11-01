@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.5.0 for the modern/1.5.0 game compatibility line. See release-20261031 for the latest changes and validation status.
+> Modern 0.5.1 for the modern/1.5.0 game compatibility line. See hotfix-20261101-portraits for the latest changes and validation status.
 
 # Olimar for Risk of Rain 2
 
-Version 0.5.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.5.1 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -404,3 +404,10 @@ Restart after editing. Master and SFX/music settings also apply. No additional t
 
 The full vanilla sundown bell plays on death and continues through the results screen.
 It is generated in memory from your own disc, uses SFX volume, and stops when you leave the run.
+
+
+## Portrait cache hotfix
+
+Character-select names and character-containing skill pictures follow the selected skin; the HUD cooldown slots use the same pictures for that body. Onion Ride and the sprout passive keep shared artwork. Generated character, skin and skill pictures persist in the local asset cache between launches.
+
+The first launch can hitch while missing pictures generate. Missing or invalid images regenerate individually; ordinary gameplay releases reuse the cache. This hotfix is build/boundary tested and has not yet been played in RoR2.

@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.8 for the modern/1.5.0 game compatibility line. See release-20261031 for the latest changes and validation status.
+> Modern 0.4.9 for the modern/1.5.0 game compatibility line. See hotfix-20261101-portraits for the latest changes and validation status.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.4.8 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.4.9 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -200,3 +200,10 @@ Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.8 registered` ea
 This is an unofficial fan project, not affiliated with Nintendo, HAL Laboratory, Hopoo Games or Gearbox. The package contains
 no game assets. All models, textures and audio are extracted on your machine from a disc you own, and are never uploaded or
 redistributed. Do not share your extracted `assets/` folder.
+
+
+## Portrait cache hotfix
+
+Character portraits use the character-select idle pose and the shared 45-degree-left framing. Original CSS pictures remain fallbacks. Character and skill pictures persist in the local asset cache between launches.
+
+The first launch can hitch while missing pictures generate. Missing or invalid images regenerate individually; ordinary gameplay releases reuse the cache. This hotfix is build/boundary tested and has not yet been played in RoR2.

@@ -49,6 +49,11 @@ $notes = (Resolve-Path -LiteralPath $NotesFile).Path
 $sources = [ordered]@{}
 foreach ($name in @('libcommon', 'ror2-common', 'ror2-mario', 'ror2-olimar', 'ror2-samus', 'libsms', 'libpikmin', 'libssbm')) {
     $dir = Join-Path $SourceRoot $name
+    $expectedBranch = if ($name -in @('libssbm', 'ror2-samus')) { 'main' } else { 'modern/1.5.0' }
+    $actualBranch = (& git -C $dir branch --show-current).Trim()
+    if ($LASTEXITCODE -ne 0 -or $actualBranch -ne $expectedBranch) {
+        throw "Refusing to package $name from '$actualBranch'; expected '$expectedBranch'."
+    }
     $commit = (& git -C $dir rev-parse HEAD).Trim()
     if ($LASTEXITCODE) { throw "Cannot read the revision of $name." }
     $dirty = @(& git -C $dir status --porcelain).Count -ne 0
