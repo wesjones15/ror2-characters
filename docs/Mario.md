@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.6 for the modern/1.5.0 game compatibility line. See release-20261027 for the latest changes and validation status.
+> Modern 0.5.0 for the modern/1.5.0 game compatibility line. See release-20261031 for the latest changes and validation status.
 
 # Mario for Risk of Rain 2
 
-Version 0.4.6 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.5.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -29,7 +29,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Mario. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip the release ZIP (**hotfix-20261021-melee-multiplayer.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip the release ZIP (**release-20261031.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Super Mario Sunshine ISO beside the two character DLLs**, directly in `BepInEx/plugins/MarioTest/`:
 
    ```text
@@ -90,11 +90,11 @@ Buttons are read by their position on an Xbox-style pad through Rewired's gamepa
 | --- | --- | --- |
 | Left stick | stick | walk, run |
 | A | A | jump; wall kick against a wall |
-| B | B | dive in the air; punch on the ground |
+| B | B | dive in the air; punch on the ground; next to a teammate or a loose Pikmin pellet, lift it |
 | Right trigger (RT) | R | spray FLUDD. Analog: a light pull is a short splash just ahead, a half pull sprays on the move, pulling all the way in plants Mario and sprays |
 | Left trigger (LT) | L | ground pound in the air; crouch on the ground. While held, FLUDD points where the camera looks (`Controls.CameraAim`) |
 | Left bumper (LB), held | | lock onto an enemy and aim FLUDD at it, on the ground or in the air. Mario doesn't crouch for it |
-| Right bumper (RB) | X | tap: swap between Spray and your chosen second nozzle. Hold half a second: a wheel to choose that nozzle (stick up Hover, right Rocket, down Turbo, left No FLUDD; push the stick all the way to pick). With LB held it steps to the next lock-on target instead |
+| Right bumper (RB) | X | tap: swap between Spray and your chosen second nozzle. Hold half a second: a wheel to choose that nozzle (stick up Hover, right Rocket, down No FLUDD, left Turbo; push the stick all the way to pick). With LB held it steps to the next lock-on target instead |
 | Right stick (while RB is pressed with LB held) | | picks the direction to cycle the lock-on (right if centred) |
 | D-pad down | | refill FLUDD's tank (`Fludd.DpadRefill`) |
 | X | | RoR2's interact (Mario uses it for nothing else) |
@@ -103,6 +103,11 @@ Buttons are read by their position on an Xbox-style pad through Rewired's gamepa
 
 Notes:
 
+- **Carrying**: B near a teammate on your team lifts him like fruit (`Carry.CarryTeammates`:
+  0 nobody, 1 the default - Olimar, the Melee fighters and other Marios, 2 any player). B puts him
+  down; running and pressing B throws him. A carried player breaks free by pressing his own A
+  (a Mario's jump), and Mario stumbles. Thrown or dropped players take no fall damage for 8 s.
+  With the Olimar plugin and a Pikmin world, the same B also lifts loose Pikmin pellets.
 - **Spray trigger**: the trigger's travel is curved (`Controls.TriggerCurve`, default 2) so the
   light zone is easier to hold. Sunshine's light zone is the first tenth of a GameCube trigger.
 - **Lock-on** picks the enemy nearest where the camera points, within `Controls.LockRange`
@@ -154,6 +159,7 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 | `Controls.LightTapSeconds` | 0.2 | keyboard tap length that counts as a light splash; 0 means always full |
 | `Fludd.DpadRefill` | on | D-pad down fills the tank |
 | `Fludd.SprayBursts` | on | Sunshine's burst-based spray |
+| `Fludd.SprayDeflects` | on | airborne droplets turn enemy projectiles back and stop bullets and lasers |
 | `Shine.Enabled` | on | the Shine Sprite over a charged teleporter |
 | `Shine.Height`, `Shine.TouchRadius` | 1.6, 1.5 | metres the Shine hangs above the teleporter, and how near you touch it from |
 | `Shine.Seconds` | 6.3 | seconds from the pose to the stage ending |
@@ -163,6 +169,13 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 | `Hud.CoinCounters` | on | Sunshine's coin counters in place of RoR2's gold and lunar coins |
 | `Hud.CoinX`, `Hud.CoinY`, `Hud.CoinScale` | -1, -1, 0.4 | where the counters sit (negative: where RoR2's own are) and their size |
 | `Coins.Gold` | 1 | RoR2 gold each yellow coin is worth |
+| `Coins.Seconds` | 30 | seconds a yellow coin lies before it disappears |
+| `Coins.TeammatesCollect` | on | other players on your team can pick up your coins, for the same heal and gold |
+| `Carry.CarryTeammates` | 1 | who B can lift: 0 nobody, 1 Olimar, the Melee fighters and other Marios, 2 any player |
+| `Flowers.ChancePerRoll` | 120 | per thousand: how often a stage roll puts Sunshine flowers out (0 turns them off) |
+| `Flowers.RollsPerStage` | 8 | rolls per stage, made when Mario arrives (about one set of flowers a stage at the default) |
+| `Flowers.BitePercent` | 10 | percent of Mario's maximum health a flower enemy's bite takes |
+| `Look.ItemDisplays` | off | draw RoR2's cosmetic item displays on Mario's drawn body (glasses, syringes, crowns) |
 | `Hud.ScreenEffects` | on | the "TOO BAD!" and game over screens |
 | `Hud.ScreenSpeed` | 1.25 | their pace against the game's own |
 | `Hud.TooBadDrop` | 20 | metres below his last footing at which a fall starts "TOO BAD!" |
@@ -175,6 +188,14 @@ In `BepInEx/config/com.libsms.mariotest.cfg`:
 
 ## Playing Mario
 
+- **Carry your friends.** B near a teammate lifts him, B sets him down, and running and pressing
+  B throws him. The carried player can break free with his own A. `Carry.CarryTeammates` picks who
+  B can lift; teammates thrown or put down take no fall damage for 8 s.
+- **Sunshine's flowers** appear rarely on a stage (about one set a stage at the defaults): a ring
+  of flowers you spray open for a shower of coins, a lone flower, a ring of hopping flower enemies,
+  or a flower tower that bursts out of the ground and bites. Water freezes the tower, a stomp or
+  pound kills it, and dead flower enemies drop coins. `[Flowers]` sets how often they appear and
+  how hard they bite.
 - **Spray** works as in Sunshine: a light press drops a short splash just ahead, which a belly
   slide can glide over; a full press sprays at full reach for about five seconds, then fades.
 - **FLUDD's tank** empties as you spray and refills while you hold spray standing in water,

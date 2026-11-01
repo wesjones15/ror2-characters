@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.5 for the modern/1.5.0 game compatibility line. See release-20261027b for the latest changes and validation status.
+> Modern 0.4.8 for the modern/1.5.0 game compatibility line. See release-20261031 for the latest changes and validation status.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.4.4 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.4.8 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -15,7 +15,7 @@ with the disc's own models, animations, effects and voices.
 
 **Samus, Fox, Luigi and Yoshi are the most complete Melee fighters.** Pikachu, Captain Falcon, Link and Donkey Kong are still in progress, with unfinished moves, effects and tuning.
 
-Version 0.4.0 improves Samus's Morph Ball and Charge Shot, Fox's movement specials, Luigi's Super Scope and Yoshi's tongue, eggs and Egg Roll. The release notes and changelog describe the new behavior. The new gameplay changes have automated checks, not a release playtest; Melee multiplayer still needs a two-machine playtest.
+Version 0.4.8 adds optional item displays on the fighters and the multiplayer fixes described in the release notes and changelog: a client's spawn, other players' fighters moving smoothly, and a client's A attack no longer erroring on the host. The new gameplay changes have automated checks, not a release playtest; Melee multiplayer still needs a two-machine playtest.
 
 Older playtest findings are development history, not a current statement that only Samus is playable. The roster still needs further gameplay validation.
 
@@ -39,7 +39,7 @@ Older playtest findings are development history, not a current statement that on
 2. **If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
    `BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`, folder `Melee`),
    and the two cannot run together: both would register Samus.
-3. Unzip the release ZIP (**release-20261024.zip**). It holds Mario, Olimar and Melee, each in its own folder under
+3. Unzip the release ZIP (**release-20261031.zip**). It holds Mario, Olimar and Melee, each in its own folder under
    `BepInEx/plugins`; copy the `Melee` folder (`Samus.dll` and `ssbm.dll`) into the same place in your game folder, or your
    mod manager's profile. Install the two DLLs together.
 4. Launch once to create `BepInEx/config/com.libssbm.melee.cfg`, quit, and set `Paths.Disc` to the full path of your disc image:
@@ -163,14 +163,16 @@ RoR2 items adapted to Melee's movement, each with an `[Items]` setting (1 is RoR
 movement, reach and model share it), `Sim.JumpScale`, `Sim.SpeedScale` (1.37: walk and run speed), `Visuals.RimLight` (the glow some moves give), `Combat.Armor` (20), `Combat.StaggerDuration`,
 `Combat.LockRangeMetres` (Pikachu's lock-on), Samus's `Combat.MissileRangeMetres`, `Combat.MissileDamageScale` and
 `Combat.ChargeShotHitboxScale`, `Controls.HoldCharge` (Samus: hold and release to fire, instead of tap to start and tap again to fire), the
-`Items.WaxQuail`, `Items.Headstompers` and `Items.AttackSpeed` scales (see Items above) and
+`Items.WaxQuail`, `Items.Headstompers` and `Items.AttackSpeed` scales (see Items above),
+`Visuals.ItemDisplays` (off: draw RoR2's cosmetic item displays on the fighters' animated bodies;
+glasses, syringes, crowns and the rest follow the pose instead of being hidden with Commando) and
 `Debug.LogEffects`.
 Each entry has a description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.3 registered` early and, after the game loads,
-`Melee 0.4.6 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
+Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.8 registered` early and, after the game loads,
+`Melee 0.4.8 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
 - *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.

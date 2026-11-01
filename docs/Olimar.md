@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.2 for the modern/1.5.0 game compatibility line. See release-20261027 for the latest changes and validation status.
+> Modern 0.5.0 for the modern/1.5.0 game compatibility line. See release-20261031 for the latest changes and validation status.
 
 # Olimar for Risk of Rain 2
 
-Version 0.4.2 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.5.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -30,7 +30,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Olimar. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip the release ZIP (**hotfix-20261021-melee-multiplayer.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
+2. Unzip the release ZIP (**release-20261031.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
 3. Put your own **Pikmin ISO beside the two character DLLs**, directly in `BepInEx/plugins/OlimarTest/`:
 
    ```text
@@ -51,7 +51,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 52, Pikmin protocol 9 and repair protocol 6. Every participant needs the same build.
+Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 58, Pikmin protocol 11 and repair protocol 6. Every participant needs the same build.
 
 ## First run
 
@@ -85,18 +85,18 @@ Read by position through Rewired's gamepad template, regardless of your RoR2 bin
 
 | Button | Does |
 | --- | --- |
-| Left stick | walk |
+| Left stick | walk; click it while riding the Onion to boost |
 | A | throw a Pikmin or pluck a sprout; in the landed Onion beam, send the Onion plucker |
-| B | jump |
-| LB (held) + B | whistle. LB is a modifier: holding it stops B jumping, and letting go of LB with B still held doesn't jump |
-| X | lower the flying Onion (double-press to dump stock except one), or raise a landed Onion outside its beam; in the landed beam, dump stock except one. RoR2 interact prompts take priority. |
-| RB | dismiss strike: a melee blow all around Olimar (4 s cooldown). While RT holds a lock, RB cycles targets instead |
+| B | jump. In an Onion's beam B still jumps; LT boards instead |
+| RT (held) + B | whistle. RT is a modifier: holding it stops B jumping, and letting go of RT with B still held doesn't jump |
+| RT (held) | the alternate-command modifier: RT + B whistle, RT + right stick swarm, RT + X dump a flying Onion, RT + Y fill it |
+| X | hold 0.6 s to raise or lower the Onion (free, and no double-tap any more); in the landed beam, dump stock except one. RoR2 interact prompts take priority. |
+| RB | dismiss strike: a melee blow all around Olimar (4 s cooldown). While LT holds a lock, RB cycles targets instead |
 | D-pad left / right | choose the colour to throw: Any (nearest), Red, Yellow, Blue (colours not in the squad are skipped) |
-| LB | in the landed Onion beam, whistle back Pikmin stuck on objects with too few carriers |
-| Right stick | pan the camera (Orbit). Up and down tilt it; see `Controls.LookUpDegrees` |
-| LB (held) + right stick | swarm: send the squad toward the cursor |
-| LT | recentre the camera behind Olimar |
-| RT (held) | lock onto an enemy. While held, the right stick chooses which way RB cycles |
+| LB | recentre the camera behind Olimar; in the landed Onion beam, whistle back Pikmin stuck on objects with too few carriers |
+| LT | lock onto an enemy (LT + A throws rapidly at it); in an Onion's beam, board it (Onion Ride) |
+| RT (held) + tap LT | call the Onion to you from anywhere and board it; the same again calls it off. The tap must be fresh: if LT is already down for a lock when RT goes down, it doesn't fire |
+| Right stick | pan the camera (Orbit). Up and down tilt it; see `Controls.LookUpDegrees`. With RT held it swarms instead |
 | Right stick click | zoom, three levels |
 | Y | RoR2's equipment, as usual |
 | RoR2's sprint bind | sprint until movement stops |
@@ -105,15 +105,16 @@ Read by position through Rewired's gamepad template, regardless of your RoR2 bin
 
 The shortcut panel appears while Olimar stands in the beam. It shows the controller glyphs:
 **X** dumps stored Pikmin except one, **Y** stores the squad, **RB** sacrifices stored
-Pikmin to heal Olimar, **LB** whistles back carriers stuck on understaffed objects, and
-**A** sends an Onion plucker for a ready sprout. Walk out of the beam to dismiss it.
-Outside the beam, X still raises or lowers the Onion.
+Pikmin to heal Olimar, **LB** whistles back carriers stuck on understaffed objects,
+**A** sends an Onion plucker for a ready sprout, and **LT** boards the Onion
+(Onion Ride, below). Walk out of the beam to dismiss it. Outside the beam, X still
+raises or lowers the Onion.
 
 #### Vanilla camera mode
 
 With `Controls.CameraMode = Vanilla` the fixed Pikmin-style camera is used, and the right stick
-swarms directly (no LB needed), RT shows the top view, and RB strikes. LT still recentres and
-right stick click still zooms. B jumps and LB + B whistles in both camera modes.
+swarms directly (no RT needed) and RB strikes. LB still recentres and
+right stick click still zooms. B jumps and RT + B whistles in both camera modes; there is no top-down view any more.
 
 ### Keyboard and mouse
 
@@ -125,17 +126,21 @@ RoR2's binds stand in, by action:
 | Primary skill | throw or pluck; in the landed Onion beam, send the Onion plucker |
 | Secondary skill | jump |
 | Jump (held) + Secondary | whistle. The jump key is the modifier, so it doesn't jump |
-| Jump (tap) | recentre the camera |
-| Utility skill | lower or raise the Onion (when no interact prompt is up) |
+| Jump (tap) | recentre the camera; in an Onion's beam, board it (Onion Ride) |
+| Utility skill | hold 0.6 s to lower or raise the Onion (when no interact prompt is up) |
 | Special skill (held) | swarm toward the cursor |
 | F | dismiss strike |
+| V | dump a flying Onion's Pikmin |
+| B | fill a flying Onion with the squad |
+| Z | call the Onion to you from anywhere and board it; again to call it off |
 | Mouse wheel | next throw colour |
 | C | zoom |
 | G | recall understaffed carriers while standing in the landed Onion beam |
-| Sprint | sprint until movement stops |
+| Sprint | sprint until movement stops; press it while riding the Onion to boost |
 | Interact | RoR2's interact; the Onion shortcuts appear automatically in its landed beam |
 
-Keyboard and mouse has no right-stick camera and no lock-on; the camera recentres with the jump key.
+Keyboard and mouse has no right-stick camera; the camera recentres with a jump tap. Aim
+mode (for VR) keeps RoR2's own binds.
 
 ### Related settings
 
@@ -147,6 +152,11 @@ Keyboard and mouse has no right-stick camera and no lock-on; the camera recentre
 | `Controls.LookUpDegrees` | 70 | how far the Orbit camera tilts up |
 | `Controls.LockRange` | 40 | lock-on reach in metres |
 | `Combat.CursorHoming` | on | thrown Pikmin are steered onto the cursor |
+| `Items.RideRecharge` | 30 | seconds before Onion Ride's one charge comes back |
+| `Combat.StrikeChargeSeconds` | 1 | seconds the squad swarms after a dismiss strike; walking ends it |
+| `Enemies.FlintBeetleShipChance` | 50 | percent chance of a Flint Beetle in a Ship Repair stage, per player |
+| `Enemies.FlintBeetleOtherChance` | 12 | percent chance elsewhere, per living Olimar |
+| `Look.ItemDisplays` | off | draw RoR2's cosmetic item displays on Olimar's drawn body |
 
 ### Notes
 
@@ -172,14 +182,14 @@ lifts off and follows you.
 - **Throwing**: throws reach twice as far as in Pikmin (`Controls.ThrowReach`), and thrown
   Pikmin are steered onto the cursor. With a lock-on they end their throw latched onto the
   enemy.
-- **Lock-on**: hold RT to lock onto an enemy within 40 m with a clear line; RB cycles targets.
+- **Lock-on**: hold LT to lock onto an enemy within 40 m with a clear line; RB cycles targets.
   The cursor stands in front of the enemy, facing Olimar.
 - **Fighting**: RoR2's enemies are creatures to the sim, with their hurtboxes as the parts
   Pikmin latch onto. Pikmin hits are RoR2 damage from Olimar, so his damage stat, crits and
   on-hit items apply. Move-speed items speed him up.
 - **Dismiss strike**: RoR2 has no captain puzzles, so RB hits every enemy around Olimar for
-  four times his punch, staggers them, and sends the squad swarming that way for three
-  seconds. A kill refunds its cooldown. Set `Combat.StrikeDamage` to 0 for Pikmin 1's
+  four times his punch, staggers them, and sends the squad swarming that way for one
+  second (walking cancels it). A kill refunds its cooldown. Set `Combat.StrikeDamage` to 0 for Pikmin 1's
   dismissal instead.
 - **Getting hurt**: an enemy hit also hurts the Pikmin near where it landed. Pikmin health is a
   share of Olimar's max health. Pikmin that fall off the map are not lost: like Olimar they are put back beside
@@ -190,7 +200,7 @@ lifts off and follows you.
   and are plucked with A. Pikmin also grow a stage per two kills. Flowers wilt after five
   minutes. Pikmin collect nearby drops automatically.
 - **The Onion**: one Onion holds all three colours. Stand in its landed beam for direct
-  stock, heal, recall and plucker shortcuts. Outside the beam, X raises or lowers it.
+  stock, heal, recall and plucker shortcuts. Outside the beam, holding X for 0.6 s raises or lowers it.
   It also sends a Pikmin to pluck planted sprouts automatically after a while.
 - **Healing**: living Pikmin assigned to Olimar regenerate from his current percentage
   health regeneration, scaled by `Items.MinionHealScale` (default 0.5). Healing wards
@@ -209,7 +219,7 @@ With a Pikmin 2 disc (see First run), every map has **Candypop Buds** on it (14 
 modes): flowers in the five Pikmin colours, plus the odd rainbow Candypop Pop. Throw Pikmin into a bud; every 5 that
 go in, it closes and spits 5 Pikmin of its own colour back out. They land beside it, already yours, ready to whistle.
 A bud takes 25 Pikmin before it withers (`Candypop.SlotsPerBulb`; a Pikmin of the bud's own colour doesn't use one
-up). The rainbow Pop gives 5 Pikmin for every 1, in whichever colour it is showing. Buds can be locked onto with RT,
+up). The rainbow Pop gives 5 Pikmin for every 1, in whichever colour it is showing. Buds can be locked onto with LT,
 like enemies.
 
 - **Purple Pikmin** are heavy: a thrown Purple pounds where it lands, hurting what it hits and knocking flying
@@ -217,6 +227,31 @@ like enemies.
 - **White Pikmin** are fast and poisonous: an enemy that eats one takes heavy damage (`Pikmin.WhitePoisonDamage`).
 
 Every skin's Onion stores all five colours, and Louie's squad starts with Purples and Whites.
+
+### Onion Ride
+
+The Utility slot is **Onion Ride**, Olimar's escape and repositioning tool. Stand in the beam
+of a live Onion (landed or hovering) and press **LT** to board, or hold **RT** and tap **LT**
+from anywhere: the Onion flies to you the way a raised Onion does, comes down, and boards you.
+It spends a charge; the 30 s cooldown (`Items.RideRecharge`; cooldown items and Hardlight's
+extra charges apply) starts when the ride ends. Olimar lifts into the Onion with Pikmin 1's
+bad-ending motion, the Onion takes off if it was landed, and his squad goes in through its legs.
+
+- **Steering**: left stick, at twice his walking speed; clicking the stick boosts to three
+  times for 2 s. The right stick is the camera. Nothing else works while riding.
+- **Height**: the Onion keeps the ground-relative height it flies at when following him, held
+  over pits, and hovers low while Pikmin are still climbing aboard.
+- **Clock**: up to 5 s of grace (ends early if the Onion goes more than 10 m from where he
+  boarded), then 10 s. Neither pauses or resets.
+- **Ending**: A, B, X or Y, the clock, or the Onion's death. Olimar drops out of the beam and
+  the Pikmin that went aboard during the ride come out together, a third down each leg; the
+  Onion's reserve stays put and Pikmin still climbing drop back to the field.
+- **Danger**: the Onion is a normal target and takes the damage; Olimar is not hurt while
+  aboard. If he is dropped over a pit, fall recovery returns him to the last ground the ride
+  crossed, with his squad.
+
+Raising and lowering the Onion (hold X 0.6 s) is separate, free, and never touches the ride's
+charges.
 
 ### Skins
 
@@ -332,7 +367,7 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 52`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 58`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.

@@ -1,8 +1,27 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 52 from 0.4.3; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 58 and network protocol 11 from 0.5.0; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.5.0 - 2026-10-31
+
+- **A new controller layout.** LT locks on (LT + RB cycles targets, LT + A throws rapidly at the locked one), RT is the alternate-command modifier (RT + B whistle, RT + right stick swarm, RT + X dumps a flying Onion, RT + Y fills it), LB recentres the camera, and holding X for 0.6 s raises or lowers the Onion. The old double-tap X dump and the RT top-down view are gone; RB still strikes.
+- **Onion Ride.** Stand in an Onion's beam and press LT to board it, or hold RT and tap LT to call it to you from anywhere and board. Fly at twice your walking speed (click the stick to boost for 2 s) with up to 5 s of grace then 10 s, and leave with A, B, X or Y. The Pikmin that went aboard come out a third down each leg, the 30 s recharge starts when the ride ends, and the Onion takes the damage while Olimar is safe inside. Boarding plays his lift into the pod, and clients can ride too.
+- **The squad can be targeted now.** Three or more Pikmin standing together on the ground are something monsters can see and aim at, so enemies go for the squad, not only Olimar.
+- **Pikmin take the hits themselves.** A monster's swipe hurts every Pikmin inside the actual swing, and an enemy explosion damages each Pikmin in it once, even when RoR2's own hit landed on something else.
+- **Stranded Pikmin come back.** Pikmin wedged below a cliff are put back at their slot, a whistle brings a grounded Pikmin that is far above or below the cursor back to it, and an Onion's death with a living teammate calls every living Pikmin home before it goes dormant.
+- **Flying Onion fixes.** Pikmin climb the legs the flying Onion actually has; filling a flying Onion keeps it at its height instead of bringing it down; taking off or landing mid-fill keeps every job; and a raised Onion folds its legs before it lifts.
+- **New Pikmin 1 life on the maps.** Pellet Posies grow from seedling to flower and release their pellet (2 per living Olimar in ordinary runs, 6 per player in Ship Repair), an Iridescent Flint Beetle scuttles around now and then (land a Pikmin on it to flip it over for pellets and nectar), and nectar puddles bloom any flowerless Pikmin that drinks from them. `Enemies.*` sets how many appear.
+- **Pikmin 2 in Ship Repair.** Its enemies play their source effects, four Pikmin 2 stage themes join the music rotation, and guests can take, carry and throw any pellet anywhere, not only ship parts.
+- **Stage cards in Pikmin 2's lettering.** Every stage opens with a five-second "DAY N" card drawn in the big orange area-name letters from Pikmin 2, and Ship Repair's location banner uses the same lettering.
+- **Plucks use the game's own clips**, with dirt, debris and three sound cues, and the HUD's changing digits expand or shrink the way Pikmin's do.
+- **The Dolphin crashes in properly:** impact effects and a dust cloud on the first landing, a light beam as Olimar leaves it, a puff when a part arrives, and sparks from three points on the wreck.
+- **Looks:** the Onion's take-off dust and landing smoke are the grey-blue the game authored (they were nearly black), and a flying Onion leans into its travel.
+- **Olimar no longer stutters** against the camera: his drawn model sits at the same smoothed position the camera follows, and `Look.ItemDisplays` (off) puts RoR2's cosmetic items on that body.
+- **Fixes:** Olimar appears in character select and loads reliably again (two startup faults), a client's Olimar starts at his stage spawn, corpse pellets follow the enemy's real size (1, 5, 10 or 20 rather than promoted by health or elite status), jump pads keep the pad's full speed and arc, and the strike charge is one second and ends when he walks. Other players' Pikmin move on a steady clock on a client instead of jumping with each network update.
+
+Install both Olimar DLLs together; native ABI 58, Pikmin protocol 11, repair protocol 6: everyone needs this build. Pikmin 2's content needs your own Pikmin 2 disc; without it Olimar plays as before. Not yet played in RoR2.
 
 ## 0.4.4 - 2026-10-30
 
