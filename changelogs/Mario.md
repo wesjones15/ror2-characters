@@ -4,6 +4,11 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.5.2 - 2026-11-01
+
+- Restore the original Sunshine nozzle-change cues on a quick Spray/alternate switch, including remote-player replay.
+- Keep radial pickup feedback separate and state refreshes silent. Update both MarioTest.dll and sms.dll.
+
 ## 0.5.1 - 2026-11-01
 
 - Persist character/skin portraits and generate missing skin-specific FLUDD, ground-pound and slide pictures once. Air Pump keeps its shared cached artwork.
