@@ -1,8 +1,23 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 58 and network protocol 11 from 0.5.0; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2; ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.5.2 - 2026-11-01
+
+- **Pikmin colours matter in a fight.** Yellow hits airborne and Mechanical enemies for 1.5x. White's hit applies RoR2 poison, and repeated White hits extend the poison instead of multiplying its tick damage. Purple takes 30% less hit damage. Red is immune to fire blasts and to fire trails such as elite trails and Fiery Bulblorb breath. Blue Pikmin take 40% less damage in stage water, and one thrown out of water keeps a 1.5x hit bonus for 5 s.
+- **The squad survives a swarm.** An enemy melee swing catches at most the two nearest Pikmin (four for champions and elites), each for twice the swing's damage, and a Pikmin that lands a hit is immune to other swipes for 0.3 s. Pikmin regenerate 4% of their max health a second, 12% a second after 6 s without one hurt, plus a share of Olimar's regeneration (Cautious Slug, Titanic Knurl, level) and doubled by Rejuvenation Rack.
+- **Jump pads work from a client.** The pad's own throw now reaches the host's simulation, so a client Olimar's squad gets the same launch and arc as the host's instead of only following his pose.
+- **The Onion can heal him.** RT + RB (keyboard: hold Z, tap F) calls the Onion to heal from its stored Pikmin and stays low over him; RT + LT still calls it to board. A called Onion tracks him while he moves, and a rescue or heal visit no longer leaves the Onion menu open afterwards.
+- **Onion Ride fixes.** He drops out of the Onion's bottom when a ride ends, keeps his heading through a moving pickup, lets the Onion take the stick on the boarding step, and the beam is centred over him.
+- **Candypop Buds** now offer White and Purple reliably alongside the Pikmin 1 colours.
+- **Carrying and the flying Onion** look right: Pikmin face the carried object's centre, a pellet being sucked rides the Onion's beam when the Onion moves, and climbers use the leg the Onion actually draws, including a leaning or flying Onion.
+- **Gait and throw animation:** the captain's gait loops inside the clip's own loop keys, keeps its place across clip changes and no longer flickers at low stick speeds; a locked-on rapid throw now catches a sprinting captain.
+- **Stage cards in Pikmin lettering.** Every stage opens with the five-second DAY card in the Pikmin 2 lettering and RoR2's stock stage card is hidden.
+- **Dolphin landing effects:** the touchdown cloud stops growing, the takeoff smoke is capped, and landing dust clears within a second.
+- **Skill bar:** the two-button chord glyphs are scaled down so they no longer overlap the next icon, and Onion Ride's description is shorter.
+- **Multiplayer build check:** a host and client whose Pikmin snapshot formats differ are now refused with one log line instead of silently drawing no Pikmin. Install the same Olimar build on every machine.
 
 ## 0.5.1 - 2026-11-01
 

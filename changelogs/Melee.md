@@ -4,6 +4,10 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.10 - 2026-11-01
+
+- **Head-and-shoulders portraits for all eight fighters.** The crop is a fraction of each fighter's height, so Samus's cannon, DK's arms or a spread idle pose cannot zoom the body out; Pikachu, Yoshi and DK get a taller crop for their larger heads. The new framing has its own cache revision, so Mario's and Olimar's portraits are untouched.
+
 ## 0.4.9 - 2026-11-01
 
 - Generate and cache idle character portraits with the common 45-degree-left framing; keep original CSS pictures as fallbacks.

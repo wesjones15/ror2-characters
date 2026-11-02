@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.5.1 for the modern/1.5.0 game compatibility line. See hotfix-20261101-portraits for the latest changes and validation status.
+> Modern 0.5.2 for the modern/1.5.0 game compatibility line. See hotfix-20261101-pikmin-colours for the latest changes and validation status.
 
 # Olimar for Risk of Rain 2
 
-Version 0.5.1 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.5.2 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -51,7 +51,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Pikmin.iso
    ```
 
-Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 58, Pikmin protocol 11 and repair protocol 6. Every participant needs the same build.
+Install `OlimarTest.dll` and `pikmin.dll` together. This release uses native ABI 59, Pikmin protocol 12 (snapshot 14) and repair protocol 6. Every participant needs the same build.
 
 ## First run
 
@@ -89,7 +89,8 @@ Read by position through Rewired's gamepad template, regardless of your RoR2 bin
 | A | throw a Pikmin or pluck a sprout; in the landed Onion beam, send the Onion plucker |
 | B | jump. In an Onion's beam B still jumps; LT boards instead |
 | RT (held) + B | whistle. RT is a modifier: holding it stops B jumping, and letting go of RT with B still held doesn't jump |
-| RT (held) | the alternate-command modifier: RT + B whistle, RT + right stick swarm, RT + X dump a flying Onion, RT + Y fill it |
+| RT (held) | the alternate-command modifier: RT + B whistle, RT + right stick swarm, RT + X dump a flying Onion, RT + Y fill it, RT + RB call the Onion over to heal |
+| RT (held) + RB | call the Onion over to heal him from its stored Pikmin; it stays low over him while the heal plays. This takes the strike's place on the chord |
 | X | hold 0.6 s to raise or lower the Onion (free, and no double-tap any more); in the landed beam, dump stock except one. RoR2 interact prompts take priority. |
 | RB | dismiss strike: a melee blow all around Olimar (4 s cooldown). While LT holds a lock, RB cycles targets instead |
 | D-pad left / right | choose the colour to throw: Any (nearest), Red, Yellow, Blue (colours not in the squad are skipped) |
@@ -223,8 +224,21 @@ up). The rainbow Pop gives 5 Pikmin for every 1, in whichever colour it is showi
 like enemies.
 
 - **Purple Pikmin** are heavy: a thrown Purple pounds where it lands, hurting what it hits and knocking flying
-  enemies down. It carries as much as ten others.
-- **White Pikmin** are fast and poisonous: an enemy that eats one takes heavy damage (`Pikmin.WhitePoisonDamage`).
+  enemies down. It carries as much as ten others, and takes 30% less hit damage.
+- **White Pikmin** are fast and poisonous: their hit applies RoR2's poison, and another White hit extends the poison
+  instead of multiplying its tick damage.
+- **Red Pikmin** are immune to fire: fire blasts from RoR2 enemies and fire trails such as elite trails and Fiery
+  Bulborb breath do nothing to them.
+- **Yellow Pikmin** hit airborne and Mechanical enemies for 1.5x.
+- **Blue Pikmin** take 40% less damage while standing in stage water, and one thrown out of water keeps a 1.5x hit
+  bonus for 5 s.
+
+### Squad survivability
+
+An enemy melee swing catches at most the two Pikmin nearest the swing (four for champions and elites), each for
+twice the swing's damage; a Pikmin that lands a hit is immune to other swipes for 0.3 s. Pikmin regenerate 4% of
+their max health a second, 12% a second after 6 s without one hurt, plus a share of Olimar's regeneration
+(Cautious Slug, Titanic Knurl, level), doubled by Rejuvenation Rack.
 
 Every skin's Onion stores all five colours, and Louie's squad starts with Purples and Whites.
 
@@ -319,11 +333,11 @@ site elsewhere. Recycled salvage and fallback wreckage also wait for a clear sit
 
 Assign enough Pikmin to haul each new part to **your landed Dolphin**. The carrying majority
 determines the destination; an opponent's nearer ship does not receive your haul. Parts use
-their disc weights (10–50 carriers). The original fitting animations, repair states, lights,
+their disc weights (10Ã¢â‚¬â€œ50 carriers). The original fitting animations, repair states, lights,
 particles and sounds show your repairs. Internal parts do not add an exterior attachment.
 
 Already have that part? Your Pikmin take it to **your landed Onion** for twice its weight in
-seeds (20–100), split across the three colours. Salvage does not advance the 30-part goal.
+seeds (20Ã¢â‚¬â€œ100), split across the three colours. Salvage does not advance the 30-part goal.
 Ship parts are excluded from all automatic Onion pickup targeting and ground vacuum.
 Only a Pikmin carry team deliberately targeting that Onion can hand a part into it;
 following Onions cannot take loose parts or intercept Dolphin-bound teams.
@@ -367,7 +381,7 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 58`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 59`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: set `Paths.Disc`, restart, and read the extraction messages.
