@@ -1,8 +1,14 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 41 and network protocol 12 from 0.5.0; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 42 and network protocol 12 from 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.5.3 - 2026-11-01
+
+- **A buried sambo's flower now shows for every player.** While a flower tower or a sambo head is under the ground, the plain flower that marks the spot is sent to every machine, not drawn only on the host, and any Mario can spray it open.
+- **Jump pads keep their full arc more reliably.** The shared air-control mark RoR2 clears on the first movement hit is latched briefly, so a pad's arc and gravity are not lost between reads.
+- **No empty pickup square.** With `Look.ItemDisplays` off, RoR2's new-item highlight no longer draws a square around a display that is hidden on our bodies.
 
 ## 0.5.2 - 2026-11-01
 
