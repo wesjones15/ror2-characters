@@ -50,7 +50,7 @@ Install the BepInExPack dependency set for the modern game:
    Disc = D:\GameCube\Super Mario Sunshine.iso
    ```
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 34 and Mario protocol 7.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 43 and Mario protocol 12.
 
 ## First run
 
@@ -299,7 +299,7 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 34`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 43`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
 - *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check
