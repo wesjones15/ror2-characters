@@ -1,6 +1,6 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.4.10 for the modern/1.5.0 game compatibility line. See hotfix-20261101-pikmin-colours for the latest changes and validation status.
+> Modern 0.4.10 for the modern/1.5.0 game compatibility line. See hotfix-20261101-frozen-sheen for the latest changes and validation status.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 

@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.5.2 for the modern/1.5.0 game compatibility line. See hotfix-20261101-pikmin-colours for the latest changes and validation status.
+> Modern 0.5.3 for the modern/1.5.0 game compatibility line. See hotfix-20261101-frozen-sheen for the latest changes and validation status.
 
 # Olimar for Risk of Rain 2
 
-Version 0.5.2 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.5.3 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -333,11 +333,11 @@ site elsewhere. Recycled salvage and fallback wreckage also wait for a clear sit
 
 Assign enough Pikmin to haul each new part to **your landed Dolphin**. The carrying majority
 determines the destination; an opponent's nearer ship does not receive your haul. Parts use
-their disc weights (10Ã¢â‚¬â€œ50 carriers). The original fitting animations, repair states, lights,
+their disc weights (10ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“50 carriers). The original fitting animations, repair states, lights,
 particles and sounds show your repairs. Internal parts do not add an exterior attachment.
 
 Already have that part? Your Pikmin take it to **your landed Onion** for twice its weight in
-seeds (20Ã¢â‚¬â€œ100), split across the three colours. Salvage does not advance the 30-part goal.
+seeds (20ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“100), split across the three colours. Salvage does not advance the 30-part goal.
 Ship parts are excluded from all automatic Onion pickup targeting and ground vacuum.
 Only a Pikmin carry team deliberately targeting that Onion can hand a part into it;
 following Onions cannot take loose parts or intercept Dolphin-bound teams.
@@ -425,3 +425,7 @@ It is generated in memory from your own disc, uses SFX volume, and stops when yo
 Character-select names and character-containing skill pictures follow the selected skin; the HUD cooldown slots use the same pictures for that body. Onion Ride and the sprout passive keep shared artwork. Generated character, skin and skill pictures persist in the local asset cache between launches.
 
 The first launch can hitch while missing pictures generate. Missing or invalid images regenerate individually; ordinary gameplay releases reuse the cache. This hotfix is build/boundary tested and has not yet been played in RoR2.
+
+## Frozen and Pikmin 2 body hotfix
+
+A frozen Olimar, and every skin, now show the same icy sheen as a frozen Pikmin. Purple and White Pikmin load their Pikmin 2 bodies from the shared P2 asset folder even without Louie's cache, and an Onion takes all five colours whenever those bodies load. The Iridescent Flint Beetle and Pellet Posy are drawn at the strategy's position instead of bobbing with the borrowed body.

@@ -1,8 +1,15 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 42 and network protocol 12 from 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 43 and network protocol 12 from 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.5.4 - 2026-11-01
+
+- **Every Mario pales when frozen.** RoR2's `FrozenState` (a Glacial elite's death blast) now gives Mario, and every skin, the same icy sheen a frozen Pikmin gets, instead of only holding his input.
+- **A Shine Get cannot be interrupted.** Touching the Shine grants hidden invincibility at once (the server grants it for a client's Mario too), so a hit can no longer cut the pickup or the pose short; if the pose is lost anyway, the demo ends instead of playing beside an idle Mario.
+- **FLUDD can pump out of a long fall.** Hover and Rocket work during RoR2's long drops instead of waiting for the flail to end.
+- **Water runs at one pace.** The wet slide's spray, the runoff drips and the other nozzles use the Spray's 1.4 speed; Yoshi's juice keeps its own rate.
 
 ## 0.5.3 - 2026-11-01
 

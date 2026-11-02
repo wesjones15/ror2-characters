@@ -1,8 +1,14 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2; ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.5.3 - 2026-11-01
+
+- **Olimar and every skin pale when frozen.** RoR2's `FrozenState` now gives the drawn captain the same icy sheen a frozen Pikmin gets, including Pianta, Louie and Captain Pikachu.
+- **Purple and White Pikmin load without Louie's cache.** Their Pikmin 2 bodies are read from the shared P2 asset folder too, and an Onion takes all five colours whenever those bodies load.
+- **Pikmin 2 props stay put.** The Iridescent Flint Beetle and Pellet Posy are drawn at the strategy's position instead of bobbing with the borrowed body's foot.
 
 ## 0.5.2 - 2026-11-01
 
