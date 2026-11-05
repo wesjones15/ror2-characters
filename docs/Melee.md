@@ -51,9 +51,9 @@ Older playtest findings are development history, not a current statement that on
 
    With `Paths.Disc` empty the plugin looks for an `.iso`, `.gcm` or `.ciso` **whose filename contains "Melee"** beside
    its DLLs, in nearby parent folders and their `iso backups` folders, and in the `SSBM_DISC` environment variable.
-   Or skip this step: write a folder's path into `BepInEx/plugins/gamecube_library.txt` (the file explains itself) and
-   put your disc images there under any names. All three mods look there, Melee picks its Rev 2 disc by reading it,
-   and a fresh cache is built in that folder's `assets\Melee`. A cache you already have stays where it is.
+   Or set up a shared disc folder. Copy `docs/examples/gamecube_library.txt` to `BepInEx/plugins/` if you haven't already,
+   write the folder's path into that file, and put your disc images there under any names. All three mods look there.
+   Melee picks its Rev 2 disc by reading it and builds a fresh cache in that folder's `assets\Melee`. A cache you already have stays where it is.
 5. Launch the game and let first-run extraction finish (a worker thread; the survivors are listed but wait for it).
    The cache is built in `BepInEx/plugins/Melee/assets/` and reused afterwards. Set `Paths.AssetsDir` to keep it
    elsewhere, for example to reuse the cache a Samus 0.2.x install built in `plugins/MeleeSamus/assets` (move it, or point
