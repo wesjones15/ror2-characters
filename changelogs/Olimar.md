@@ -1,8 +1,21 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 62 from 0.5.4; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.5.4 - 2026-11-05
+
+- **Olimar in VR (opt-in).** First person from his head for every skin with his own arms on the controllers, the held Pikmin in the throwing hand, his layout read by RoR2 through VrBank, carry counts, the Onion window, Ship Repair's overlays and part names and the enemy gauges on the wrist panel, and a VR pause sheet. A ridden Onion hides in first person. Every captain body's VR arms are baked on first run.
+- **Free cursor.** A host's aimed point is kept in 3D (native ABI 61), so a VR pointer can throw Pikmin where it points.
+- **Onion follows its legs.** The Onion walks, jumps and climbs the legs the host draws, its lean eases into the jump, the flying Onion's entry jump is an arc peaking on the leg grab point, and its dormancy now comes from the sim instead of a host copy (ABI 60 to 62).
+- **Dolphin arrival.** Olimar lands in the goal spot's rings, with one short half-alpha dust cloud, and the dust dissolves instead of dimming as one sheet.
+- **Particles.** Per-particle alpha is applied in the C# renderer.
+- **Jump pads** hand Olimar the motor's throw, as Mario's host does.
+- **Pellet Posy** holds its 1-HP death trigger until the body has been healthy.
+- **Audio** reopens its output when the sound device is lost or the default changes.
+- **Native panics are logged** each frame (`pik_take_panic`).
+- Install the updated `OlimarTest.dll` and `pikmin.dll` together: this build is native ABI 62.
 
 ## 0.5.3 - 2026-11-01
 

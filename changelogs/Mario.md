@@ -1,8 +1,18 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 43 and network protocol 12 from 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 47 and network protocol 12 from 0.5.5; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.5.5 - 2026-11-05
+
+- **Bowser Jr. and his goop.** A new Shadow Mario / Bowser Jr. survivor runs on Mario's sim, with Sunshine's goop world (every goop type, its lifetime and cap), goop critters (Swoopin' Stus, goop Piranhas and their shots), Petey Piranha as his sidekick, screen refraction over Shadow Mario's body, and the goop drawn with the disc's scrolling paint. The goop world is mirrored to every machine in multiplayer (native ABI 47). Not yet played in-game.
+- **Mario in VR (opt-in).** First person from his head with his forearms and gloves on the motion controllers, the nozzle wheel in the right hand, FLUDD aimed with the pointer, and the HUD, TOO BAD, GAME OVER and SHINE! on a wrist panel. RoR2 reads Mario's layout through the shared VrBank. Every skin's VR arms are baked on first run.
+- **Corkscrew hold.** A slow stick circle keeps the corkscrew going instead of needing a full circle every tick (ABI 43/44).
+- **Spray bursts by press time**, not by trigger depth.
+- **Multiplayer fixes.** Coin pickup works for non-Mario players, puppets nudge into place instead of teleporting, and spectators fit nozzles silently.
+- **Native panics are logged.** Anything sms.dll catches at its boundary is written to the log each frame.
+- Install the updated `MarioTest.dll` and `sms.dll` together: this build is native ABI 47. Everyone in a multiplayer game needs the same Mario build.
 
 ## 0.5.4 - 2026-11-01
 

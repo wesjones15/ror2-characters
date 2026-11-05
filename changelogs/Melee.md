@@ -4,6 +4,13 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.11 - 2026-11-05
+
+- **Melee in VR (opt-in).** Every fighter gets VR through the shared MeleeVr layer: a `[VR]` settings section, the body drawn through DrawBody, and RoR2 reading the fighter's layout via VrBank. Every fighter costume's VR arms are baked on first run (native ABI 5, with `ssbm_view_set_vr_arms`).
+- **Shared fighter behavior.** Common bodies became trait defaults in libssbm.
+- **Native panics are logged.** Anything ssbm.dll catches at its boundary is written to the log each frame.
+- Install the updated `Samus.dll` and `ssbm.dll` together.
+
 ## 0.4.10 - 2026-11-01
 
 - **Head-and-shoulders portraits for all eight fighters.** The crop is a fraction of each fighter's height, so Samus's cannon, DK's arms or a spread idle pose cannot zoom the body out; Pikachu, Yoshi and DK get a taller crop for their larger heads. The new framing has its own cache revision, so Mario's and Olimar's portraits are untouched.
