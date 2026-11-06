@@ -4,6 +4,23 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.5.7 - 2026-11-05
+
+- **Throw in mid-air.** B while carrying a player or object, jumping or falling, throws it (with Mario's current velocity) instead of diving, and Mario stays in his jump. Before, only the grounded states could throw, so a jump-and-B never released a carried friend.
+- **Spinning ground pound.** A full stick circle during a ground pound's wind-up or fall spins it, with the spin jump's swirl. Its landing reaches 2.5 times as far and does 2 times the damage, on the enemy pounded and the shock wave. New `Damage` config keys `SpinPoundDamage` (2) and `SpinPoundRadius` (2.5).
+- **The ground pound can be aimed a little.** In its fall the stick nudges Mario sideways (up to 12 units a frame, a fraction of a run) and turns him toward it. With no stick he falls straight down.
+- **Burning no longer cancels a ground pound.** Fire hits, bullets, lava and graffito skip the burn reaction from the pound's wind-up through its get-up. The damage still lands.
+- **Flaming spins are steerable and hit harder.** A corkscrew that has caught fire (spun for 1 second) turns twice as hard, pitches up to 55 degrees from the camera instead of 15, and steers more sharply the faster it flies, so the Turbo's keeps up. The flaming Rocket spin is steered by the stick with the Rocket's 2.5 times air control. Defaults: `SuperCorkscrew` damage 20 to 40, `RocketSpin` 10 to 20 (an existing config file keeps its old values; delete the lines to take the new ones).
+- **Rocket spin no longer machine-guns a boss.** It hits each enemy once per climb, and at most once per 0.75 seconds per enemy, so wedging inside a large body (the Wandering Vagrant) can no longer land hit after hit.
+- **Luigi without FLUDD no longer wears the pack.** Choosing No FLUDD removes the pack from his back as well as the nozzle.
+- **Spray keeps up with a boosted Mario** (Wax Quail): the extra travel above 1x is inherited in full.
+- **Bigger kills drop a ring of coins:** golem 5, titan 8, champion 10.
+- **Spectating shows the watched Mario's HUD** (life, coins, FLUDD gauge), or none when the watched player is another character.
+- **Bowser Jr. is still hidden from character select** (as in 0.5.6). His Shadow Mario refraction and portrait fixes are in, but nobody can pick him yet.
+- Install the updated `MarioTest.dll` and `sms.dll` together (native ABI 47, unchanged). Everyone in a multiplayer game needs the same Mario build.
+
+Not played in game: the mid-air throw, spinning pound, aimed pound, steerable flaming spins and the Luigi pack fix. The libsms test suite passes.
+
 ## 0.5.6 - 2026-11-05
 
 - **Bowser Jr. (Shadow Mario) is hidden from character select for this release.** His body, goop world and network messages stay registered, so nothing else changes for Mario, but he can no longer be picked.

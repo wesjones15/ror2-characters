@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.13 - 2026-11-05
+
+- **Frozen fighters hold their pose.** When RoR2 freezes a Melee fighter (a Glacial elite's death blast) the mesh stays as it was instead of playing the idle, and the fighter gets the same icy tint Mario and the Pikmin get.
+- **Spectating shows the watched fighter's HUD.** A spectator of a Melee fighter now sees that fighter's HUD.
+- Native ABI 5 and `ssbm.dll` are unchanged.
+
 ## 0.4.12 - 2026-11-05
 
 - **Generated skill portraits stay.** The skill art Melee generates for each fighter is now stored beside the installed plugin, and a vanilla fallback icon loading later no longer replaces a generated one.
