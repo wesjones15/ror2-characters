@@ -1,8 +1,12 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 47 and network protocol 12 from 0.5.5; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 48 and network protocol 13 from 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.5.8 - 2026-11-05
+
+- **Mario follows the stage's gravity.** RoR2's moon (Commencement) lowers gravity; Mario now jumps higher and falls slower there, with the same take-off speed. Every other stage is unchanged (the scale is 1). Native ABI 48 and network protocol 13: install `MarioTest.dll` and `sms.dll` together, and everyone in a multiplayer game needs this build. Not played on the moon yet.
 
 ## 0.5.7 - 2026-11-05
 
