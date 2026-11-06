@@ -1,8 +1,18 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 62 from 0.5.4; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 63 from 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.5.6 - 2026-11-05
+
+- **Dead Pikmin can sprout again (opt-in).** A Pikmin that dies can come back as a buried leaf you pluck again. Config: 60% of the time normally and 80% in a mass death. Off unless enabled; native ABI 63.
+- **The Onion plucker works from a hovering Onion.** The plucker button is allowed on a flying Onion, and the plucker teleports back to its captain if the Onion flies far off.
+- **Spectating shows the watched Olimar's bottom HUD.**
+- **Frozen survivors hold their pose** instead of playing the idle (shared library change; see Melee 0.4.13).
+- Install the updated `OlimarTest.dll` and `pikmin.dll` together: this build is native ABI 63. Everyone in a multiplayer game needs the same Olimar build.
+
+Not played in game; the Rust suites and managed checks passed on clean clones.
 
 ## 0.5.5 - 2026-11-05
 
