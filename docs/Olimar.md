@@ -60,9 +60,9 @@ effects, plus the Impact Site arrival clip. The cache is reused on later launche
 disc. By default it is the `assets/` folder next to the plugin; `Paths.AssetsDir`, then
 `assets_dir.txt` beside the plugin, then `PIKMIN_ASSETS`, override that.
 
-**One folder for every disc (optional).** Write a folder's path into `BepInEx/plugins/gamecube_library.txt`
-(the file explains itself) and put your disc images there, with any file names. Olimar, Mario and Melee all
-look there for their discs (Olimar also for Pikmin 2 and Melee, for his extra skins and enemies), and a mod
+**One folder for every disc (optional).** For first-time setup, copy `docs/examples/gamecube_library.txt`
+to `BepInEx/plugins/`. Write a folder's path into that file and put your disc images there, with any file names.
+Olimar, Mario and Melee all look there for their discs (Olimar also for Pikmin 2 and Melee, for his extra skins and enemies), and a mod
 with no cache yet builds it in that folder's `assets\Olimar`, `assets\Mario` or `assets\Melee`. A cache you
 already have stays where it is and keeps being used.
 

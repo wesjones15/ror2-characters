@@ -62,9 +62,9 @@ and the wipe pictures added when the disc is found (`Paths.Disc`); without them 
 screen is simply not shown. By default it is the `assets/` folder next to the
 plugin; `Paths.AssetsDir`, then `assets_dir.txt` beside the plugin, then `SMS_ASSETS`, override that.
 
-**One folder for every disc (optional).** Write a folder's path into `BepInEx/plugins/gamecube_library.txt`
-(the file explains itself) and put your disc images there, with any file names. Mario, Olimar and Melee all
-look there for their discs, and a mod with no cache yet builds it in that folder's `assets\Mario`,
+**One folder for every disc (optional).** For first-time setup, copy `docs/examples/gamecube_library.txt`
+to `BepInEx/plugins/`. Write a folder's path into that file and put your disc images there, with any file names.
+Mario, Olimar and Melee all look there for their discs, and a mod with no cache yet builds it in that folder's `assets\Mario`,
 `assets\Olimar` or `assets\Melee`. A cache you already have stays where it is and keeps being used.
 
 - Mario stays registered while extraction runs, but his sim, model and coins wait for the

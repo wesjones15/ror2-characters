@@ -90,14 +90,11 @@ $docs = @(
     @{ To = 'docs/Mario.md'; From = 'docs\Mario.md' },
     @{ To = 'docs/Olimar.md'; From = 'docs\Olimar.md' },
     @{ To = 'docs/Melee.md'; From = 'docs\Melee.md' },
-    # Each plugin's settings at this release's defaults (generated from its Config.Bind calls). Replacing an
-    # older file resets every setting, including Paths; BepInEx adds any key the file leaves out at its default.
-    @{ To = 'BepInEx/config/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
-    @{ To = 'BepInEx/config/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
-    @{ To = 'BepInEx/config/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' },
-    # The shared GameCube library's pointer, shipped as notes only (ror2-common GAMECUBE-LIBRARY.md): the mods
-    # ignore it until the player writes a folder into it.
-    @{ To = 'BepInEx/plugins/gamecube_library.txt'; From = 'templates\gamecube_library.txt'; Local = $true }
+    # Ship examples away from the live paths so merging BepInEx preserves players' settings and disc locations.
+    @{ To = 'docs/examples/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
+    @{ To = 'docs/examples/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
+    @{ To = 'docs/examples/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' },
+    @{ To = 'docs/examples/gamecube_library.txt'; From = 'templates\gamecube_library.txt' }
 )
 
 # --- The changelog sections of the versions being released -------------------------------------------------------
@@ -124,7 +121,7 @@ foreach ($pair in @(@('Mario', 'Mario'), @('Olimar', 'Olimar'), @('Melee', 'Mele
 New-Item -ItemType Directory -Path $out | Out-Null
 $files = New-Object System.Collections.Generic.List[string]
 foreach ($item in $payload + $docs) {
-    $candidate = if ([IO.Path]::IsPathRooted($item.From)) { $item.From } elseif ($item.To.StartsWith('docs/') -or $item.To.StartsWith('BepInEx/config/') -or $item.ContainsKey('Local')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
+    $candidate = if ($item.To.StartsWith('docs/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw "Missing build output: $candidate" }
     $target = Join-Path $out ($item.To -replace '/', '\')
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
@@ -157,6 +154,7 @@ $manifestText = $manifest | ConvertTo-Json -Depth 8
 # --- Guard: only the approved files, no game data or local path hints ---------------------------------------------
 $expected = @($files) + @('release.json')
 $actual = @(Get-ChildItem -LiteralPath $out -File -Recurse | ForEach-Object { $_.FullName.Substring($out.Length + 1).Replace('\', '/') })
+if ($actual -match '^BepInEx/(config/|plugins/gamecube_library\.txt$)') { throw 'Package would replace player settings.' }
 $diff = @(Compare-Object ($expected | Sort-Object) ($actual | Sort-Object))
 if ($diff.Count -ne 0) { throw "Package contents differ from the allowlist: $($diff | Out-String)" }
 $stillMarked = @(Get-ChildItem -LiteralPath $out -Recurse -File | Where-Object { Get-Item -LiteralPath $_.FullName -Stream Zone.Identifier -ErrorAction SilentlyContinue })

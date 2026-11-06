@@ -45,7 +45,7 @@ Releases are made on GitHub directly, from the release worktree of this reposito
 powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-20261021 -NotesFile .\releases\release-20261021.md
 ```
 
-This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). It works in Windows PowerShell 5.1 and never pushes or publishes.
+This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). Settings examples go in `docs/examples/` so the archive preserves installed settings when copied over an existing installation. It works in Windows PowerShell 5.1 and never pushes or publishes.
 
 For isolated release builds, build the committed `sources/` snapshots and pass `-SourceRoot .\sources -Workspace <workspace>` to the packaging script. This reads versions and DLLs from those clean snapshots while leaving unrelated local work untouched. Every source HEAD must match its staged submodule pin. Shared Rust code is linked into each native DLL; `libcommon` adds no runtime DLL.
 
