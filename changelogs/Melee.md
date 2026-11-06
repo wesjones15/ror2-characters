@@ -1,8 +1,13 @@
 # Melee changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 5 (libssbm).
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 6 (libssbm) from 0.4.14; ABI 5 before.
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
+
+## 0.4.14 - 2026-11-05
+
+- **Samus's homing missile locks the enemy nearest your crosshair.** Its 120 m lock range let distance outweigh how close an enemy was to the crosshair, so a nearby enemy often beat the one you were aiming at. The first pick now goes by the angle from the camera (where the crosshair is), with distance only breaking ties. Mario's and Olimar's lock-on share the code and are unchanged.
+- **Fighters follow the stage's gravity.** On RoR2's moon (low gravity) every Melee fighter falls with the lower gravity and the jump height is asked for at it, so jumps are higher and floatier; other stages are unchanged. Native ABI 6 (from 5), with the new setting carried in the network replay: install `Samus.dll` and `ssbm.dll` together, and everyone in a multiplayer game needs this build. Projectile shots keep normal gravity. Not played on the moon yet.
 
 ## 0.4.13 - 2026-11-05
 
