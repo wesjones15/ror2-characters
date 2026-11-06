@@ -4,6 +4,11 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.5.6 - 2026-11-05
+
+- **Bowser Jr. (Shadow Mario) is hidden from character select for this release.** His body, goop world and network messages stay registered, so nothing else changes for Mario, but he can no longer be picked.
+- Rebuilt against the shared library with the generated skill-icon fix (see Melee 0.4.12). Native ABI 47 is unchanged: keep `MarioTest.dll` and `sms.dll` from the same ZIP.
+
 ## 0.5.5 - 2026-11-05
 
 - **Bowser Jr. and his goop.** A new Shadow Mario / Bowser Jr. survivor runs on Mario's sim, with Sunshine's goop world (every goop type, its lifetime and cap), goop critters (Swoopin' Stus, goop Piranhas and their shots), Petey Piranha as his sidekick, screen refraction over Shadow Mario's body, and the goop drawn with the disc's scrolling paint. The goop world is mirrored to every machine in multiplayer (native ABI 47). Not yet played in-game.

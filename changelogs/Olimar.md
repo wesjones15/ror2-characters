@@ -4,6 +4,10 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.5.5 - 2026-11-05
+
+- Rebuilt against the updated shared library (generated skill icons are kept when vanilla fallbacks load). No Olimar behavior changes; native ABI 62, protocol and snapshot format are unchanged from 0.5.4.
+
 ## 0.5.4 - 2026-11-05
 
 - **Olimar in VR (opt-in).** First person from his head for every skin with his own arms on the controllers, the held Pikmin in the throwing hand, his layout read by RoR2 through VrBank, carry counts, the Onion window, Ship Repair's overlays and part names and the enemy gauges on the wrist panel, and a VR pause sheet. A ridden Onion hides in first person. Every captain body's VR arms are baked on first run.

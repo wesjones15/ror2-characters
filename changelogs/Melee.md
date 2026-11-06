@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.4.12 - 2026-11-05
+
+- **Generated skill portraits stay.** The skill art Melee generates for each fighter is now stored beside the installed plugin, and a vanilla fallback icon loading later no longer replaces a generated one.
+- **Menus pick up cached art.** When locally cached skill art arrives after a menu is already open, the Melee skill and loadout menus refresh instead of keeping the placeholder.
+- Native ABI 5 and `ssbm.dll` are unchanged.
+
 ## 0.4.11 - 2026-11-05
 
 - **Melee in VR (opt-in).** Every fighter gets VR through the shared MeleeVr layer: a `[VR]` settings section, the body drawn through DrawBody, and RoR2 reading the fighter's layout via VrBank. Every fighter costume's VR arms are baked on first run (native ABI 5, with `ssbm_view_set_vr_arms`).
