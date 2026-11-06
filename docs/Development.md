@@ -47,6 +47,16 @@ powershell -ExecutionPolicy Bypass -File .\package-release.ps1 -Tag release-2026
 
 This writes `<workspace>\<tag>\` (the three plugin folders, `docs\`, `README.md`, `CHANGELOG.md`, `release.json`) and `<tag>.zip` with its `.sha256`. `release.json` records every file's SHA-256, the plugin versions and the commit of each source repository. The script refuses to run on a dirty source repository, refuses to overwrite an existing package, and checks that the package holds only the approved files (no disc data, no `assets_dir.txt`). Settings examples go in `docs/examples/` so the archive preserves installed settings when copied over an existing installation. It works in Windows PowerShell 5.1 and never pushes or publishes.
 
+The manual ZIP also holds `BepInEx/plugins/wesleyasaurus-SharedFiles/` (the two placeholder READMEs from
+`ror2-common\sharedfiles`), the one folder every mod reads discs from and extracts into (see `ror2-common\SHARED-FILES.md`).
+The same run writes `<workspace>\<tag>-thunderstore\` with one Thunderstore package per entry of `thunderstore\packages.json`:
+`wesleyasaurus-SharedFiles-1.0.0.zip`, `wesleyasaurus-Mario-<v>.zip`, `-Olimar-<v>.zip` and `-Melee-<v>.zip`. Each is flat
+(`manifest.json`, `README.md`, `icon.png` and its files at the root; r2modman installs it into
+`BepInEx/plugins/wesleyasaurus-<name>/`), holds only files the manual ZIP already holds, and depends on BepInExPack,
+RoR2BepInExPack and SharedFiles. Mod versions come from the plugins; SharedFiles stays 1.0.0 unless its READMEs change.
+The page text and icons are `thunderstore\<name>\README.md` and `icon.png` (256x256). Upload SharedFiles first, then the
+mods, at https://thunderstore.io/c/riskofrain2/create/ under the `wesleyasaurus` team.
+
 For isolated release builds, build the committed `sources/` snapshots and pass `-SourceRoot .\sources -Workspace <workspace>` to the packaging script. This reads versions and DLLs from those clean snapshots while leaving unrelated local work untouched. Every source HEAD must match its staged submodule pin. Shared Rust code is linked into each native DLL; `libcommon` adds no runtime DLL.
 
 5. Pin the sources in this repository (`git -C sources/<name> fetch ..\..\<name> modern/1.5.0`, check out the released commit, `git add sources`), and commit the docs and pins.

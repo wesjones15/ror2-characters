@@ -13,12 +13,10 @@ with the disc's own models, animations, effects and voices.
 
 ## Status
 
-**Samus, Fox, Luigi and Yoshi are the most complete Melee fighters.** Pikachu, Captain Falcon, Link and Donkey Kong are still in progress, with unfinished moves, effects and tuning.
-
-Version 0.4.8 adds optional item displays on the fighters and the multiplayer fixes described in the release notes and changelog: a client's spawn, other players' fighters moving smoothly, and a client's A attack no longer erroring on the host. The new gameplay changes have automated checks, not a release playtest; Melee multiplayer still needs a two-machine playtest.
-
-Older playtest findings are development history, not a current statement that only Samus is playable. The roster still needs further gameplay validation.
-
+**Samus and Yoshi are the fighters this release offers.** Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong
+are unfinished and hidden: they aren't registered and their files aren't extracted. To try them anyway, set
+`ShowUnfinished = true` in `BepInEx/config/Ror2Common.Experimental.cfg` (see [Install](Install.md)); everyone in a
+multiplayer game needs the same setting. Melee multiplayer still needs a two-machine playtest.
 ## Requirements and dependency mods
 
 - Risk of Rain 2 **modern/1.5.0 (DLC4, Unity 2021.3.45f2)**, Windows x64.
@@ -35,32 +33,17 @@ Older playtest findings are development history, not a current statement that on
 
 ## Install
 
-1. Install BepInExPack and the five dependencies above, as for Mario and Olimar.
-2. **If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
-   `BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`, folder `Melee`),
-   and the two cannot run together: both would register Samus.
-3. Unzip the release ZIP (**release-20261031.zip**). It holds Mario, Olimar and Melee, each in its own folder under
-   `BepInEx/plugins`; copy the `Melee` folder (`Samus.dll` and `ssbm.dll`) into the same place in your game folder, or your
-   mod manager's profile. Install the two DLLs together.
-4. Launch once to create `BepInEx/config/com.libssbm.melee.cfg`, quit, and set `Paths.Disc` to the full path of your disc image:
+See [Install](Install.md): install `wesleyasaurus-Melee` (it brings `wesleyasaurus-SharedFiles`), put your own Melee
+disc (USA, revision 1.02) in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game. First-run
+extraction runs on a worker thread (the survivors are listed but wait for it) into `SharedFiles/assets/melee/`, shared
+with Mario's Luigi skin and punch and kick and Olimar's Captain Pikachu. Each fighter extracts its own files; one
+failing does not disable the others.
 
-   ```ini
-   [Paths]
-   Disc = D:\GameCube\Super Smash Bros. Melee (USA) (En,Ja) (Rev 2).ciso
-   ```
+**If you have a Samus release (0.2.x) installed, remove it first.** Delete `BepInEx/plugins/MeleeSamus/` and
+`BepInEx/config/com.libssbm.samus.cfg`. This release is a different plugin (`com.libssbm.melee`), and the two cannot
+run together: both would register Samus.
 
-   With `Paths.Disc` empty the plugin looks for an `.iso`, `.gcm` or `.ciso` **whose filename contains "Melee"** beside
-   its DLLs, in nearby parent folders and their `iso backups` folders, and in the `SSBM_DISC` environment variable.
-   Or set up a shared disc folder. Copy `docs/examples/gamecube_library.txt` to `BepInEx/plugins/` if you haven't already,
-   write the folder's path into that file, and put your disc images there under any names. All three mods look there.
-   Melee picks its Rev 2 disc by reading it and builds a fresh cache in that folder's `assets\Melee`. A cache you already have stays where it is.
-5. Launch the game and let first-run extraction finish (a worker thread; the survivors are listed but wait for it).
-   The cache is built in `BepInEx/plugins/Melee/assets/` and reused afterwards. Set `Paths.AssetsDir` to keep it
-   elsewhere, for example to reuse the cache a Samus 0.2.x install built in `plugins/MeleeSamus/assets` (move it, or point
-   `Paths.AssetsDir` at it). Each fighter extracts its own files; one failing does not disable the others.
-
-The native ABI must match: install `Samus.dll` and `ssbm.dll` from one ZIP. This release uses ABI 5.
-
+The native ABI must match: install `Samus.dll` and `ssbm.dll` from one ZIP.
 ## Controls
 
 The same five-skill layout for every fighter. Pad buttons are read by position, so your RoR2 binds do not change them.
@@ -159,7 +142,7 @@ RoR2 items adapted to Melee's movement, each with an `[Items]` setting (1 is RoR
 
 ## Configuration
 
-`BepInEx/config/com.libssbm.melee.cfg`: `Paths.AssetsDir`, `Paths.Disc`, `Sim.MetresPerUnit` (0.1: world metres per Melee unit;
+`BepInEx/config/com.libssbm.melee.cfg`: `Sim.MetresPerUnit` (0.1: world metres per Melee unit;
 movement, reach and model share it), `Sim.JumpScale`, `Sim.SpeedScale` (1.37: walk and run speed), `Visuals.RimLight` (the glow some moves give), `Combat.Armor` (20), `Combat.StaggerDuration`,
 `Combat.LockRangeMetres` (Pikachu's lock-on), Samus's `Combat.MissileRangeMetres`, `Combat.MissileDamageScale` and
 `Combat.ChargeShotHitboxScale`, `Controls.HoldCharge` (Samus: hold and release to fire, instead of tap to start and tap again to fire), the
@@ -174,7 +157,7 @@ Each entry has a description in the file.
 Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.10 registered` early and, after the game loads,
 `Melee 0.4.10 / libssbm ABI 5 loaded` then `Melee assets extracted from your disc` the first time.
 
-- *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check `Paths.Disc`, restart.
+- *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check your disc is in `wesleyasaurus-SharedFiles/put_games_here/`, restart.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.
 - *ABI mismatch error*: you mixed DLLs from different releases. Reinstall both from one ZIP.
 - *Wrong game version*: only DLC4 (2026) is supported.

@@ -1,0 +1,50 @@
+{
+  "namespace": "wesleyasaurus",
+  "website_url": "https://github.com/wesjones15/ror2-characters",
+  "common_dependencies": [
+    "bbepis-BepInExPack-5.4.2121",
+    "RiskofThunder-RoR2BepInExPack-1.46.0"
+  ],
+  "packages": [
+    {
+      "name": "SharedFiles",
+      "version": "1.0.0",
+      "description": "The folder the wesleyasaurus Mario, Olimar and Melee mods share: put your own GameCube disc images in put_games_here. No code.",
+      "dependencies": [],
+      "files": [
+        { "to": "put_games_here/README.txt", "from": "ror2-common/sharedfiles/put_games_here/README.txt" },
+        { "to": "assets/README.txt", "from": "ror2-common/sharedfiles/assets/README.txt" }
+      ]
+    },
+    {
+      "name": "Mario",
+      "plugin": "Mario",
+      "description": "Mario with FLUDD from Super Mario Sunshine as a survivor. Needs your own Sunshine disc. A Melee disc adds the Luigi skin. Offline and friends-only.",
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "files": [
+        { "to": "MarioTest.dll", "from": "ror2-mario/dist/MarioTest/MarioTest.dll" },
+        { "to": "sms.dll", "from": "ror2-mario/dist/MarioTest/sms.dll" }
+      ]
+    },
+    {
+      "name": "Olimar",
+      "plugin": "Olimar",
+      "description": "Olimar and the Pikmin from Pikmin as a survivor, plus the Ship Repair mode. Needs your own Pikmin disc; Pikmin 2 and Melee discs add skins and enemies. Offline and friends-only.",
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "files": [
+        { "to": "OlimarTest.dll", "from": "ror2-olimar/dist/OlimarTest/OlimarTest.dll" },
+        { "to": "pikmin.dll", "from": "ror2-olimar/dist/OlimarTest/pikmin.dll" }
+      ]
+    },
+    {
+      "name": "Melee",
+      "plugin": "Melee",
+      "description": "Samus and Yoshi from Super Smash Bros. Melee as survivors. Needs your own Melee disc (USA, revision 1.02). Offline and friends-only.",
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "files": [
+        { "to": "Samus.dll", "from": "ror2-samus/Samus/bin/Release/netstandard2.1/Samus.dll" },
+        { "to": "ssbm.dll", "from": "libssbm/target/release/ssbm.dll" }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 # RoR2 Characters
 
-Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin; and the Melee mod adds eight Super Smash Bros. Melee fighters (Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong). Each is a separate BepInEx mod and can be installed with the others.
+Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's movement and FLUDD; Olimar leads a squad of Pikmin; and the Melee mod adds Super Smash Bros. Melee fighters (Samus and Yoshi; six more are unfinished and hidden). Each is a separate BepInEx mod and can be installed with the others.
 
 **Offline and friends-only co-op only.** Melee multiplayer is new and has never been played between two machines.
 
@@ -10,11 +10,14 @@ Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's mo
 | --- | --- | --- | --- |
 | Mario | 0.5.0 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
 | Olimar | 0.5.0 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
-| Melee (Samus, Fox, Luigi and Yoshi are the most complete; Pikachu, Captain Falcon, Link and Donkey Kong are still in progress) | 0.4.8 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
+| Melee (Samus and Yoshi; Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong are hidden until finished) | 0.4.8 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
 
 ## Download
 
-Get the ZIP from the [releases page](https://github.com/wesjones15/ror2-characters/releases). A release holds all three mods, each in its own folder under `BepInEx/plugins`, plus `README.md` (install and what's new), `CHANGELOG.md`, the guides in `docs/`, and `release.json` with the SHA-256 of every file and the source commits it was built from. The latest release is the one marked Latest; earlier ones (such as the per-character `modern-mario-v0.3.0` releases and the hotfix releases) stay available.
+Two ways, with the same files:
+
+- **Thunderstore / r2modman:** install `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and/or `wesleyasaurus-Melee`. Each brings `wesleyasaurus-SharedFiles` (the folder for your discs) and BepInEx with it.
+- **By hand:** the ZIP on the [releases page](https://github.com/wesjones15/ror2-characters/releases) holds all three mods and SharedFiles under `BepInEx/plugins`, plus `README.md` (install and what's new), `CHANGELOG.md`, the guides in `docs/`, and `release.json` with the SHA-256 of every file and the source commits it was built from. The Thunderstore packages are attached to the same release.
 
 ## Requirements
 
@@ -24,19 +27,16 @@ Get the ZIP from the [releases page](https://github.com/wesjones15/ror2-characte
 | BepInEx | **5.4.21.0** |
 | RoR2BepInExPack | **1.46.0** |
 | Mario: a Super Mario Sunshine disc image | your own `.iso`, `.gcm` or `.ciso` (any region) |
-| Olimar: a Pikmin disc image | your own `.iso`, `.gcm` or `.ciso` |
-| Melee: a Super Smash Bros. Melee disc image | your own NTSC-U revision 2 (`GALE01`) `.iso`, `.gcm` or `.ciso` |
+| Olimar: a Pikmin disc image | your own `.iso`, `.gcm` or `.ciso` (any region) |
+| Melee: a Super Smash Bros. Melee disc image | your own USA revision 1.02 (`GALE01`) `.iso`, `.gcm` or `.ciso` |
 
 Other game builds are not supported. VR is not supported in these releases.
 
 ## Install
 
-1. Install BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0 into Risk of Rain 2 DLC4 (2026).
-2. Right-click the downloaded ZIP, open Properties and tick **Unblock** (otherwise Windows asks "These files might be harmful" when you copy the DLLs; OK is safe). Unzip the release and copy the folders you want from its `BepInEx/plugins` into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there. With a mod manager, copy them into the active profile folder instead.
-3. Launch the game once, set `Paths.Disc` in each mod's config file to your own disc image, and launch again.
+Install the mods, put your own disc images in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game. There are no path settings. [docs/Install.md](docs/Install.md) has the steps for r2modman and by hand, which discs add what, how to upgrade from an older release (old disc and cache locations aren't read any more), and how to show the unfinished fighters.
 
 Each mod's guide has the details, controls and troubleshooting. **Upgrading from Samus 0.2.x:** Melee replaces it; delete `BepInEx/plugins/MeleeSamus` first (see the Melee guide).
-
 ## Your disc, not ours
 
 The mods extract their models, textures and audio from **your own GameCube disc images** on first launch. The ZIPs contain no disc images, extracted game assets, generated music, game DLLs or dependency DLLs; only the mod DLLs, the documentation and a manifest. Please don't share extracted assets.

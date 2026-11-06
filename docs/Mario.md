@@ -28,45 +28,21 @@ Install the BepInExPack dependency set for the modern game:
 
 ## Install
 
-1. Install **BepInExPack and all five dependencies** using your Risk of Rain 2 mod manager. Confirm they are enabled in the same profile you will use for Mario. For a manual install, download BepInExPack from the link above and copy the contents of its inner `BepInExPack` directory into the game directory, with `winhttp.dll` beside the game executable. Download the five dependency packages separately and merge their included folders into that installation, preserving `BepInEx/plugins`, `BepInEx/patchers` and `BepInEx/config`; follow each package's own instructions. Copy complete package contents, including supporting files.
-2. Unzip the release ZIP (**release-20261031.zip**). It holds Mario, Olimar and Melee, each in its own folder under `BepInEx/plugins`, so copy the folders you want. Copy the `BepInEx` folder from the ZIP into your Risk of Rain 2 game folder (the one with `Risk of Rain 2.exe`), merging with the `BepInEx` folder already there when Windows asks. With a mod manager, copy it into the active profile folder instead and launch through that profile. It adds only the character's two DLLs under `BepInEx/plugins/`; your configs, assets, disc images and other mods stay as they are.
-3. Put your own **Super Mario Sunshine ISO beside the two character DLLs**, directly in `BepInEx/plugins/MarioTest/`:
+See [Install](Install.md): install `wesleyasaurus-Mario` (it brings `wesleyasaurus-SharedFiles`), put your own
+Super Mario Sunshine disc in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game.
+A Melee disc (USA, revision 1.02) there as well adds the Luigi skin; with the Melee mod installed too, the empty
+FLUDD button gets Mario's Melee punch and kick.
 
-   ```text
-   BepInEx/
-     plugins/
-       MarioTest/
-         MarioTest.dll
-         sms.dll
-         Super Mario Sunshine.iso
-   ```
-
-   The ISO filename does not matter. Keep it in this character folder, rather than the game root or the `assets` subfolder. The plugin searches beside its DLLs automatically. Mario and the other character use separate folders and can be installed together.
-4. Launch the game and let first-run extraction finish. The plugin creates `assets/` beside its DLLs by default and reuses that cache on later launches.
-5. To keep the ISO elsewhere, launch once to create the config, quit, and edit `BepInEx/config/com.libsms.mariotest.cfg`. Under `[Paths]`, set `Disc` to its full path, then launch again:
-
-   ```ini
-   [Paths]
-   Disc = D:\GameCube\Super Mario Sunshine.iso
-   ```
-
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 43 and Mario protocol 12.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 49.
 
 ## First run
 
-The plugin builds its asset cache from your disc: models, animation, tuning, sounds, HUD and
-particle effects, the Shine Sprite and its Shine Get camera, plus the arrival, "Too Bad!", game over, blue coin, "secret" chime and Shine Get fanfare jingles (in
-`assets/ror2_audio/`) and the pictures of the game over wipe (`assets/wipe/`). The cache is
-reused on later launches without the disc. A cache made by an older version gets the jingles
-and the wipe pictures added when the disc is found (`Paths.Disc`); without them the game over
-screen is simply not shown. By default it is the `assets/` folder next to the
-plugin; `Paths.AssetsDir`, then `assets_dir.txt` beside the plugin, then `SMS_ASSETS`, override that.
-
-**One folder for every disc (optional).** For first-time setup, copy `docs/examples/gamecube_library.txt`
-to `BepInEx/plugins/`. Write a folder's path into that file and put your disc images there, with any file names.
-Mario, Olimar and Melee all look there for their discs, and a mod with no cache yet builds it in that folder's `assets\Mario`,
-`assets\Olimar` or `assets\Melee`. A cache you already have stays where it is and keeps being used.
-
+The plugin builds its asset cache from your disc in `SharedFiles/assets/sunshine/`: models, animation, tuning,
+sounds, HUD and particle effects, the Shine Sprite and its Shine Get camera, plus the arrival, "Too Bad!", game over,
+blue coin, "secret" chime and Shine Get fanfare jingles (`ror2_audio/`) and the pictures of the game over wipe
+(`wipe/`). The cache is reused on later launches without the disc. A cache made by an older version gets the jingles
+and the wipe pictures added when the disc is found; without them the game over screen is simply not shown.
+Luigi's files go to `SharedFiles/assets/melee/`, shared with the other mods.
 - Mario stays registered while extraction runs, but his sim, model and coins wait for the
   complete cache. If extraction fails or there is no disc, he plays as Commando and the log
   says what to fix.
@@ -294,7 +270,7 @@ His front Spray comes out of his mouth in his juice colour.
 `BepInEx/config/com.libsms.mariotest.cfg`. The main sections are `Look.*` (model, height,
 effects, smoke speed, water tint), `Sound.*`, `SpawnMusic.*`, `Sim.*` (jump, stomp and speed
 rules), `Fludd.*`, `Controls.*` (camera aim, lock range, trigger curve), `Hud.*`, `Damage.*`,
-`Items.*`, `FallDamage.*`, `Knockdown.*`, `Paths.*` and `Debug.*`. Each entry has a
+`Items.*`, `FallDamage.*`, `Knockdown.*` and `Debug.*`. Each entry has a
 description in the file.
 
 ## Troubleshooting
@@ -302,8 +278,8 @@ description in the file.
 Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 43`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
-- *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check
-  `Paths.Disc`, then restart.
+- *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check your disc is in
+  `wesleyasaurus-SharedFiles/put_games_here/`, then restart.
 - *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
 - *Wrong game version*: only DLC4 (2026) is supported.
 
