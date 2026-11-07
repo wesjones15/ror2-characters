@@ -41,7 +41,7 @@ foreach ($core in $cores) {
             $unexpected = @($failed | Where-Object { $_ -notin $allowed })
             if ($failed.Count -eq 0) { $failures.Add("cargo test $core (no failing test named; build or harness error)") }
             elseif ($unexpected.Count -ne 0) { $unexpected | ForEach-Object { $failures.Add("${core}: $_") } }
-            else { Write-Host "::warning::$core: $($failed.Count) asset-bound tests failed as expected without a disc cache; they are NOT verified by this run." }
+            else { Write-Host "::warning::${core}: $($failed.Count) asset-bound tests failed as expected without a disc cache; they are NOT verified by this run." }
         }
     } finally { Pop-Location }
     Write-Host '::endgroup::'
