@@ -87,12 +87,12 @@ $versions = [ordered]@{
 
 # --- Built files: plugin folder -> (source file) ------------------------------------------------------------------
 $payload = @(
-    @{ To = 'BepInEx/plugins/MarioTest/MarioTest.dll'; From = 'ror2-mario\dist\MarioTest\MarioTest.dll' },
-    @{ To = 'BepInEx/plugins/MarioTest/sms.dll'; From = 'ror2-mario\dist\MarioTest\sms.dll' },
-    @{ To = 'BepInEx/plugins/OlimarTest/OlimarTest.dll'; From = 'ror2-olimar\dist\OlimarTest\OlimarTest.dll' },
-    @{ To = 'BepInEx/plugins/OlimarTest/pikmin.dll'; From = 'ror2-olimar\dist\OlimarTest\pikmin.dll' },
-    @{ To = 'BepInEx/plugins/Melee/Samus.dll'; From = 'ror2-samus\Samus\bin\Release\netstandard2.1\Samus.dll' },
-    @{ To = 'BepInEx/plugins/Melee/ssbm.dll'; From = 'libssbm\target\release\ssbm.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Mario/MarioTest.dll'; From = 'ror2-mario\dist\MarioTest\MarioTest.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Mario/sms.dll'; From = 'ror2-mario\dist\MarioTest\sms.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Olimar/OlimarTest.dll'; From = 'ror2-olimar\dist\OlimarTest\OlimarTest.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Olimar/pikmin.dll'; From = 'ror2-olimar\dist\OlimarTest\pikmin.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Melee/Samus.dll'; From = 'ror2-samus\Samus\bin\Release\netstandard2.1\Samus.dll' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-Melee/ssbm.dll'; From = 'libssbm\target\release\ssbm.dll' },
     # The shared disc/asset folder every mod reads (ror2-common SharedFiles): two placeholder READMEs, no code.
     @{ To = 'BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/README.txt'; From = 'ror2-common\sharedfiles\put_games_here\README.txt' },
     @{ To = 'BepInEx/plugins/wesleyasaurus-SharedFiles/assets/README.txt'; From = 'ror2-common\sharedfiles\assets\README.txt' }
