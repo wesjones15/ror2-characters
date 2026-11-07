@@ -1,22 +1,22 @@
 # Mario
 
-Mario from **Super Mario Sunshine** as a Risk of Rain 2 survivor: Sunshine's own movement (triple jumps, dives, wall kicks, ground pounds) and FLUDD's Spray, Hover, Rocket and Turbo nozzles, drawn and voiced from your disc.
+Mario from **Super Mario Sunshine** as a Risk of Rain 2 survivor: Sunshine's own movement (triple jumps, dives, wall kicks, ground pounds) and FLUDD's Spray, Hover, Rocket and Turbo nozzles.
 
-Needs your own **Super Mario Sunshine** disc (any region). Optional extras:
-- A **Melee** disc (USA, revision 1.02) adds the Luigi skin.
-- With the **wesleyasaurus-Melee** mod installed too, FLUDD's empty button gets Mario's Melee punch and kick.
-- Olimar (wesleyasaurus-Olimar) can wear a Pianta skin made from the Sunshine files this mod copies.
+Requires your own copy of Super Mario Sunshine (GameCube). Nothing from the game is included in this package.
+
+Extras:
+- A Luigi skin, with your own copy of Super Smash Bros. Melee.
+- With **wesleyasaurus-Melee** installed too, FLUDD's empty button gets Mario's Melee punch and kick.
+- With **wesleyasaurus-Olimar** installed, Olimar can wear a Pianta skin.
+
 ## Setup
 
-1. Install this mod with r2modman. It brings `wesleyasaurus-SharedFiles`.
-2. In r2modman: Settings, Browse profile folder, then `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`.
-3. Put your own disc images there (`.iso`, `.gcm` or `.ciso`, any names), and start the game. The first launch takes a minute while the mod copies its files from the disc.
+Install with r2modman, then follow the setup guide: https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/Install.md
 
-**Used the GitHub ZIP before (Mario 0.5.x)?** Delete the old `BepInEx/plugins/MarioTest` folder from your Risk of Rain 2 folder (and `gamecube_library.txt` if you made one), so the old copy doesn't load beside this one, and move your disc images into `put_games_here`. Old disc paths and caches aren't read any more; the first launch extracts again. Full steps: [Upgrading](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/Install.md#upgrading-from-mario-05x-olimar-05x-or-melee-04x).
+Used the GitHub download before (Mario 0.5.x)? Delete the old `BepInEx/plugins/MarioTest` folder from your Risk of Rain 2 folder so it doesn't load beside this one. The guide's "Upgrading" section has the rest.
 
-## Your discs, your computer
+## Notes
 
-- Nothing from any game disc is included. Each mod copies what it needs from **your own** disc images on the first launch, into `wesleyasaurus-SharedFiles/assets/`. Never share that folder.
-- The mods make no internet connections and start no other programs; multiplayer uses Risk of Rain 2's own connection. Each is a .NET DLL plus a native DLL (`sms.dll`, `pikmin.dll` or `ssbm.dll`) that runs the character, loaded from the mod's own folder.
-- **Offline and friends-only co-op.** Don't use these mods in public lobbies.
-- Unofficial fan project, not affiliated with Nintendo, HAL Laboratory, Hopoo Games or Gearbox. Source, guides and changelogs: https://github.com/wesjones15/ror2-characters
+- Offline and friends-only co-op. Don't use it in public lobbies.
+- Makes no internet connections; multiplayer uses Risk of Rain 2's own connection.
+- Unofficial fan project, not affiliated with Nintendo, Hopoo Games or Gearbox. Source, guides and changelogs: https://github.com/wesjones15/ror2-characters

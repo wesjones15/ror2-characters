@@ -1,23 +1,21 @@
 # Melee
 
-**Samus** and **Yoshi** from **Super Smash Bros. Melee** as Risk of Rain 2 survivors, with Melee's own physics, moves, hitboxes, effects and voices from your disc.
+**Samus** and **Yoshi** from **Super Smash Bros. Melee** as Risk of Rain 2 survivors, with Melee's own physics, moves and hitboxes.
 
-Needs your own **Super Smash Bros. Melee** disc: **USA, revision 1.02** (`GALE01`). Other versions are refused.
+Requires your own copy of Super Smash Bros. Melee (GameCube, USA version 1.02). Nothing from the game is included in this package.
 
 More fighters (Fox, Luigi, Pikachu, Captain Falcon, Link, Donkey Kong) are unfinished and hidden. To try them anyway, set `ShowUnfinished = true` in `BepInEx/config/Ror2Common.Experimental.cfg`; everyone in a multiplayer game needs the same setting.
 
 With **wesleyasaurus-Mario** installed, Mario gets his Melee punch and kick.
+
 ## Setup
 
-1. Install this mod with r2modman. It brings `wesleyasaurus-SharedFiles`.
-2. In r2modman: Settings, Browse profile folder, then `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`.
-3. Put your own disc images there (`.iso`, `.gcm` or `.ciso`, any names), and start the game. The first launch takes a minute while the mod copies its files from the disc.
+Install with r2modman, then follow the setup guide: https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/Install.md
 
-**Used the GitHub ZIP before (Melee 0.4.x)?** Delete the old `BepInEx/plugins/Melee` folder from your Risk of Rain 2 folder (and `gamecube_library.txt` if you made one), so the old copy doesn't load beside this one, and move your disc images into `put_games_here`. Old disc paths and caches aren't read any more; the first launch extracts again. Full steps: [Upgrading](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/Install.md#upgrading-from-mario-05x-olimar-05x-or-melee-04x).
+Used the GitHub download before (Melee 0.4.x)? Delete the old `BepInEx/plugins/Melee` folder from your Risk of Rain 2 folder so it doesn't load beside this one. The guide's "Upgrading" section has the rest.
 
-## Your discs, your computer
+## Notes
 
-- Nothing from any game disc is included. Each mod copies what it needs from **your own** disc images on the first launch, into `wesleyasaurus-SharedFiles/assets/`. Never share that folder.
-- The mods make no internet connections and start no other programs; multiplayer uses Risk of Rain 2's own connection. Each is a .NET DLL plus a native DLL (`sms.dll`, `pikmin.dll` or `ssbm.dll`) that runs the character, loaded from the mod's own folder.
-- **Offline and friends-only co-op.** Don't use these mods in public lobbies.
+- Offline and friends-only co-op. Don't use it in public lobbies.
+- Makes no internet connections; multiplayer uses Risk of Rain 2's own connection.
 - Unofficial fan project, not affiliated with Nintendo, HAL Laboratory, Hopoo Games or Gearbox. Source, guides and changelogs: https://github.com/wesjones15/ror2-characters

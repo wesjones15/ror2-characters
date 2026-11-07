@@ -19,7 +19,7 @@
     {
       "name": "Mario",
       "plugin": "Mario",
-      "description": "Mario with FLUDD from Super Mario Sunshine as a survivor. Needs your own Sunshine disc. A Melee disc adds the Luigi skin. Offline and friends-only.",
+      "description": "Mario with FLUDD from Super Mario Sunshine as a survivor. Requires your own copy of Super Mario Sunshine (GameCube); no game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
       "files": [
         { "to": "MarioTest.dll", "from": "ror2-mario/dist/MarioTest/MarioTest.dll" },
@@ -29,7 +29,7 @@
     {
       "name": "Olimar",
       "plugin": "Olimar",
-      "description": "Olimar and the Pikmin from Pikmin as a survivor, plus the Ship Repair mode. Needs your own Pikmin disc; Pikmin 2 and Melee discs add skins and enemies. Offline and friends-only.",
+      "description": "Captain Olimar and his Pikmin as a survivor, plus the Ship Repair mode. Requires your own copy of Pikmin (GameCube); no game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
       "files": [
         { "to": "OlimarTest.dll", "from": "ror2-olimar/dist/OlimarTest/OlimarTest.dll" },
@@ -39,7 +39,7 @@
     {
       "name": "Melee",
       "plugin": "Melee",
-      "description": "Samus and Yoshi from Super Smash Bros. Melee as survivors. Needs your own Melee disc (USA, revision 1.02). Offline and friends-only.",
+      "description": "Samus and Yoshi from Super Smash Bros. Melee as survivors. Requires your own copy of Melee (GameCube); no game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
       "files": [
         { "to": "Samus.dll", "from": "ror2-samus/Samus/bin/Release/netstandard2.1/Samus.dll" },
