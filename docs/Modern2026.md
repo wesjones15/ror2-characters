@@ -1,6 +1,6 @@
 # DLC4 migration (2026-10-14)
 
-Target: the local `2026 Mod Stuff/RiskOfRain2_DLC4` installation. Its UnityPlayer reports **2021.3.45f2**; RoR2 references .NET Standard 2.1. Installed RoR2BepInExPack reports **1.46.0**. The nearby Enforcer 3.11.9 source was used as a migration reference, not as a binary dependency.
+Target: DLC4 reference assemblies selected explicitly by the builder with `-RoR2Dir`. The migration used Unity **2021.3.45f2** and .NET Standard 2.1 references. Installed RoR2BepInExPack reports **1.46.0**. The nearby Enforcer 3.11.9 source was used as a migration reference, not as a binary dependency.
 
 ## Branches and implementation
 

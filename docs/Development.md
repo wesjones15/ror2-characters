@@ -15,17 +15,19 @@ The eight Git submodules under `sources/` pin the exact source commits used toge
 
 ## Build the mods
 
-Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.1`. The build uses your local RoR2 DLC4 (2026) installation and its BepInEx 5.4.21.0 reference assemblies (the workspace copy `2026 Mod Stuff\RiskOfRain2_DLC4` by default). Building needs no Nintendo disc or extracted assets and does not install into a live game folder.
+Set `$referenceDirectory` explicitly to the chosen RoR2/BepInEx reference directory. Build scripts have no personal game-copy default. Staging resolves from the source workspace to `target/`, independently of reference location.
+
+Building requires Windows x64, Git, stable Rust with the MSVC toolchain, Visual Studio C++ Build Tools with a Windows SDK, and a .NET SDK supporting `netstandard2.1`. The build uses your local RoR2 DLC4 (2026) installation and its BepInEx 5.4.21.0 reference assemblies (selected explicitly with `-RoR2Dir`). Building needs no Nintendo disc or extracted assets and does not install into a live game folder.
 
 Work happens in the source repositories next to this one, on `modern/1.5.0` (Melee: `main`). Each has its own build script:
 
 ```powershell
 # Mario: builds sms.dll and MarioTest.dll into ror2-mario\dist\MarioTest
-powershell -ExecutionPolicy Bypass -File ..\ror2-mario\build.ps1 -NoInstall
+powershell -ExecutionPolicy Bypass -File ..\ror2-mario\build.ps1 -RoR2Dir $referenceDirectory -NoInstall
 # Olimar: builds pikmin.dll and OlimarTest.dll into ror2-olimar\dist\OlimarTest
-powershell -ExecutionPolicy Bypass -File ..\ror2-olimar\build.ps1 -NoInstall
+powershell -ExecutionPolicy Bypass -File ..\ror2-olimar\build.ps1 -RoR2Dir $referenceDirectory -NoInstall
 # Melee: runs the libssbm tests and the C# checks, builds Samus.dll and ssbm.dll, and with -Deploy stages them
-powershell -ExecutionPolicy Bypass -File ..\ror2-samus\build.ps1 -Deploy
+powershell -ExecutionPolicy Bypass -File ..\ror2-samus\build.ps1 -RoR2Dir $referenceDirectory -Deploy
 ```
 
 `-Deploy` (and Olimar's default install) stage the DLLs under the workspace's `target\BepInEx\plugins\<Plugin>\`; copy them from there into the game by hand. Nothing is ever deployed into a live game folder.

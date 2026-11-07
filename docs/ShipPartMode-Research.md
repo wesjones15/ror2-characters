@@ -49,7 +49,7 @@ Read the local DLC4 `Risk of Rain 2_Data/Managed/RoR2.dll` with the installation
 `BepInEx/core/Mono.Cecil.dll`. No game was launched or changed. Reproduce with:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\docs\tools\InspectShipModeApi.ps1 -RoR2Dir "D:\Games\Risk of Rain 2"
+powershell -ExecutionPolicy Bypass -File .\docs\tools\InspectShipModeApi.ps1 -RoR2Dir $referenceDirectory
 ```
 
 Observed metadata:

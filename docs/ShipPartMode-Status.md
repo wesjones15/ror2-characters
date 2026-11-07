@@ -16,8 +16,8 @@ in-game validation is still pending.
 - Managed Release build, `ShipRepairCheck`, shared renderer checks and
   `NativeCheck` pass. Native checks use the Steam installation's existing asset
   cache, including ship delivery, duplicate salvage, victory PCM and stage music.
-- Deployed Olimar 0.3.4 and matching native ABI 33 to
-  `D:\SteamLibrary\steamapps\common\Risk of Rain 2`. Mario, configuration, asset
+- Historical local test deployment: Olimar 0.3.4 and native ABI 33. Current builds
+  stage in `<workspace>/target/` for manual copying. Mario, configuration, asset
   pointers and spawn audio are preserved. Previous Olimar DLLs and the verified
   deployment manifest are in `dist/ship-repair-targeting-20261016-214203/`.
 - Select **Ship Repair** in the game-mode menu; the old `ShipPartsMode` config
