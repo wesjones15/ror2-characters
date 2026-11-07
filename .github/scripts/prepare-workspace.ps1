@@ -17,7 +17,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$Workspace,
     [Parameter(Mandatory = $true)][string]$ReleaseRepo,
-    [Parameter(Mandatory = $true)][string]$Token,
+    [string]$Token = '',
     [string]$Owner = 'wesjones15'
 )
 $ErrorActionPreference = 'Stop'
@@ -28,10 +28,15 @@ $sources = [ordered]@{
     'libcommon' = 'modern/1.5.0'; 'libpikmin' = 'modern/1.5.0'; 'libsms' = 'modern/1.5.0'; 'libssbm' = 'main'
     'ror2-common' = 'modern/1.5.0'; 'ror2-mario' = 'modern/1.5.0'; 'ror2-olimar' = 'modern/1.5.0'; 'ror2-samus' = 'main'
 }
-$basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$Token"))
-Write-Host "::add-mask::$basic"
+# The source repositories are public, so no token is needed; one is used only if given (a private fork).
+$auth = @()
+if ($Token) {
+    $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x-access-token:$Token"))
+    Write-Host "::add-mask::$basic"
+    $auth = @('-c', "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic")
+}
 function Invoke-Git([string]$Dir, [string[]]$GitArgs) {
-    $all = @('-c', "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic", '-C', $Dir) + $GitArgs
+    $all = $auth + @('-C', $Dir) + $GitArgs
     & git @all
     if ($LASTEXITCODE -ne 0) { throw "git $($GitArgs -join ' ') failed in $Dir" }
 }
@@ -44,8 +49,8 @@ foreach ($name in $sources.Keys) {
     if ([string]::IsNullOrWhiteSpace($pin) -or $pin.Length -ne 40) { throw "sources/$name is not pinned in $ReleaseRepo." }
     if (-not (Test-Path (Join-Path $dir '.git'))) {
         $parent = Split-Path -Parent $dir
-        & git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic" -C $parent clone --quiet "https://github.com/$Owner/$name.git" $name
-        if ($LASTEXITCODE -ne 0) { throw "Cannot clone $name (does SOURCES_TOKEN have read access to it?)." }
+        & git @auth -C $parent clone --quiet "https://github.com/$Owner/$name.git" $name
+        if ($LASTEXITCODE -ne 0) { throw "Cannot clone $name." }
     }
     Invoke-Git $dir @('fetch', '--quiet', '--prune', 'origin', "+refs/heads/${branch}:refs/remotes/origin/$branch")
     & git -C $dir cat-file -e "$pin^{commit}"

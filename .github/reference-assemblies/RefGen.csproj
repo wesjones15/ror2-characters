@@ -1,0 +1,21 @@
+<!-- Restores the compilation references the plugins build against, from NuGet, so no game or BepInEx DLLs are committed.
+     make-reference-dir.ps1 builds this project and lays the restored DLLs out like a game folder (the -RoR2Dir layout).
+     The versions follow the supported game build: Risk of Rain 2 1.5.0 (DLC4, 2026), Unity 2021.3.45, BepInEx 5.4.21.
+     The game libs are publicized and stripped: they are for compiling only and cannot run. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>$(NoWarn);CS2008</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.5.0-r.1" />
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.45" />
+    <PackageReference Include="BepInEx.BaseLib" Version="5.4.21" />
+    <PackageReference Include="MonoMod.Utils" Version="22.1.29.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.1.29.1" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.4" />
+  </ItemGroup>
+</Project>

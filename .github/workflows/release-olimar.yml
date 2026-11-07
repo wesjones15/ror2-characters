@@ -31,5 +31,3 @@ jobs:
       notes_file: ${{ inputs.notes_file }}
       title: ${{ inputs.title }}
       draft: ${{ inputs.draft }}
-    secrets:
-      SOURCES_TOKEN: ${{ secrets.SOURCES_TOKEN }}

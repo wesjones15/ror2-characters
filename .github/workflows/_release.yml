@@ -1,13 +1,13 @@
 # Shared release pipeline. The five release-*.yml workflows call this with a different `kind`.
 #
-#   build   (self-hosted Windows runner: the plugins compile against the game's own DLLs, which cannot be on GitHub's runners)
-#           prepare workspace at the pinned commits -> checks that need no game/assets -> build all three plugins
-#           -> package-release.ps1 -> upload the packaged files as a workflow artifact
+#   build   (GitHub-hosted Windows runner) clone the eight source repositories at the commits pinned in sources/ ->
+#           restore the game/Unity/BepInEx compilation references from NuGet (nothing is committed) -> checks that
+#           need no game files or assets -> build all three plugins -> package-release.ps1 -> upload the files
 #   publish (GitHub-hosted, behind the `release` environment so a human approves) -> verify hashes, refuse existing
 #           tags, `gh release create` with only the assets this kind publishes
 #
-# Releases are cut only from modern/1.5.0. Triggers are workflow_dispatch only: this repository is public, and a
-# self-hosted runner must never run code from a pull request.
+# The plugins compile against publicized, stripped reference assemblies (RiskOfRain2.GameLibs), so the build sets
+# PublicizedGameLibs=true. Releases are cut only from modern/1.5.0, and the trigger is workflow_dispatch only.
 name: _release
 
 on:
@@ -33,10 +33,6 @@ on:
         description: Create the release as a draft
         type: boolean
         default: true
-    secrets:
-      SOURCES_TOKEN:
-        description: Fine-grained PAT with read access to the eight private source repositories
-        required: true
 
 permissions:
   contents: read
@@ -48,11 +44,9 @@ concurrency:
 jobs:
   build:
     if: github.ref == 'refs/heads/modern/1.5.0'
-    runs-on: ${{ fromJSON(vars.RELEASE_RUNNER_LABELS || '["self-hosted","windows","ror2-release"]') }}
+    runs-on: windows-latest
     timeout-minutes: 120
     env:
-      ROR2_REFERENCE_DIR: ${{ vars.ROR2_REFERENCE_DIR }}
-      RELEASE_WORKSPACE: ${{ vars.RELEASE_WORKSPACE }}
       KIND: ${{ inputs.kind }}
       NOTES_FILE: ${{ inputs.notes_file }}
       BUNDLE_TAG: ${{ inputs.tag }}
@@ -70,32 +64,42 @@ jobs:
           if ($env:KIND -notin 'mario', 'olimar', 'melee', 'sharedfiles', 'bundle') { throw "Unknown kind '$env:KIND'." }
           if ($env:KIND -eq 'bundle' -and $env:BUNDLE_TAG -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]*$') { throw 'The bundle needs a tag such as release-20261107.' }
           if ($env:KIND -ne 'bundle' -and $env:BUNDLE_TAG) { throw 'tag is only used by the bundle; the other releases derive it from the plugin version.' }
-          if ([string]::IsNullOrWhiteSpace($env:ROR2_REFERENCE_DIR)) { throw 'Set the ROR2_REFERENCE_DIR repository variable (a DLC4 (2026) install or reference folder on the runner).' }
           $repo = (Resolve-Path ror2-characters).Path
           $notes = [IO.Path]::GetFullPath((Join-Path $repo $env:NOTES_FILE))
           if (-not $notes.StartsWith($repo + '\') -or -not (Test-Path -LiteralPath $notes -PathType Leaf)) { throw "notes_file '$env:NOTES_FILE' must be an existing file inside the repository." }
           "NOTES_PATH=$notes" | Add-Content $env:GITHUB_ENV
-          $workspace = if ($env:RELEASE_WORKSPACE) { $env:RELEASE_WORKSPACE } else { Join-Path $env:USERPROFILE 'ror2-release-workspace' }
-          "WORKSPACE=$workspace" | Add-Content $env:GITHUB_ENV
+          "WORKSPACE=$(Join-Path $env:RUNNER_TEMP 'workspace')" | Add-Content $env:GITHUB_ENV
+          "REF_DIR=$(Join-Path $env:RUNNER_TEMP 'reference')" | Add-Content $env:GITHUB_ENV
           "OUT_DIR=$(Join-Path $env:RUNNER_TEMP "release-$($env:GITHUB_RUN_ID)-$($env:GITHUB_RUN_ATTEMPT)")" | Add-Content $env:GITHUB_ENV
           $scope = @{ mario = 'Mario'; olimar = 'Olimar'; melee = 'Melee'; sharedfiles = 'None'; bundle = 'All' }[$env:KIND]
           "SCOPE=$scope" | Add-Content $env:GITHUB_ENV
           $packageTag = if ($env:KIND -eq 'bundle') { $env:BUNDLE_TAG } else { "ci-$($env:GITHUB_RUN_ID)" }
           "PACKAGE_TAG=$packageTag" | Add-Content $env:GITHUB_ENV
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~\.nuget\packages
+            ~\.cargo\registry
+            ~\.cargo\git
+          key: deps-${{ runner.os }}-${{ hashFiles('ror2-characters/.github/reference-assemblies/RefGen.csproj') }}
+          restore-keys: deps-${{ runner.os }}-
+
       - name: Prepare source workspace at the pinned commits
-        env:
-          SOURCES_TOKEN: ${{ secrets.SOURCES_TOKEN }}
         run: |
-          & ror2-characters\.github\scripts\prepare-workspace.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path -Token $env:SOURCES_TOKEN
+          & ror2-characters\.github\scripts\prepare-workspace.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path
+
+      - name: Restore the game compilation references from NuGet
+        run: |
+          & ror2-characters\.github\scripts\make-reference-dir.ps1 -OutDir $env:REF_DIR
 
       - name: Checks that need no game files or assets
         run: |
-          & ror2-characters\.github\scripts\run-checks.ps1 -Workspace $env:WORKSPACE -Scope $env:SCOPE -RoR2Dir $env:ROR2_REFERENCE_DIR
+          & ror2-characters\.github\scripts\run-checks.ps1 -Workspace $env:WORKSPACE -Scope $env:SCOPE
 
       - name: Build and package
         run: |
-          & ror2-characters\.github\scripts\build-package.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path -RoR2Dir $env:ROR2_REFERENCE_DIR -PackageTag $env:PACKAGE_TAG -NotesFile $env:NOTES_PATH -OutDir $env:OUT_DIR
+          & ror2-characters\.github\scripts\build-package.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path -RoR2Dir $env:REF_DIR -Publicized -PackageTag $env:PACKAGE_TAG -NotesFile $env:NOTES_PATH -OutDir $env:OUT_DIR
 
       - name: Collect release files
         run: |
