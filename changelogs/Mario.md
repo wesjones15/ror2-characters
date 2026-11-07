@@ -1,8 +1,28 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 48 and network protocol 13 from 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 50 and network protocol 13 from 0.6.0; ABI 48 and protocol 13 in 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.6.0 - 2026-11-06
+
+**Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Mario`** (was `MarioTest`), the name r2modman uses. Delete the old `MarioTest` folder, after moving out any disc image you kept in it; left in place it is a second copy of Mario.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir`, the skin path settings, `assets_dir.txt` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/sunshine/`, and Luigi's Melee files go to `SharedFiles/assets/melee/`, shared with the other mods.
+- **Mario extracts once more on the first launch**, even with an old cache: extracted files now carry the version of the extractor that made them, and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Mario`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Spinning ground pound jumps higher and leaves a ring of fire.** A on the landing of a spinning pound leaps 2.5 times as high as a plain pound's jump (new `Sim` setting `SpinPoundJump`, 1 for no difference), and the landing sweeps fire out to the shock wave's radius (shown on your machine; other players see the usual burst). Native ABI 50: install `MarioTest.dll` and `sms.dll` together.
+- **Luigi strikes the Melee punch and kick poses.** He kept playing his normal animation during Mario's Melee A attacks; now he follows the attack pose like Mario.
+- **Mario extracts the Melee files he uses himself**: the Luigi skin's files without the Melee mod, and the punch and kick's (`PlMr.dat`) when the Melee mod is installed. Luigi's egg-lay move waits until the Melee mod has Yoshi's files instead of trying before they exist.
+- **Character portraits are lit evenly.** The portrait camera uses a shared key-and-fill light instead of one directional light that could leave the picture dark with a hard shadow. Portraits are regenerated once. Mario's default skin icon is now his rendered portrait.
+- **Bowser Jr. stays hidden**, now behind the shared unfinished-content switch (`ShowUnfinished` in `BepInEx/config/Ror2Common.Experimental.cfg`). With it on, Shadow Mario gets an opaque body, brush attacks (RT tap throws goop at the crosshair, hold sprays), his own voice set, and a Gatekeeper that grows from big goop piles.
+- **Multiplayer:** the `ShowUnfinished` setting is part of RoR2's mod-list check, so players whose settings differ are told their mods don't match instead of joining with different rosters. Network protocol 13 is unchanged; everyone needs this build.
+
+Not played in game: the spinning-pound jump and fire ring, Luigi's attack poses, the new folder layout and re-extraction, the lobby check.
 
 ## 0.5.8 - 2026-11-05
 

@@ -57,6 +57,12 @@ RoR2BepInExPack and SharedFiles. Mod versions come from the plugins; SharedFiles
 The page text and icons are `thunderstore\<name>\README.md` and `icon.png` (256x256). Upload SharedFiles first, then the
 mods, at https://thunderstore.io/c/riskofrain2/create/ under the `wesleyasaurus` team.
 
+It also writes `<workspace>\<tag>-mods\` for the per-mod GitHub releases: `<Mod>-<version>.zip` (that mod's plugin
+folder, SharedFiles, its guide, `Install.md`, its example config, the release notes as `README.md` and its own changelog
+section as `CHANGELOG.md`) with a `.sha256`, and `<Mod>-CHANGELOG.md`. Per-mod releases are tagged
+`mario-v<version>`, `olimar-v<version>`, `melee-v<version>` and `sharedfiles-v<version>` (when SharedFiles changes),
+each with its mod ZIP and its Thunderstore package; the combined `release-<date>` carries everything.
+
 For isolated release builds, build the committed `sources/` snapshots and pass `-SourceRoot .\sources -Workspace <workspace>` to the packaging script. This reads versions and DLLs from those clean snapshots while leaving unrelated local work untouched. Every source HEAD must match its staged submodule pin. Shared Rust code is linked into each native DLL; `libcommon` adds no runtime DLL.
 
 5. Pin the sources in this repository (`git -C sources/<name> fetch ..\..\<name> modern/1.5.0`, check out the released commit, `git add sources`), and commit the docs and pins.

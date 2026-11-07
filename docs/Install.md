@@ -51,20 +51,36 @@ Without the disc, a mod keeps using the files it already has.
 There are no path settings: the mods only look in `put_games_here/`. The BepInEx log says which disc a mod is
 missing.
 
-## Upgrading from an older release
+## Upgrading from Mario 0.5.x, Olimar 0.5.x or Melee 0.4.x
 
-Older releases kept discs and extracted files beside each mod, or in a folder named by `gamecube_library.txt`.
-Those locations aren't read any more.
+**Copying the new ZIP over the old install is not enough.** The plugin folders have new names, and the mods no
+longer read discs or extracted files from the old places (beside each mod's DLLs, `Paths.Disc` /
+`Paths.AssetsDir` in the config files, or the folder named in `gamecube_library.txt`).
 
-1. Delete the old mod folders (`BepInEx/plugins/MarioTest`, `OlimarTest` and `Melee`) and `gamecube_library.txt`
-   before installing. The mods now live in `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and `wesleyasaurus-Melee`;
-   an old folder left beside them is a second copy of the same mod, and BepInEx would load only one of the two.
-   With a mod manager, also remove any copy you installed by hand.
-2. Move your disc images into `put_games_here/`.
-3. Optional, to skip extracting again: move an old cache into `SharedFiles/assets/`. Mario's goes to `sunshine`,
-   Olimar's to `pikmin` (keep its `p2` folder inside), Melee's to `melee`.
+1. **Move your disc images out first** if they are inside an old mod folder (for example
+   `BepInEx/plugins/MarioTest/`), since the next step deletes those folders.
+2. **Delete the old mod folders:** `BepInEx/plugins/MarioTest`, `BepInEx/plugins/OlimarTest` and
+   `BepInEx/plugins/Melee`, and `BepInEx/plugins/gamecube_library.txt` if you made one. The mods now live in
+   `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and `wesleyasaurus-Melee`. An old folder left beside a new one
+   is a second copy of the same mod: BepInEx loads only one of them, and it may be the old one.
+3. **Install this release**: by hand (merge the ZIP's `BepInEx` folder into the game folder) or with r2modman. If
+   you switch to r2modman, delete the hand-installed folders from the game folder too, or the game started from
+   Steam still loads them.
+4. **Put your disc images in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, under any file names.
+   With r2modman that is inside the profile folder (Settings, Browse profile folder).
+5. **Start the game and let it extract.** Every mod extracts from your discs once more, even if you had a cache:
+   extracted files are now stamped with the version of the extractor that made them, and old caches have no stamp.
+   It takes a minute or two per game; the BepInEx log shows progress. Old caches (the `assets` folders that were
+   inside the old mod folders, or in your `gamecube_library.txt` folder) can be deleted. Only if you no longer have
+   a disc, move that game's old cache into `SharedFiles/assets/` instead (Mario's into `sunshine`, Olimar's into
+   `pikmin` with its `p2` folder inside, Melee's into `melee`); without the disc, a mod keeps using the files it finds.
 
-The old `[Paths]` entries in your BepInEx config files are ignored; you can delete them.
+Your settings are kept: the config files in `BepInEx/config` keep their names, and the ZIP contains none. Their
+old `[Paths]` entries are ignored; you can delete them.
+
+**Fox, Luigi, Pikachu, Captain Falcon, Link, Donkey Kong and Bowser Jr. are hidden now** (see below). In
+multiplayer everyone needs the same mods, versions and `ShowUnfinished` setting; a player whose setting differs
+is refused at the lobby as an incompatible mod list.
 
 ## Unfinished content
 
@@ -74,8 +90,8 @@ launch) and restart. In multiplayer everyone needs the same setting.
 
 ## What the mods do on your computer
 
-- They read your disc images and write only inside `wesleyasaurus-SharedFiles/assets/`, plus their own config files
-  and a few generated pictures in their own plugin folders.
+- They read your disc images and write only inside `wesleyasaurus-SharedFiles/assets/` (extracted files and the
+  pictures generated from them), plus their own config files in `BepInEx/config`.
 - They make no internet connections and start no other programs. Multiplayer uses Risk of Rain 2's own connection.
 - Each mod is a .NET DLL plus a native DLL (`sms.dll`, `pikmin.dll`, `ssbm.dll`) that runs the character. The native
   DLL is loaded from the mod's own folder.

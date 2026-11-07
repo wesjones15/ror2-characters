@@ -15,6 +15,9 @@
   uses for SharedFiles. It never pushes, tags or publishes: that is left to `gh release create` and the Thunderstore
   upload page.
 
+  And one manual ZIP per mod into <Workspace>\<Tag>-mods\ (<Mod>-<version>.zip + .sha256 + <Mod>-CHANGELOG.md), for
+  the per-mod GitHub releases: that mod's folder, SharedFiles, its guide and Install.md.
+
   Works in Windows PowerShell 5.1.
 
 .EXAMPLE
@@ -48,7 +51,8 @@ $SourceRoot = [IO.Path]::GetFullPath($SourceRoot)
 $out = Join-Path $Workspace $Tag
 $zip = "$out.zip"
 $thunderOut = "$out-thunderstore"
-foreach ($path in @($out, $zip, "$zip.sha256", $thunderOut)) {
+$modsOut = "$out-mods"
+foreach ($path in @($out, $zip, "$zip.sha256", $thunderOut, $modsOut)) {
     if (Test-Path -LiteralPath $path) { throw "Refusing to overwrite $path." }
 }
 $notes = (Resolve-Path -LiteralPath $NotesFile).Path
@@ -279,8 +283,39 @@ foreach ($pkg in $thunder.packages) {
     $thunderZips += $tzip
 }
 
+# --- One manual ZIP per mod (for the per-mod GitHub releases) ------------------------------------------------------
+# Each holds that mod's plugin folder, SharedFiles, its guide, Install.md, its example config, README.md (the release
+# notes) and CHANGELOG.md (that mod's section only). Built from the files already in $out, so the guards above apply.
+New-Item -ItemType Directory -Path $modsOut | Out-Null
+$modZips = @()
+$modExamples = @{ Mario = 'com.libsms.mariotest.cfg'; Olimar = 'com.libpikmin.olimartest.cfg'; Melee = 'com.libssbm.melee.cfg' }
+foreach ($mod in @('Mario', 'Olimar', 'Melee')) {
+    $prefix = "BepInEx/plugins/wesleyasaurus-$mod/"
+    $pick = @($actual | Where-Object {
+        $_.StartsWith($prefix) -or $_.StartsWith('BepInEx/plugins/wesleyasaurus-SharedFiles/') -or
+        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md'
+    })
+    if (-not ($pick | Where-Object { $_.StartsWith($prefix) })) { throw "No plugin files for $mod." }
+    $modChangelog = "# $mod changelog`n`nWhat changed since the previous published $mod version.`n`n" + (Get-ChangelogSection $mod $versions[$mod]) + "`n"
+    $mzip = Join-Path $modsOut ("{0}-{1}.zip" -f $mod, $versions[$mod])
+    $archive = [IO.Compression.ZipFile]::Open($mzip, [IO.Compression.ZipArchiveMode]::Create)
+    try {
+        foreach ($rel in ($pick | Sort-Object)) {
+            $stream = $archive.CreateEntry($rel, [IO.Compression.CompressionLevel]::Optimal).Open()
+            try { $bytes = [IO.File]::ReadAllBytes((Join-Path $out ($rel -replace '/', '\'))); $stream.Write($bytes, 0, $bytes.Length) } finally { $stream.Dispose() }
+        }
+        $stream = $archive.CreateEntry('CHANGELOG.md', [IO.Compression.CompressionLevel]::Optimal).Open()
+        try { $bytes = (New-Object Text.UTF8Encoding($false)).GetBytes($modChangelog); $stream.Write($bytes, 0, $bytes.Length) } finally { $stream.Dispose() }
+    } finally { $archive.Dispose() }
+    [IO.File]::WriteAllText((Join-Path $modsOut "$mod-CHANGELOG.md"), $modChangelog, (New-Object Text.UTF8Encoding($false)))
+    $sum = (Get-FileHash -LiteralPath $mzip -Algorithm SHA256).Hash.ToLowerInvariant()
+    [IO.File]::WriteAllText("$mzip.sha256", "$sum  $(Split-Path -Leaf $mzip)`n", (New-Object Text.ASCIIEncoding))
+    $modZips += "$mzip ($sum)"
+}
+
 Write-Host "Packaged $Tag"
 Write-Host ("  Mario {0}, Olimar {1}, Melee {2}" -f $versions.Mario, $versions.Olimar, $versions.Melee)
 Write-Host "  $out"
 Write-Host "  $zip ($checksum)"
 foreach ($tzip in $thunderZips) { Write-Host "  Thunderstore: $tzip" }
+foreach ($mzip in $modZips) { Write-Host "  Per mod: $mzip" }
