@@ -25,8 +25,9 @@ them.
 2. Right-click the downloaded ZIP, open Properties and tick **Unblock**. Otherwise Windows asks "These files might
    be harmful" when you copy the DLLs; OK is safe.
 3. Unzip it and copy its `BepInEx` folder into your Risk of Rain 2 folder (the one with `Risk of Rain 2.exe`),
-   merging with the `BepInEx` folder already there. It adds `BepInEx/plugins/wesleyasaurus-SharedFiles/` and a
-   folder for each mod. Drop the mod folders you don't want.
+   merging with the `BepInEx` folder already there. It adds `BepInEx/plugins/wesleyasaurus-SharedFiles/` and one
+   folder per mod: `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and `wesleyasaurus-Melee`, the same names a mod
+   manager uses. Drop the mod folders you don't want.
 4. Put your own disc images in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`, and start the game.
 
 ## Your discs
@@ -44,7 +45,8 @@ game, Convert File).
 
 On the first launch each mod copies what it needs from your discs into `SharedFiles/assets/` (`pikmin`, `sunshine`,
 `melee`), which can take a minute. Files from one disc are shared by every mod, so nothing is copied twice. After
-that the discs are only read again when an update needs a file it didn't have.
+that the discs are only read again when an update needs a file it didn't have, or changes how a file is extracted.
+Without the disc, a mod keeps using the files it already has.
 
 There are no path settings: the mods only look in `put_games_here/`. The BepInEx log says which disc a mod is
 missing.
@@ -55,7 +57,9 @@ Older releases kept discs and extracted files beside each mod, or in a folder na
 Those locations aren't read any more.
 
 1. Delete the old mod folders (`BepInEx/plugins/MarioTest`, `OlimarTest` and `Melee`) and `gamecube_library.txt`
-   before installing. With a mod manager, also remove any copy you installed by hand.
+   before installing. The mods now live in `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and `wesleyasaurus-Melee`;
+   an old folder left beside them is a second copy of the same mod, and BepInEx would load only one of the two.
+   With a mod manager, also remove any copy you installed by hand.
 2. Move your disc images into `put_games_here/`.
 3. Optional, to skip extracting again: move an old cache into `SharedFiles/assets/`. Mario's goes to `sunshine`,
    Olimar's to `pikmin` (keep its `p2` folder inside), Melee's to `melee`.
