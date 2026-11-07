@@ -1,8 +1,26 @@
 # Melee changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 6 (libssbm) from 0.4.14; ABI 5 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 6 (libssbm) from 0.4.14 (0.5.0 unchanged); ABI 5 before.
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
+
+## 0.5.0 - 2026-11-06
+
+**Updating from 0.4.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Melee`** (was `Melee`), the name r2modman uses. Delete the old `Melee` folder, after moving out any disc image you kept in it; left in place it is a second copy of the mod.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/melee/`, shared with Mario's Luigi skin and Olimar's Captain Pikachu, so each file is extracted once.
+- **The fighters extract once more on the first launch**, even with an old cache: each fighter's files now carry the version of the extractor that made them, and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Melee`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Samus and Yoshi only.** Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong are unfinished and now hidden: they are not registered and their files are not extracted. To try them, set `ShowUnfinished = true` in `BepInEx/config/Ror2Common.Experimental.cfg` and restart (their files are extracted then). Each fighter's effects load only when that fighter's files are present, so a hidden fighter's missing files never affect the others.
+- **Generated skill icons are cached in `SharedFiles/assets/melee/skill-icons/`** instead of a `generated` folder in the plugin folder, which an update replaces.
+- **Character portraits are lit evenly**, with a shared key-and-fill light instead of one directional light that could leave them dark with a hard shadow. Portraits are regenerated once.
+- **Multiplayer:** the `ShowUnfinished` setting is part of RoR2's mod-list check, so players whose settings differ are told their mods don't match instead of joining with different rosters. Native ABI 6 is unchanged; everyone needs this build.
+
+Not played in game: Samus's and Yoshi's models and skill portraits with the new folder layout, re-extraction, the lobby check.
 
 ## 0.4.14 - 2026-11-05
 

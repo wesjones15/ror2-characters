@@ -1,8 +1,25 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 64 from 0.5.7; ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 64 from 0.5.7 (0.6.0 unchanged); ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.6.0 - 2026-11-06
+
+**Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Olimar`** (was `OlimarTest`), the name r2modman uses. Delete the old `OlimarTest` folder, after moving out any disc image you kept in it; left in place it is a second copy of Olimar.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir`, the skin and Pikmin 2 path settings, `assets_dir.txt` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/pikmin/` (Pikmin 2's files in `pikmin/p2/`); the Pianta skin reads Mario's `assets/sunshine/` and Captain Pikachu `assets/melee/`.
+- **Olimar extracts once more on the first launch**, even with an old cache: extracted files now carry the version of the extractor that made them (Pikmin, Pikmin 2, its enemies and treasures, the Ice Climbers set), and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Olimar`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Captain Pikachu's files are checked in full.** The Melee set Olimar extracts for the Captain Pikachu skin and the Ice Climber Pikmin now includes and validates Pikachu's animation file (`PlPkAJ.dat`), so a cache missing it is repaired instead of drawing a broken skin. Olimar extracts this set himself; the Melee mod is not needed.
+- **Character portraits are lit evenly**, with a shared key-and-fill light instead of one directional light that could leave them dark with a hard shadow. Portraits are regenerated once.
+- **Multiplayer:** the shared `ShowUnfinished` setting (`BepInEx/config/Ror2Common.Experimental.cfg`) is part of RoR2's mod-list check. Native ABI 64 is unchanged; everyone needs this build.
+
+Not played in game: the new folder layout and re-extraction, the lobby check.
 
 ## 0.5.7 - 2026-11-05
 
