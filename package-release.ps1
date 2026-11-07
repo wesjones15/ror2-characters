@@ -6,7 +6,14 @@
   Build first (each repository's build.ps1; Melee: ror2-samus\build.ps1). This script copies the built DLLs,
   the guides and the changelog sections of the versions being released into <Workspace>\<Tag>\, writes
   release.json (versions, source commits, SHA-256 of every file), zips it with forward-slash entry names and
-  writes <Tag>.zip.sha256. It never pushes, tags or publishes: that is left to `gh release create`.
+  writes <Tag>.zip.sha256. That ZIP is the manual install: the three plugin folders plus
+  BepInEx/plugins/wesleyasaurus-SharedFiles (ror2-common/sharedfiles).
+
+  It also writes one Thunderstore package per mod into <Workspace>\<Tag>-thunderstore\ (thunderstore\packages.json:
+  wesleyasaurus-SharedFiles, -Mario, -Olimar, -Melee). Each is flat (manifest.json, README.md, icon.png and the files
+  at the root): r2modman installs it into BepInEx/plugins/<namespace>-<name>/, the same folder name the manual ZIP
+  uses for SharedFiles. It never pushes, tags or publishes: that is left to `gh release create` and the Thunderstore
+  upload page.
 
   Works in Windows PowerShell 5.1.
 
@@ -40,7 +47,8 @@ if ([string]::IsNullOrWhiteSpace($SourceRoot)) { $SourceRoot = $Workspace }
 $SourceRoot = [IO.Path]::GetFullPath($SourceRoot)
 $out = Join-Path $Workspace $Tag
 $zip = "$out.zip"
-foreach ($path in @($out, $zip, "$zip.sha256")) {
+$thunderOut = "$out-thunderstore"
+foreach ($path in @($out, $zip, "$zip.sha256", $thunderOut)) {
     if (Test-Path -LiteralPath $path) { throw "Refusing to overwrite $path." }
 }
 $notes = (Resolve-Path -LiteralPath $NotesFile).Path
@@ -84,17 +92,20 @@ $payload = @(
     @{ To = 'BepInEx/plugins/OlimarTest/OlimarTest.dll'; From = 'ror2-olimar\dist\OlimarTest\OlimarTest.dll' },
     @{ To = 'BepInEx/plugins/OlimarTest/pikmin.dll'; From = 'ror2-olimar\dist\OlimarTest\pikmin.dll' },
     @{ To = 'BepInEx/plugins/Melee/Samus.dll'; From = 'ror2-samus\Samus\bin\Release\netstandard2.1\Samus.dll' },
-    @{ To = 'BepInEx/plugins/Melee/ssbm.dll'; From = 'libssbm\target\release\ssbm.dll' }
+    @{ To = 'BepInEx/plugins/Melee/ssbm.dll'; From = 'libssbm\target\release\ssbm.dll' },
+    # The shared disc/asset folder every mod reads (ror2-common SharedFiles): two placeholder READMEs, no code.
+    @{ To = 'BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/README.txt'; From = 'ror2-common\sharedfiles\put_games_here\README.txt' },
+    @{ To = 'BepInEx/plugins/wesleyasaurus-SharedFiles/assets/README.txt'; From = 'ror2-common\sharedfiles\assets\README.txt' }
 )
 $docs = @(
     @{ To = 'docs/Mario.md'; From = 'docs\Mario.md' },
     @{ To = 'docs/Olimar.md'; From = 'docs\Olimar.md' },
     @{ To = 'docs/Melee.md'; From = 'docs\Melee.md' },
+    @{ To = 'docs/Install.md'; From = 'docs\Install.md' },
     # Ship examples away from the live paths so merging BepInEx preserves players' settings and disc locations.
     @{ To = 'docs/examples/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
     @{ To = 'docs/examples/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
-    @{ To = 'docs/examples/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' },
-    @{ To = 'docs/examples/gamecube_library.txt'; From = 'templates\gamecube_library.txt' }
+    @{ To = 'docs/examples/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' }
 )
 
 # --- The changelog sections of the versions being released -------------------------------------------------------
@@ -155,6 +166,7 @@ $manifestText = $manifest | ConvertTo-Json -Depth 8
 $expected = @($files) + @('release.json')
 $actual = @(Get-ChildItem -LiteralPath $out -File -Recurse | ForEach-Object { $_.FullName.Substring($out.Length + 1).Replace('\', '/') })
 if ($actual -match '^BepInEx/(config/|plugins/gamecube_library\.txt$)') { throw 'Package would replace player settings.' }
+if ($actual -match '^BepInEx/plugins/wesleyasaurus-SharedFiles/assets/(?!README\.txt$)') { throw 'Package would put files in the extracted-assets folder.' }
 $diff = @(Compare-Object ($expected | Sort-Object) ($actual | Sort-Object))
 if ($diff.Count -ne 0) { throw "Package contents differ from the allowlist: $($diff | Out-String)" }
 $stillMarked = @(Get-ChildItem -LiteralPath $out -Recurse -File | Where-Object { Get-Item -LiteralPath $_.FullName -Stream Zone.Identifier -ErrorAction SilentlyContinue })
@@ -214,7 +226,61 @@ try {
 $checksum = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
 [IO.File]::WriteAllText("$zip.sha256", "$checksum  $Tag.zip`n", (New-Object Text.ASCIIEncoding))
 
+# --- Thunderstore: one flat package per mod, plus SharedFiles -------------------------------------------------------
+# Same built files as the manual ZIP (copied from $out, so every guard above already applies to them).
+$thunder = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'thunderstore\packages.json') -Raw | ConvertFrom-Json
+New-Item -ItemType Directory -Path $thunderOut | Out-Null
+$thunderZips = @()
+foreach ($pkg in $thunder.packages) {
+    if ($pkg.name -notmatch '^[A-Za-z0-9_]+$') { throw "Thunderstore package name '$($pkg.name)' may only use letters, digits and _." }
+    $version = if ($pkg.PSObject.Properties['plugin']) { $versions[$pkg.plugin] } else { $pkg.version }
+    if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Thunderstore version '$version' of $($pkg.name) must be Major.Minor.Patch." }
+    if ($pkg.description.Length -gt 250) { throw "Thunderstore description of $($pkg.name) is over 250 characters." }
+    $assets = Join-Path $PSScriptRoot "thunderstore\$($pkg.name)"
+    foreach ($need in @('README.md', 'icon.png')) {
+        if (-not (Test-Path -LiteralPath (Join-Path $assets $need))) { throw "Missing thunderstore\$($pkg.name)\$need." }
+    }
+    # Thunderstore requires a 256x256 PNG icon.
+    Add-Type -AssemblyName System.Drawing
+    $icon = [Drawing.Image]::FromFile((Join-Path $assets 'icon.png'))
+    try { if ($icon.Width -ne 256 -or $icon.Height -ne 256) { throw "thunderstore\$($pkg.name)\icon.png must be 256x256." } } finally { $icon.Dispose() }
+    $deps = @()
+    if ($pkg.name -ne 'SharedFiles') { $deps += $thunder.common_dependencies }
+    $deps += @($pkg.dependencies)
+    $manifestJson = [ordered]@{
+        name = $pkg.name; version_number = $version; website_url = $thunder.website_url
+        description = $pkg.description; dependencies = @($deps)
+    } | ConvertTo-Json -Depth 4
+    $entries = [ordered]@{
+        'manifest.json' = (New-Object Text.UTF8Encoding($false)).GetBytes($manifestJson)
+        'README.md'     = [IO.File]::ReadAllBytes((Join-Path $assets 'README.md'))
+        'icon.png'      = [IO.File]::ReadAllBytes((Join-Path $assets 'icon.png'))
+    }
+    foreach ($file in $pkg.files) {
+        # Every payload file must be one the manual ZIP already holds (and so has passed its guards).
+        $match = @($payload | Where-Object { $_.From -eq ($file.from -replace '/', '\') })
+        if ($match.Count -ne 1) { throw "Thunderstore file $($file.from) is not in the manual payload." }
+        $entries[$file.to] = [IO.File]::ReadAllBytes((Join-Path $out ($match[0].To -replace '/', '\')))
+    }
+    foreach ($name in $entries.Keys) {
+        foreach ($bad in @('assets_dir.txt', '.iso', '.ciso', '.gcm', '.wav', '.ssm', '.sem', '.dat', '.cfg')) {
+            if ($name.EndsWith($bad, [StringComparison]::OrdinalIgnoreCase)) { throw "Thunderstore package $($pkg.name) contains $bad." }
+        }
+        if ($name -match '^(BepInEx|config)/') { throw "Thunderstore package $($pkg.name) must be flat; $name is not." }
+    }
+    $tzip = Join-Path $thunderOut ("{0}-{1}-{2}.zip" -f $thunder.namespace, $pkg.name, $version)
+    $archive = [IO.Compression.ZipFile]::Open($tzip, [IO.Compression.ZipArchiveMode]::Create)
+    try {
+        foreach ($name in $entries.Keys) {
+            $stream = $archive.CreateEntry($name, [IO.Compression.CompressionLevel]::Optimal).Open()
+            try { $stream.Write($entries[$name], 0, $entries[$name].Length) } finally { $stream.Dispose() }
+        }
+    } finally { $archive.Dispose() }
+    $thunderZips += $tzip
+}
+
 Write-Host "Packaged $Tag"
 Write-Host ("  Mario {0}, Olimar {1}, Melee {2}" -f $versions.Mario, $versions.Olimar, $versions.Melee)
 Write-Host "  $out"
 Write-Host "  $zip ($checksum)"
+foreach ($tzip in $thunderZips) { Write-Host "  Thunderstore: $tzip" }
