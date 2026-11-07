@@ -56,6 +56,12 @@ foreach ($path in @($out, $zip, "$zip.sha256", $thunderOut, $modsOut)) {
     if (Test-Path -LiteralPath $path) { throw "Refusing to overwrite $path." }
 }
 $notes = (Resolve-Path -LiteralPath $NotesFile).Path
+$legalNames = @('LICENSE', 'CREDITS.md', 'THIRD_PARTY_NOTICES.md')
+foreach ($name in $legalNames) {
+    if (-not (Test-Path -LiteralPath (Join-Path $PSScriptRoot $name) -PathType Leaf)) {
+        throw "Missing release license or credits: $name."
+    }
+}
 
 # --- Source repositories: commits and cleanliness ----------------------------------------------------------------
 $sources = [ordered]@{}
@@ -111,6 +117,7 @@ $docs = @(
     @{ To = 'docs/examples/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
     @{ To = 'docs/examples/com.libssbm.melee.cfg'; From = 'config\com.libssbm.melee.cfg' }
 )
+$legalDocs = @($legalNames | ForEach-Object { @{ To = $_; From = $_ } })
 
 # --- The changelog sections of the versions being released -------------------------------------------------------
 function Get-ChangelogSection([string]$name, [string]$version) {
@@ -135,8 +142,8 @@ foreach ($pair in @(@('Mario', 'Mario'), @('Olimar', 'Olimar'), @('Melee', 'Mele
 # --- Assemble ---------------------------------------------------------------------------------------------------
 New-Item -ItemType Directory -Path $out | Out-Null
 $files = New-Object System.Collections.Generic.List[string]
-foreach ($item in $payload + $docs) {
-    $candidate = if ($item.To.StartsWith('docs/')) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
+foreach ($item in $payload + $docs + $legalDocs) {
+    $candidate = if ($item.To.StartsWith('docs/') -or $item.To -in $legalNames) { Join-Path $PSScriptRoot $item.From } else { Join-Path $SourceRoot $item.From }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw "Missing build output: $candidate" }
     $target = Join-Path $out ($item.To -replace '/', '\')
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
@@ -261,6 +268,9 @@ foreach ($pkg in $thunder.packages) {
         'README.md'     = [IO.File]::ReadAllBytes((Join-Path $assets 'README.md'))
         'icon.png'      = [IO.File]::ReadAllBytes((Join-Path $assets 'icon.png'))
     }
+    foreach ($name in $legalNames) {
+        $entries[$name] = [IO.File]::ReadAllBytes((Join-Path $out $name))
+    }
     foreach ($file in $pkg.files) {
         # Every payload file must be one the manual ZIP already holds (and so has passed its guards).
         $match = @($payload | Where-Object { $_.From -eq ($file.from -replace '/', '\') })
@@ -294,7 +304,7 @@ foreach ($mod in @('Mario', 'Olimar', 'Melee')) {
     $prefix = "BepInEx/plugins/wesleyasaurus-$mod/"
     $pick = @($actual | Where-Object {
         $_.StartsWith($prefix) -or $_.StartsWith('BepInEx/plugins/wesleyasaurus-SharedFiles/') -or
-        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md'
+        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md' -or $_ -in $legalNames
     })
     if (-not ($pick | Where-Object { $_.StartsWith($prefix) })) { throw "No plugin files for $mod." }
     $modChangelog = "# $mod changelog`n`nWhat changed since the previous published $mod version.`n`n" + (Get-ChangelogSection $mod $versions[$mod]) + "`n"

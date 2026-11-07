@@ -48,3 +48,11 @@ This is an unofficial fan project, not affiliated with Nintendo, HAL Laboratory,
 Building from source and publishing a release are covered in [docs/Development.md](docs/Development.md). The source repositories are private for now and will be made public later.
 
 Olimar includes **Ship Repair**: recover 30 unique parts and carry them to your Dolphin near the teleporter to rebuild it (Mario can play it too, carrying parts by hand). See the [rules](docs/ShipPartMode.md) and [implementation/validation status](docs/ShipPartMode-Status.md). Its in-game visual and multiplayer validation remains pending.
+
+## License and credits
+
+Original contributions by **wesleyasaurus** are dedicated to the public domain under
+[CC0 1.0 Universal](LICENSE), to the extent wesleyasaurus owns the relevant rights.
+Attribution for those contributions is appreciated but not required. Third-party software
+and original game content retain their respective rights and terms.
+See [CREDITS.md](CREDITS.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
