@@ -237,7 +237,8 @@ New-Item -ItemType Directory -Path $thunderOut | Out-Null
 $thunderZips = @()
 foreach ($pkg in $thunder.packages) {
     if ($pkg.name -notmatch '^[A-Za-z0-9_]+$') { throw "Thunderstore package name '$($pkg.name)' may only use letters, digits and _." }
-    $version = if ($pkg.PSObject.Properties['plugin']) { $versions[$pkg.plugin] } else { $pkg.version }
+    # "version" wins when set: a Thunderstore-only re-upload (new page text, same DLLs) needs a new version number.
+    $version = if ($pkg.PSObject.Properties['version']) { $pkg.version } elseif ($pkg.PSObject.Properties['plugin']) { $versions[$pkg.plugin] } else { throw "No version for $($pkg.name)." }
     if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Thunderstore version '$version' of $($pkg.name) must be Major.Minor.Patch." }
     if ($pkg.description.Length -gt 250) { throw "Thunderstore description of $($pkg.name) is over 250 characters." }
     $assets = Join-Path $PSScriptRoot "thunderstore\$($pkg.name)"

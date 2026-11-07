@@ -29,6 +29,7 @@
     {
       "name": "Olimar",
       "plugin": "Olimar",
+      "version": "0.6.1",
       "description": "Captain Olimar and his Pikmin as a survivor, plus the Ship Repair mode. Requires your own copy of Pikmin (GameCube); no game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
       "files": [

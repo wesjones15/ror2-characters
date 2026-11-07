@@ -13,10 +13,7 @@ Extras:
 
 Install with r2modman, then follow the setup guide: https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/Install.md
 
-Used the GitHub download before (Mario 0.5.x)? Delete the old `BepInEx/plugins/MarioTest` folder from your Risk of Rain 2 folder so it doesn't load beside this one. The guide's "Upgrading" section has the rest.
-
 ## Notes
 
-- Offline and friends-only co-op. Don't use it in public lobbies.
-- Makes no internet connections; multiplayer uses Risk of Rain 2's own connection.
+- Made for solo play and co-op with friends.
 - Unofficial fan project, not affiliated with Nintendo, Hopoo Games or Gearbox. Source, guides and changelogs: https://github.com/wesjones15/ror2-characters
