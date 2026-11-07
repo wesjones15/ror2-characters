@@ -1,0 +1,179 @@
+# Shared release pipeline. The five release-*.yml workflows call this with a different `kind`.
+#
+#   build   (self-hosted Windows runner: the plugins compile against the game's own DLLs, which cannot be on GitHub's runners)
+#           prepare workspace at the pinned commits -> checks that need no game/assets -> build all three plugins
+#           -> package-release.ps1 -> upload the packaged files as a workflow artifact
+#   publish (GitHub-hosted, behind the `release` environment so a human approves) -> verify hashes, refuse existing
+#           tags, `gh release create` with only the assets this kind publishes
+#
+# Releases are cut only from modern/1.5.0. Triggers are workflow_dispatch only: this repository is public, and a
+# self-hosted runner must never run code from a pull request.
+name: _release
+
+on:
+  workflow_call:
+    inputs:
+      kind:
+        description: mario | olimar | melee | sharedfiles | bundle
+        type: string
+        required: true
+      notes_file:
+        description: Release notes, a markdown file in this repository (for example releases/mario-v0.6.1.md)
+        type: string
+        required: true
+      tag:
+        description: Release tag; used by the bundle only (the other kinds derive it from the plugin version)
+        type: string
+        default: ''
+      title:
+        description: Release title; blank derives one from the versions
+        type: string
+        default: ''
+      draft:
+        description: Create the release as a draft
+        type: boolean
+        default: true
+    secrets:
+      SOURCES_TOKEN:
+        description: Fine-grained PAT with read access to the eight private source repositories
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/modern/1.5.0'
+    runs-on: ${{ fromJSON(vars.RELEASE_RUNNER_LABELS || '["self-hosted","windows","ror2-release"]') }}
+    timeout-minutes: 120
+    env:
+      ROR2_REFERENCE_DIR: ${{ vars.ROR2_REFERENCE_DIR }}
+      RELEASE_WORKSPACE: ${{ vars.RELEASE_WORKSPACE }}
+      KIND: ${{ inputs.kind }}
+      NOTES_FILE: ${{ inputs.notes_file }}
+      BUNDLE_TAG: ${{ inputs.tag }}
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ror2-characters
+          persist-credentials: false
+
+      - name: Validate inputs
+        run: |
+          if ($env:KIND -notin 'mario', 'olimar', 'melee', 'sharedfiles', 'bundle') { throw "Unknown kind '$env:KIND'." }
+          if ($env:KIND -eq 'bundle' -and $env:BUNDLE_TAG -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]*$') { throw 'The bundle needs a tag such as release-20261107.' }
+          if ($env:KIND -ne 'bundle' -and $env:BUNDLE_TAG) { throw 'tag is only used by the bundle; the other releases derive it from the plugin version.' }
+          if ([string]::IsNullOrWhiteSpace($env:ROR2_REFERENCE_DIR)) { throw 'Set the ROR2_REFERENCE_DIR repository variable (a DLC4 (2026) install or reference folder on the runner).' }
+          $repo = (Resolve-Path ror2-characters).Path
+          $notes = [IO.Path]::GetFullPath((Join-Path $repo $env:NOTES_FILE))
+          if (-not $notes.StartsWith($repo + '\') -or -not (Test-Path -LiteralPath $notes -PathType Leaf)) { throw "notes_file '$env:NOTES_FILE' must be an existing file inside the repository." }
+          "NOTES_PATH=$notes" | Add-Content $env:GITHUB_ENV
+          $workspace = if ($env:RELEASE_WORKSPACE) { $env:RELEASE_WORKSPACE } else { Join-Path $env:USERPROFILE 'ror2-release-workspace' }
+          "WORKSPACE=$workspace" | Add-Content $env:GITHUB_ENV
+          "OUT_DIR=$(Join-Path $env:RUNNER_TEMP "release-$($env:GITHUB_RUN_ID)-$($env:GITHUB_RUN_ATTEMPT)")" | Add-Content $env:GITHUB_ENV
+          $scope = @{ mario = 'Mario'; olimar = 'Olimar'; melee = 'Melee'; sharedfiles = 'None'; bundle = 'All' }[$env:KIND]
+          "SCOPE=$scope" | Add-Content $env:GITHUB_ENV
+          $packageTag = if ($env:KIND -eq 'bundle') { $env:BUNDLE_TAG } else { "ci-$($env:GITHUB_RUN_ID)" }
+          "PACKAGE_TAG=$packageTag" | Add-Content $env:GITHUB_ENV
+
+      - name: Prepare source workspace at the pinned commits
+        env:
+          SOURCES_TOKEN: ${{ secrets.SOURCES_TOKEN }}
+        run: |
+          & ror2-characters\.github\scripts\prepare-workspace.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path -Token $env:SOURCES_TOKEN
+
+      - name: Checks that need no game files or assets
+        run: |
+          & ror2-characters\.github\scripts\run-checks.ps1 -Workspace $env:WORKSPACE -Scope $env:SCOPE -RoR2Dir $env:ROR2_REFERENCE_DIR
+
+      - name: Build and package
+        run: |
+          & ror2-characters\.github\scripts\build-package.ps1 -Workspace $env:WORKSPACE -ReleaseRepo (Resolve-Path ror2-characters).Path -RoR2Dir $env:ROR2_REFERENCE_DIR -PackageTag $env:PACKAGE_TAG -NotesFile $env:NOTES_PATH -OutDir $env:OUT_DIR
+
+      - name: Collect release files
+        run: |
+          $out = Join-Path $env:OUT_DIR 'upload'
+          New-Item -ItemType Directory -Force -Path $out | Out-Null
+          $pkg = Join-Path $env:OUT_DIR $env:PACKAGE_TAG
+          Copy-Item "$pkg.zip", "$pkg.zip.sha256" $out
+          Copy-Item (Join-Path $pkg 'release.json'), (Join-Path $pkg 'CHANGELOG.md') $out
+          Copy-Item (Join-Path $env:OUT_DIR "$($env:PACKAGE_TAG)-mods\*") $out
+          Copy-Item (Join-Path $env:OUT_DIR "$($env:PACKAGE_TAG)-thunderstore\*") $out
+          Copy-Item $env:NOTES_PATH (Join-Path $out 'release-notes.md')
+          Get-ChildItem $out | Format-Table Name, Length
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-files
+          path: ${{ env.OUT_DIR }}/upload/*
+          if-no-files-found: error
+          retention-days: 3
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      KIND: ${{ inputs.kind }}
+      BUNDLE_TAG: ${{ inputs.tag }}
+      TITLE: ${{ inputs.title }}
+      DRAFT: ${{ inputs.draft }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-files
+          path: files
+
+      - name: Verify hashes
+        working-directory: files
+        run: |
+          shopt -s nullglob
+          for sum in *.sha256; do sha256sum --check "$sum"; done
+
+      - name: Create the release
+        working-directory: files
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          one() { local m=($1); [ "${#m[@]}" -eq 1 ] || { echo "Expected exactly one file matching '$1', found ${#m[@]}." >&2; exit 1; }; echo "${m[0]}"; }
+          case "$KIND" in
+            mario|olimar|melee)
+              mod="$(tr '[:lower:]' '[:upper:]' <<<"${KIND:0:1}")${KIND:1}"
+              version="$(jq -r --arg m "$mod" '.versions[$m]' release.json)"
+              tag="${KIND}-v${version}"
+              title="${TITLE:-$mod $version (RoR2 DLC4 (2026))}"
+              assets=("$mod-$version.zip" "$mod-$version.zip.sha256" "$mod-CHANGELOG.md" "$(one "wesleyasaurus-$mod-*.zip")")
+              ;;
+            sharedfiles)
+              zip="$(one 'wesleyasaurus-SharedFiles-*.zip')"
+              version="${zip#wesleyasaurus-SharedFiles-}"; version="${version%.zip}"
+              tag="sharedfiles-v${version}"
+              title="${TITLE:-SharedFiles $version}"
+              assets=("$zip")
+              ;;
+            bundle)
+              tag="$BUNDLE_TAG"
+              m="$(jq -r '.versions.Mario' release.json)"; o="$(jq -r '.versions.Olimar' release.json)"; e="$(jq -r '.versions.Melee' release.json)"
+              title="${TITLE:-Mario $m, Olimar $o, Melee $e (RoR2 DLC4 (2026))}"
+              # The bundle ships the three mods; SharedFiles is released on its own (sharedfiles-v*), so its Thunderstore zip is left out.
+              assets=("$tag.zip" "$tag.zip.sha256" "CHANGELOG.md" "$(one 'wesleyasaurus-Mario-*.zip')" "$(one 'wesleyasaurus-Olimar-*.zip')" "$(one 'wesleyasaurus-Melee-*.zip')")
+              ;;
+            *) echo "Unknown kind $KIND" >&2; exit 1 ;;
+          esac
+          for a in "${assets[@]}"; do [ -f "$a" ] || { echo "Missing asset $a" >&2; exit 1; }; done
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then echo "Release $tag already exists; nothing is overwritten." >&2; exit 1; fi
+          if git ls-remote --exit-code --tags "https://github.com/$GITHUB_REPOSITORY.git" "refs/tags/$tag" >/dev/null 2>&1; then echo "Tag $tag already exists." >&2; exit 1; fi
+          flags=(--latest=false)
+          [ "$DRAFT" = "true" ] && flags+=(--draft)
+          echo "Publishing $tag: ${assets[*]}"
+          gh release create "$tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "$title" --notes-file release-notes.md "${flags[@]}" "${assets[@]}"

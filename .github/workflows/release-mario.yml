@@ -1,0 +1,35 @@
+name: Release Mario
+
+# Run from the modern/1.5.0 branch (Actions tab -> "Release Mario" -> Run workflow, or
+# gh workflow run "Release Mario" --ref modern/1.5.0 -f notes_file=releases/mario-notes.md).
+# Builds from the commits pinned in sources/, then waits for approval in the "release" environment.
+on:
+  workflow_dispatch:
+    inputs:
+      notes_file:
+        description: Release notes (a markdown file in this repository, e.g. releases/mario-notes.md)
+        required: true
+        type: string
+      title:
+        description: Release title (blank = derived from the version)
+        required: false
+        default: ''
+        type: string
+      draft:
+        description: Create the release as a draft
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    uses: ./.github/workflows/_release.yml
+    with:
+      kind: mario
+      notes_file: ${{ inputs.notes_file }}
+      title: ${{ inputs.title }}
+      draft: ${{ inputs.draft }}
+    secrets:
+      SOURCES_TOKEN: ${{ secrets.SOURCES_TOKEN }}
