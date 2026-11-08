@@ -1,7 +1,7 @@
 # Installing Mario, Olimar and Melee
 
-The three mods are separate. Install any one, two or all three with their declared BepInEx dependencies and play.
-GameCube discs, extracted assets and the folder-only **SharedFiles** package are optional.
+The three mods are separate. Install any one, two or all three and play; their declared BepInEx dependencies and the folder-only
+**SharedFiles** package install with them. GameCube discs and extracted assets are optional.
 Without game assets the mods use generic shapes and built-in gameplay; missing custom arrivals use RoR2 drop pods.
 
 | Package | What it is |
@@ -9,12 +9,12 @@ Without game assets the mods use generic shapes and built-in gameplay; missing c
 | `wesleyasaurus-Mario` | Mario with FLUDD; Sunshine assets optional |
 | `wesleyasaurus-Olimar` | Olimar and the Pikmin; Pikmin assets optional |
 | `wesleyasaurus-Melee` | Samus and Yoshi; Melee assets optional |
-| `wesleyasaurus-SharedFiles` | Optional `put_games_here/` and extracted-asset folders |
+| `wesleyasaurus-SharedFiles` | The `put_games_here/` and extracted-asset folders; installed with each mod, holds no code |
 
 ## With r2modman (or another Thunderstore mod manager)
 
 1. Install the mods you want and their declared dependencies, then start the game and play.
-2. Optional: install SharedFiles, open the profile folder (r2modman: Settings, Browse profile folder), then
+2. Optional: to add your own discs, open the profile folder (r2modman: Settings, Browse profile folder), then
    `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`.
 3. If you want original presentation and disc-derived tuning, put your own supported disc images there (see below) and restart.
 

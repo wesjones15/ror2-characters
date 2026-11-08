@@ -16,7 +16,7 @@ Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's mo
 
 Two ways, with the same files:
 
-- **Thunderstore / r2modman:** install `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and/or `wesleyasaurus-Melee` with their declared BepInEx dependencies and play. GameCube discs and the folder-only `wesleyasaurus-SharedFiles` package are optional.
+- **Thunderstore / r2modman:** install `wesleyasaurus-Mario`, `wesleyasaurus-Olimar` and/or `wesleyasaurus-Melee` and play; the BepInEx packs and the folder-only `wesleyasaurus-SharedFiles` package install with them. GameCube discs are optional.
 - **By hand:** the ZIP on the [releases page](https://github.com/wesjones15/ror2-characters/releases) holds all three mods and SharedFiles under `BepInEx/plugins`, plus `README.md` (install and what's new), `CHANGELOG.md`, the guides in `docs/`, and `release.json` with the SHA-256 of every file and the source commits it was built from. The Thunderstore packages are attached to the same release. Each mod also has its own release (`mario-v<version>`, `olimar-v<version>`, `melee-v<version>`, `sharedfiles-v<version>`) with a ZIP holding just that mod and SharedFiles.
 
 ## Requirements

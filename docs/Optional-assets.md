@@ -2,7 +2,7 @@
 
 Install any of the character mods with its declared RoR2/BepInEx dependencies and
 play. No GameCube disc, extracted cache, asset pack, converter or setup executable
-is required. SharedFiles is an optional folder convenience package.
+is required. SharedFiles, the folder those would go in, installs with each mod as a dependency and holds no code.
 
 Without those assets:
 

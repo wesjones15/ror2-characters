@@ -9,7 +9,7 @@
     {
       "name": "SharedFiles",
       "version": "1.0.1",
-      "description": "Optional folder for your own GameCube discs and extracted assets. Mario, Olimar and Melee also work without game assets. No code.",
+      "description": "The folder for your own GameCube discs and extracted assets, installed with the Mario, Olimar and Melee mods. The discs are optional: the mods work without them. No code.",
       "dependencies": [],
       "files": [
         { "to": "put_games_here/README.txt", "from": "ror2-common/sharedfiles/put_games_here/README.txt" },
@@ -20,7 +20,7 @@
       "name": "Mario",
       "plugin": "Mario",
       "description": "Mario with FLUDD as a survivor. Play with generic shapes; your own Sunshine assets are optional. No game content included. Offline and friends-only.",
-      "dependencies": [],
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.1" ],
       "files": [
         { "to": "MarioTest.dll", "from": "ror2-mario/dist/MarioTest/MarioTest.dll" },
         { "to": "sms.dll", "from": "ror2-mario/dist/MarioTest/sms.dll" }
@@ -31,7 +31,7 @@
       "plugin": "Olimar",
       "version": "0.6.3",
       "description": "Olimar, Pikmin and Ship Repair. Play with existing stand-ins; your own Pikmin assets are optional. No game content included. Offline and friends-only.",
-      "dependencies": [],
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.1" ],
       "files": [
         { "to": "OlimarTest.dll", "from": "ror2-olimar/dist/OlimarTest/OlimarTest.dll" },
         { "to": "pikmin.dll", "from": "ror2-olimar/dist/OlimarTest/pikmin.dll" }
@@ -41,7 +41,7 @@
       "name": "Melee",
       "plugin": "Melee",
       "description": "Samus and Yoshi as survivors. Play with generic fighters and projectiles; your own Melee assets are optional. No game content included. Offline and friends-only.",
-      "dependencies": [],
+      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.1" ],
       "files": [
         { "to": "Samus.dll", "from": "ror2-samus/Samus/bin/Release/netstandard2.1/Samus.dll" },
         { "to": "ssbm.dll", "from": "libssbm/target/release/ssbm.dll" }
