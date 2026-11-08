@@ -3,6 +3,30 @@
 Candidate versions: Mario 0.6.2 (`sms` ABI 51), Olimar 0.6.2 (`pikmin` ABI 64),
 Melee 0.5.1 (`ssbm` ABI 7). **Not yet played in Risk of Rain 2.**
 
+### Source follow-up — 2026-11-08
+
+The original 2026-11-07 ZIP above records ABI 51. Current staged Mario is ABI 52
+and includes native pose flags for horizontal dives/slides, a shorter ground pound
+and a wider spinning core. Luigi/Louie stand-ins and conditional missing-game
+overview notes are implemented. [Pose/skin preview](asset-free-captures/poses-120.png)
+has no original asset/cue/model ID; [frames 90](asset-free-captures/poses-90.png) and
+[150](asset-free-captures/poses-150.png) show the procedural preview at other times.
+
+Current reference checks match code-only and local asset-backed run/jump traces,
+dive/slide distance, pound timing/fall, and all four nozzles' timing, lift, travel
+and water use. Mandatory ordinary-jump/no-early-spray-cutoff checks pass. Native
+FFI tests pass (21 passed, one opt-in extraction test ignored); shared overview/
+skin/menu-metadata checks pass. All three current DLL pairs are staged under
+workspace `target/BepInEx/plugins`, with their no-assets gates passing. Melee's
+startup boundary also passed; its unchanged native behavior suite was not rerun
+for this C# presentation update. Logs are in `output/no-assets-poses/`.
+
+This does **not** establish mixed-disc multiplayer safety. The new
+[asset-gate audit](Asset-gate-audit.md) records remaining content gates, possible
+invisible Pikmin enemies and inconsistent optional skin indices. RoR2 play and
+mixed-disc testing remain pending. The older optional Louie-anchor failure below
+was not changed or reclassified by these checks.
+
 ## Viewer proof and identity
 
 These are authored procedural stand-ins, with no extracted asset, emitter, model or
