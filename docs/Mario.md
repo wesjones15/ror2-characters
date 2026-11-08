@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.6.0 for the modern/1.5.0 game compatibility line. See release-20261106 for the latest changes and validation status.
+> Candidate 0.6.3 for modern/1.5.0. See [asset/session validation](Asset-session-validation.md); not yet played in RoR2.
 
 # Mario for Risk of Rain 2
 
-Version 0.6.0 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
+Version 0.6.3 (modern). A survivor called **Mario**: Super Mario Sunshine's movement, FLUDD and
 sounds in Risk of Rain 2. He uses Commando's body and HUD but is moved by `sms.dll` (libsms,
 a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
@@ -14,7 +14,7 @@ a reimplementation of Sunshine's Mario) and drawn and heard as the disc's Mario.
 
 - Risk of Rain 2 **modern/1.5.0 (DLC4, Unity 2021.3.45f2)**, Windows x64.
 - [BepInExPack by bbepis](https://old.thunderstore.io/package/bbepis/BepInExPack/), with BepInEx 5.4.21.0 and its supporting mods below. The character ZIP does not include or install these dependencies.
-- Your own **Super Mario Sunshine** GameCube disc image (`.iso`, `.gcm` or `.ciso`). RVZ/WIA/WBFS must be converted to ISO first. No game data is included in this release.
+- Optional original presentation: your own **Super Mario Sunshine** GameCube disc image (`.iso`, `.gcm` or `.ciso`). RVZ/WIA/WBFS must be converted to ISO first. No game data is included; Mario is playable without it.
 
 Install the BepInExPack dependency set for the modern game:
 
@@ -31,10 +31,12 @@ Install the BepInExPack dependency set for the modern game:
 See [Install](Install.md): install `wesleyasaurus-Mario` and its declared loader dependencies, then play.
 Without game assets Mario is a red shape, FLUDD water is blue shapes and arrival uses the standard drop pod.
 Optionally add your own Sunshine disc under `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` for original presentation and tuning.
-A Melee disc (USA, revision 1.02) there as well adds the Luigi skin; with the Melee mod installed too, the empty
-FLUDD button gets Mario's Melee punch and kick.
+The Melee mod exposes Luigi's skin entry, preserving his earned unlock. Optional
+Melee USA 1.02 art supplies his original model; otherwise he uses a green stand-in.
+No-FLUDD punch/kick requires the attacker's Sunshine/Melee data and Melee mod;
+receivers still observe authoritative damage without that animation art.
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 51.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 53.
 
 ## First run
 
@@ -44,9 +46,8 @@ blue coin, "secret" chime and Shine Get fanfare jingles (`ror2_audio/`) and the 
 (`wipe/`). The cache is reused on later launches without the disc. A cache made by an older version gets the jingles
 and the wipe pictures added when the disc is found; without them the game over screen is simply not shown.
 Luigi's files go to `SharedFiles/assets/melee/`, shared with the other mods.
-- Mario stays registered while extraction runs, but his sim, model and coins wait for the
-  complete cache. If extraction fails or there is no disc, he plays as Commando and the log
-  says what to fix.
+- Mario stays registered while extraction runs. Without usable assets he retains
+  Mario's simulation and uses generated presentation. Missing sounds/effects are omitted.
 - If you pick Mario on the character select screen before extraction finishes, select another
   survivor and then Mario again to refresh his lobby display.
 - An incomplete cache from an older version is repaired automatically.

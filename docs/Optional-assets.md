@@ -20,6 +20,24 @@ Built-in tuning, attack clocks, anchors and volumes are approximations. Providin
 your own supported discs/caches enables original presentation and disc-derived
 data. No extracted game content is included in the downloads.
 
+Crossover skin entries depend on installed mods: Pianta needs Mario + Olimar,
+Captain Pikachu needs Melee + Olimar, and Sunshine Luigi needs Mario + Melee.
+Their earned unlocks stay the same. Each machine independently uses original
+skin art, available base-character art or shapes; captain art can load without
+Pikmin army art. Overview notes identify missing local presentation.
+
+Pikmin 2 bonus gameplay uses the common supported lobby capability, independent
+of Pikmin 1 art. All players need the complete required P2 data to enable Purple/
+White starting squads, Onion acceptance, buds, P2 enemies and treasures. A mixed
+lobby can play the base game together and shows a disc-folder explanation.
+Capabilities lock at run start. Incompatible late joins are explained and
+disconnected after three seconds; start a compatible new run to play together.
+
+Sunshine flowers use orange shapes when missing; the Shine uses a yellow sphere
+and a simple ordinary teleporter transition. The generated FLUDD backpack/nozzle
+follows the gameplay emitter, and generated wet patches follow native water
+drying. Existing procedural goop rules/surfaces remain separate from water.
+
 To deliberately use the built-in path even with local discs/caches, start once,
 set `BuiltinOnly = true` under `[Assets]` in
 `BepInEx/config/Ror2Common.Assets.cfg`, then restart. This is useful for checking

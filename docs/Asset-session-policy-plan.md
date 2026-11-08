@@ -1,9 +1,10 @@
 # Mod presence, local presentation and optional session content
 
-Proposed policy following the 2026-11-08 asset-gate audit. This is a design and
-implementation plan, not a claim that the new capability negotiation or fallback
-renderers are already implemented. Normal multiplayer requires the same mod
-versions, mod set and content-affecting settings.
+Implemented policy following the 2026-11-08 asset-gate audit. The capability
+exchange, independent captain view and procedural renderers are implemented in
+the local candidate. Automated checks and staged builds pass; mixed-client RoR2
+playtesting is pending. See [implementation evidence](Asset-session-validation.md).
+Normal multiplayer requires the same mod versions, mod set and content-affecting settings.
 
 ## Three independent decisions
 
@@ -46,11 +47,11 @@ Apply the same principle to Captain Pikachu with Melee replacing Sunshine.
 Objects need independent fallback choices: captain, army, Onion, enemies, pickups
 and effects should not share an all-or-nothing `AssetsReady` decision.
 
-Currently `PikminModels.Create` opens a Pikmin base view before appending alternate
-captain models, and `OlimarDisplay.Create` requires base Pikmin assets. Therefore
-the Sunshine-only Pianta case needs a standalone alternate-captain renderer/view;
-changing `OlimarSkin.Register` alone is insufficient. Reuse existing native asset
-loaders, animation/anchor contracts and shared model/primitive rendering.
+`pik_view_new` now creates a captain-only view when base art is unavailable, and
+`pik_view_has_base` selects world stand-ins. Existing alternate-captain loaders
+append their own art to this view. Generated anchors preserve the loading and
+retargeting contract; missing Pikmin clips cannot provide original motion clocks.
+`PikminModels` and `OlimarDisplay` both use this path.
 
 Overview notes should describe the local fallback actually used: e.g. Pianta's
 Sunshine art is missing and Olimar is being displayed, or Pikmin army art is missing
@@ -118,9 +119,9 @@ requirements:
   distinct simulation systems. Where a terrain overlay is unsuitable, use shallow
   non-colliding cylinders. Rendering creates no new collision/hazard rules.
 - Bowser Jr.: keep ShowUnfinished/release availability unchanged. His eventual
-  no-assets form can be a cylinder with the same goop fallback. The current goop
-  world loads disc data, so removing its rendering gate alone will not provide a
-  usable default simulation.
+  no-assets form is a cylinder with the same goop fallback. Native goop setup
+  retains its existing generated circular mask, colors and surface when optional files
+  are absent; the host simulation and generic critters now run without the art gate.
 - FLUDD: add a yellow backpack cylinder to procedural Mario/Luigi and a nozzle
   marker. Use the emitter position/direction used by the actual water simulation.
   Asset-backed views currently supply animated skeleton emitters; the no-view path

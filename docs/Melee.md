@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.5.0 for the modern/1.5.0 game compatibility line. See release-20261106 for the latest changes and validation status.
+> Candidate 0.5.2 for modern/1.5.0. See [asset/session validation](Asset-session-validation.md); not yet played in RoR2.
 
 # Super Smash Bros. Melee for Risk of Rain 2
 
-Version 0.5.0 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
+Version 0.5.2 (modern). One plugin, **Melee**, adds eight survivors from *Super Smash Bros. Melee*:
 **Samus, Fox, Luigi, Pikachu, Captain Falcon, Link, Yoshi and Donkey Kong**. They use Commando's body and HUD, but are
 moved and drawn by `ssbm.dll` (libssbm, a reimplementation of Melee's fighter physics, moves, hitboxes, effects and sound)
 with the disc's own models, animations, effects and voices.
@@ -21,7 +21,7 @@ multiplayer game needs the same setting. Melee multiplayer still needs a two-mac
 
 - Risk of Rain 2 **modern/1.5.0 (DLC4, Unity 2021.3.45f2)**, Windows x64.
 - [BepInExPack by bbepis](https://old.thunderstore.io/package/bbepis/BepInExPack/), with BepInEx 5.4.21.0 and the supporting mods below. The ZIP does not include or install these.
-- Your own **Super Smash Bros. Melee** GameCube disc image: **NTSC-U revision 2** (`GALE01`, version 1.02) as `.iso`, `.gcm` or `.ciso`. Other revisions and regions are refused. No game data is included.
+- Optional original presentation/data: your own **Super Smash Bros. Melee** GameCube disc image, **NTSC-U revision 2** (`GALE01`, version 1.02), as `.iso`, `.gcm` or `.ciso`. Other revisions/regions leave built-in fighters available. No game data is included.
 
 | Dependency | Purpose |
 | --- | --- |
@@ -105,8 +105,10 @@ stored Charge Shot. Link's grab is a hookshot: the press fires a chain that pull
 ## Multiplayer
 
 Melee works in offline, friends-only co-op. **Everyone who plays or sees a Melee fighter needs the same Melee release**
-(`Samus.dll` and `ssbm.dll` from one ZIP) **and that fighter's disc assets extracted on their own machine**; a player
-without the mod sees a Commando, and a different build is refused with one line in the log.
+(`Samus.dll` and `ssbm.dll` from one ZIP), with the same mod set and content settings.
+Each machine chooses original art or generated fighters/projectiles from its own
+assets. Mixed-assets replay still needs a two-machine playtest; matching packet
+versions alone do not prove timing parity. Players without the same mods are unsupported.
 
 - A player's machine runs their fighter, so they play without lag. The other players' machines run a copy of it from the calls
   it recorded: the same model, animations, sounds (they fade with distance), effects, KO and recovery.
@@ -156,7 +158,7 @@ Each entry has a description in the file.
 ## Troubleshooting
 
 Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.10 registered` early and, after the game loads,
-`Melee 0.5.1 / libssbm ABI 7 loaded`; extraction messages appear only when an optional supported disc is supplied.
+`Melee 0.5.2 / libssbm ABI 7 loaded`; extraction messages appear only when an optional supported disc is supplied.
 
 - *A fighter is a generic shape*: normal without optional game assets; its own skills remain active.
 - *A fighter looks like Commando*: check for an old or mismatched DLL pair and reinstall this release.

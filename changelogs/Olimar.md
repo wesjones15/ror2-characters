@@ -1,8 +1,23 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 64 from 0.5.7 (0.6.0 unchanged); ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 65 from 0.6.3; ABI 64 from 0.5.7 (0.6.0 unchanged); ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.6.3 - 2026-11-08
+
+- Crossover skins follow installed mods: Pianta with Mario, Captain Pikachu with
+  Melee; Louie remains available with Olimar. Each client chooses local art or
+  fallback without changing selected skin identity/unlocks.
+- Native ABI 65 supports alternate captain art without Pikmin 1 world assets.
+  Generic army/Onion/enemy/bud presentation covers missing base art.
+- Pikmin 2 bonus gameplay uses the common lobby capability, independent of P1 art:
+  starting colors, Onion acceptance, buds, P2 enemies and treasures agree. Mixed
+  lobbies show an explanation; the run locks the set and refuses incompatible late joins.
+- Flying stand-in Onions hide their legs. Generic captains ascend into the pod,
+  hide while riding and become visible after dropping.
+- Native, policy, skin and build checks pass. Mixed-client RoR2 playtesting remains
+  pending; pre-existing optional animation QA failures remain documented.
 
 ## 0.6.2 - 2026-11-07
 

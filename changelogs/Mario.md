@@ -1,8 +1,20 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 50 and network protocol 13 from 0.6.0; ABI 48 and protocol 13 in 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 53 from 0.6.3; ABI 51 in 0.6.2; ABI 50 and network protocol 13 from 0.6.0; ABI 48 and protocol 13 in 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.6.3 - 2026-11-08
+
+- Luigi's skin entry follows Melee mod presence rather than local disc presence;
+  earned unlocks and per-client original/stand-in presentation remain independent.
+- Flowers and flower creatures run without presentation assets, with orange
+  cylinders. Missing Shine art uses a yellow sphere and simple teleporter exit.
+- Procedural FLUDD has a yellow backpack/nozzle at the gameplay emitter. Generated
+  dark patches show actual sampled wet ground. Existing goop defaults and generic
+  critter/Jr. drawing support missing art; unfinished-content gates remain unchanged.
+- Native ABI 53 exposes the common emitter and wet geometry without a view.
+  Headless/packet/build checks pass; not yet played in RoR2.
 
 ## 0.6.2 - 2026-11-07
 

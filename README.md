@@ -1,4 +1,4 @@
-> Mario 0.6.0, Olimar 0.6.0 and Melee 0.5.0 for the modern/1.5.0 game compatibility branch. Legacy 0.1.0 targets RoR2 1.2.4.4. See [migration notes](docs/Modern2026.md).
+> Candidate: Mario 0.6.3, Olimar 0.6.3 and Melee 0.5.2 for modern/1.5.0. See [validation](docs/Asset-session-validation.md). Legacy 0.1.0 targets RoR2 1.2.4.4.
 
 # RoR2 Characters
 
@@ -8,9 +8,9 @@ Playable survivors in **Risk of Rain 2**: Mario brings Super Mario Sunshine's mo
 
 | Mod | Version | Guide (install, controls) | Changelog |
 | --- | --- | --- | --- |
-| Mario | 0.6.0 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
-| Olimar | 0.6.0 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
-| Melee (Samus and Yoshi; Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong are hidden until finished) | 0.5.0 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
+| Mario | 0.6.3 | [Mario](docs/Mario.md) | [Mario](changelogs/Mario.md) |
+| Olimar | 0.6.3 | [Olimar](docs/Olimar.md) | [Olimar](changelogs/Olimar.md) |
+| Melee (Samus and Yoshi; Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong are hidden until finished) | 0.5.2 | [Melee](docs/Melee.md) | [Melee](changelogs/Melee.md) |
 
 ## Download
 

@@ -1,10 +1,10 @@
 > **Folder disappearing on launch?** BepInEx removes `BepInEx/plugins/RoR2BepInExPack` (case-insensitive) as obsolete. Rename it before launching, or restore the complete dependency package if already deleted, under `BepInEx/plugins/RiskofThunder-RoR2BepInExPack`. Include its supporting DLLs, including `Newtonsoft.Json.dll`. The native-runtime hotfix does not repair this folder. [Full repair instructions](https://github.com/wesjones15/ror2-characters/blob/modern/1.5.0/docs/FixStartup.md).
 
-> Modern 0.6.0 for the modern/1.5.0 game compatibility line. See release-20261106 for the latest changes and validation status.
+> Candidate 0.6.3 for modern/1.5.0. See [asset/session validation](Asset-session-validation.md); not yet played in RoR2.
 
 # Olimar for Risk of Rain 2
 
-Version 0.6.0 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
+Version 0.6.3 (modern). A survivor called **Olimar**: Pikmin's captain leading a squad of Pikmin
 through Risk of Rain 2. He uses Commando's body and HUD but fights with Pikmin from
 `pikmin.dll` (libpikmin, a reimplementation of Pikmin 1's mechanics), drawn and heard with the
 disc's own models, animations and sounds. Commando's skills never fire.
@@ -15,7 +15,7 @@ disc's own models, animations and sounds. Commando's skills never fire.
 
 - Risk of Rain 2 **modern/1.5.0 (DLC4, Unity 2021.3.45f2)**, Windows x64.
 - [BepInExPack by bbepis](https://old.thunderstore.io/package/bbepis/BepInExPack/), with BepInEx 5.4.21.0 and its supporting mods below. The character ZIP does not include or install these dependencies.
-- Your own **Pikmin** GameCube disc image (`.iso`, `.gcm` or `.ciso`). RVZ/WIA/WBFS must be converted to ISO first. No game data is included in this release.
+- Optional original presentation: your own **Pikmin** GameCube disc image (`.iso`, `.gcm` or `.ciso`). RVZ/WIA/WBFS must be converted to ISO first. No game data is included; stand-ins work without it.
 
 Install the BepInExPack dependency set for the modern game:
 
@@ -250,18 +250,30 @@ Olimar has three alt-skins, picked in the loadout's skin row. Each unlocks once 
 
 - **Pianta**: Super Mario Sunshine's Pianta, from the Mario mod's Sunshine cache. Unlocks after stage 1's teleporter
   event as Olimar.
-- **Captain Pikachu**: Melee's Pikachu, with Ice Climbers as his Pikmin. Needs a Melee disc (USA, revision 1.02) in `put_games_here/`; the Melee mod isn't needed.
+- **Captain Pikachu**: Melee's Pikachu, with Ice Climbers as his Pikmin. Offered with the Melee mod installed; Melee USA 1.02 art is optional.
   Unlocks after stage 2's teleporter event as Olimar.
-- **Louie**: from Pikmin 2, with his own squad of Purple and White Pikmin and his Hocotate Ship. Needs a Pikmin 2 disc.
+- **Louie**: from Pikmin 2. Original Louie/Hocotate art is optional. His Purple/White starting squad follows the negotiated P2 gameplay pack.
   Unlocks by recovering all 30 ship parts in one Ship Repair run.
 
-A skin whose disc files aren't found isn't offered.
+Skin entries follow the installed mods: Pianta needs Mario, Captain Pikachu needs
+Melee, and Louie needs only Olimar. Missing local art shows Olimar's available base
+model or a generic captain. Alternate captain art can lead a stand-in army without
+Pikmin 1 assets. Overview notes identify missing local presentation.
+
+Pikmin 2 bonus gameplay (starting colors, Onion acceptance, buds, P2 enemies and
+treasures) requires complete P2 runtime data on every lobby player, independently
+of P1 art. The lobby explains when it is disabled. The set locks at run launch;
+incompatible late joins receive an explanation and disconnect to wait for a
+compatible new run. Solo uses local data. See [optional assets](Optional-assets.md).
+
+Stand-in enemies remain visible when art is missing. The flying stand-in Onion
+hides its legs; the generic captain rises into the pod, hides and reappears on drop.
 
 ## Ship Repair mode (preview)
 
 Select **Ship Repair** in the solo extra-mode menu or the multiplayer host's mode picker.
 Everyone must choose Olimar or Mario (Mario needs `MarioTest.dll` from the same release and carries parts by
-hand: see the Mario guide). Turn artifacts off. Your extracted disc assets must be ready.
+hand: see the Mario guide). Turn artifacts off. Generic carry definitions support all 30 parts without disc assets.
 
 Start with a wrecked Dolphin and race to recover **30 unique parts for your own ship**.
 The host's config controls the rule, locked at run start:
@@ -358,7 +370,7 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 64`, `Olimar registered`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 65`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
 - *No assets / default tuning*: normal built-in operation. Optionally add your own Pikmin disc in `wesleyasaurus-SharedFiles/put_games_here/` and restart for original presentation/tuning.

@@ -32,6 +32,12 @@ Without game assets the mods use generic shapes and built-in gameplay; missing c
 
 ## Optional discs
 
+Crossover skin entries follow installed mods, with original/base/generic art chosen
+locally. Optional Pikmin 2 gameplay is enabled only when every lobby player has
+complete required P2 data, independently of P1 art. A mixed lobby explains the
+disabled bonus pack; the result locks per run and incompatible late joins must
+wait for a compatible new run. See [asset/session policy](Asset-session-policy-plan.md).
+
 `.iso`, `.gcm` or `.ciso`, under any file names, directly in `put_games_here/` or in one folder inside it. Each mod
 reads the discs to find its own game. Convert `.rvz`, `.wia` or `.wbfs` to `.iso` first (Dolphin: right-click the
 game, Convert File).

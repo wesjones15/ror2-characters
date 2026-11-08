@@ -1,8 +1,15 @@
 # Melee changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 6 (libssbm) from 0.4.14 (0.5.0 unchanged); ABI 5 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 7 from 0.5.1; ABI 6 (libssbm) from 0.4.14 (0.5.0 unchanged); ABI 5 before.
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
+
+## 0.5.2 - 2026-11-08
+
+- Luigi's Super Scope no longer requires `ItCo.dat` when native built-in support
+  is available. The no-assets gate checks equip and moving beam behavior.
+- Includes current shared fallback/session helpers. Native ABI remains 7.
+  Shipping startup and no-assets checks pass; not yet played in RoR2.
 
 ## 0.5.1 - 2026-11-07
 
