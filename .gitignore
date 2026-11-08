@@ -9,3 +9,7 @@
 *.wav
 assets_dir.txt
 local.ps1
+
+# Build output of the reference-assemblies project (make-reference-dir.ps1 builds in a temp folder)
+.github/reference-assemblies/obj/
+.github/reference-assemblies/bin/

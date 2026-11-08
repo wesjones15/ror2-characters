@@ -46,6 +46,10 @@ Invoke-Step 'Build Melee native (libssbm-ffi)' {
 Invoke-Step 'Build Melee plugin (Samus)' {
     & dotnet build (Join-Path $Workspace 'ror2-samus/Samus/Samus.csproj') -c Release "-p:RoR2Dir=$RoR2Dir" "-p:Ror2CommonDir=$(Join-Path $Workspace 'ror2-common')"
 }
+# The same no-assets gate the Mario and Olimar build scripts run against their DLLs (ror2-samus/build.ps1 runs it for ssbm.dll).
+Invoke-Step 'No-assets gate (ssbm.dll)' {
+    & dotnet run --project (Join-Path $Workspace 'ror2-common/tests/NoAssetsCheck') -c Release -- ssbm (Join-Path $Workspace 'libssbm/target/release/ssbm.dll')
+}
 
 if ($SkipPackage) { Write-Host 'Built all three plugins; -SkipPackage, so nothing was packaged.'; return }
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null

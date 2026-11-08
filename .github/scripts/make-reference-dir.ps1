@@ -12,16 +12,20 @@
 param([Parameter(Mandatory = $true)][string]$OutDir)
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$project = Join-Path $PSScriptRoot '../reference-assemblies/RefGen.csproj'
 $work = Join-Path ([IO.Path]::GetTempPath()) ("refgen-" + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $work | Out-Null
 try {
-    & dotnet build $project -c Release -o $work --nologo -v quiet
+    # Build a copy in the temp folder so obj/ and bin/ (which hold absolute local paths) never appear in the repository.
+    $projectDir = Join-Path $work 'project'
+    New-Item -ItemType Directory -Path $projectDir | Out-Null
+    Copy-Item (Join-Path $PSScriptRoot '../reference-assemblies/RefGen.csproj'), (Join-Path $PSScriptRoot '../reference-assemblies/nuget.config') $projectDir
+    $buildOut = Join-Path $work 'out'
+    & dotnet build (Join-Path $projectDir 'RefGen.csproj') -c Release -o $buildOut --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw 'Restoring the reference assemblies from NuGet failed.' }
     $managed = Join-Path $OutDir 'Risk of Rain 2_Data/Managed'
     $core = Join-Path $OutDir 'BepInEx/core'
     New-Item -ItemType Directory -Force -Path $managed, $core | Out-Null
-    foreach ($dll in Get-ChildItem -LiteralPath $work -Filter *.dll) {
+    foreach ($dll in Get-ChildItem -LiteralPath $buildOut -Filter *.dll) {
         if ($dll.Name -eq 'RefGen.dll') { continue }
         $dest = if ($dll.Name -match '^(BepInEx\.dll|0Harmony.*\.dll|Mono\.Cecil.*\.dll|MonoMod.*\.dll)$') { $core } else { $managed }
         Copy-Item -LiteralPath $dll.FullName -Destination $dest -Force
