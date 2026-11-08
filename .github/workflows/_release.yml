@@ -76,6 +76,12 @@ jobs:
           $packageTag = if ($env:KIND -eq 'bundle') { $env:BUNDLE_TAG } else { "ci-$($env:GITHUB_RUN_ID)" }
           "PACKAGE_TAG=$packageTag" | Add-Content $env:GITHUB_ENV
 
+      # The check projects (and NoAssetsCheck, which the host build scripts run) target net6.0; the runner image only
+      # carries newer runtimes. Installed next to them, so the SDK that builds the plugins is unchanged.
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
       - uses: actions/cache@v4
         with:
           path: |
