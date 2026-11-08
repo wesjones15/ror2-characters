@@ -3,6 +3,7 @@ ror2-common/tests/BlastDamageCheck
 ror2-common/tests/CameraHandoffCheck
 ror2-common/tests/CameraPerspectiveCheck
 ror2-common/tests/EnemyLockCheck
+ror2-common/tests/ExperimentalCheck
 ror2-common/tests/MaterialAlphaCheck
 ror2-common/tests/MeleeHostCheck
 ror2-common/tests/MeleeRecoveryCheck
@@ -18,9 +19,12 @@ ror2-common/tests/SkillCardCacheCheck
 ror2-common/tests/SkillCardRenderCheck
 ror2-common/tests/StepSmootherCheck
 ror2-common/tests/UnstuckCheck
+ror2-mario/tests/CoinCheck
 ror2-mario/tests/FallDamageCheck
 ror2-mario/tests/NetCheck
+ror2-mario/tests/PresentationCheck
 ror2-mario/tests/SkinUnlockCheck
 ror2-mario/tests/UnstuckCheck
+ror2-olimar/tests/OnionMenuCheck
 ror2-olimar/tests/ShipRepairCheck
 ror2-olimar/tests/SkinUnlockCheck
