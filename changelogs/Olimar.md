@@ -4,6 +4,16 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.6.4 - 2026-11-08
+
+- The stand-in cursor is a pink circle using the native cursor draw pose: flat
+  during free aim, upright and facing Olimar while locked, with the existing spin.
+  Position/rotation match the original-art view through aim/lock/release tests.
+- Numbered pellet stand-ins use the Pikmin color table and actual simulation
+  radius/scale, including shrink-to-zero during absorption.
+- No ABI change (PIK 65). Native, presentation and required no-assets checks pass;
+  not yet played in RoR2.
+
 ## 0.6.3 - 2026-11-08
 
 - Crossover skins follow installed mods: Pianta with Mario, Captain Pikachu with

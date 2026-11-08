@@ -116,6 +116,13 @@ $docs = @(
     @{ To = 'docs/Optional-assets-validation.md'; From = 'docs\Optional-assets-validation.md' },
     @{ To = 'docs/Asset-session-policy-plan.md'; From = 'docs\Asset-session-policy-plan.md' },
     @{ To = 'docs/Asset-session-validation.md'; From = 'docs\Asset-session-validation.md' },
+    @{ To = 'docs/Stand-in-cues-validation.md'; From = 'docs\Stand-in-cues-validation.md' },
+    @{ To = 'docs/asset-free-captures/cues-30.png'; From = 'docs\asset-free-captures\cues-30.png' },
+    @{ To = 'docs/asset-free-captures/cues-90.png'; From = 'docs\asset-free-captures\cues-90.png' },
+    @{ To = 'docs/asset-free-captures/cues-120.png'; From = 'docs\asset-free-captures\cues-120.png' },
+    @{ To = 'docs/asset-free-captures/water-8.png'; From = 'docs\asset-free-captures\water-8.png' },
+    @{ To = 'docs/asset-free-captures/water-18.png'; From = 'docs\asset-free-captures\water-18.png' },
+    @{ To = 'docs/asset-free-captures/water-30.png'; From = 'docs\asset-free-captures\water-30.png' },
     @{ To = 'docs/asset-free-captures/session-20.png'; From = 'docs\asset-free-captures\session-20.png' },
     @{ To = 'docs/asset-free-captures/session-70.png'; From = 'docs\asset-free-captures\session-70.png' },
     @{ To = 'docs/asset-free-captures/session-140.png'; From = 'docs\asset-free-captures\session-140.png' },
@@ -169,7 +176,8 @@ foreach ($file in $marked) {
     Write-Warning ("{0} carried a web-download mark (Zone.Identifier); cleared it on the packaged copy. Check where that build output came from." -f $file.FullName.Substring($out.Length + 1))
     Unblock-File -LiteralPath $file.FullName
 }
-[IO.File]::WriteAllText((Join-Path $out 'README.md'), [IO.File]::ReadAllText($notes), (New-Object Text.UTF8Encoding($false)))
+$releaseReadme = [IO.File]::ReadAllText($notes).Replace('](../docs/', '](docs/')
+[IO.File]::WriteAllText((Join-Path $out 'README.md'), $releaseReadme, (New-Object Text.UTF8Encoding($false)))
 [IO.File]::WriteAllText((Join-Path $out 'CHANGELOG.md'), $changelog, (New-Object Text.UTF8Encoding($false)))
 $files.Add('README.md'); $files.Add('CHANGELOG.md')
 
@@ -315,7 +323,11 @@ foreach ($mod in @('Mario', 'Olimar', 'Melee')) {
     $prefix = "BepInEx/plugins/wesleyasaurus-$mod/"
     $pick = @($actual | Where-Object {
         $_.StartsWith($prefix) -or $_.StartsWith('BepInEx/plugins/wesleyasaurus-SharedFiles/') -or
-        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq 'docs/Optional-assets.md' -or $_ -eq 'docs/Optional-assets-validation.md' -or $_.StartsWith('docs/asset-free-captures/') -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md' -or $_ -in $legalNames
+        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq 'docs/Optional-assets.md' -or
+        $_ -eq 'docs/Optional-assets-validation.md' -or $_ -eq 'docs/Stand-in-cues-validation.md' -or
+        $_ -eq 'docs/Asset-session-policy-plan.md' -or $_ -eq 'docs/Asset-session-validation.md' -or
+        $_.StartsWith('docs/asset-free-captures/') -or $_ -eq "docs/examples/$($modExamples[$mod])" -or
+        $_ -eq 'README.md' -or $_ -in $legalNames
     })
     if (-not ($pick | Where-Object { $_.StartsWith($prefix) })) { throw "No plugin files for $mod." }
     $modChangelog = "# $mod changelog`n`nWhat changed since the previous published $mod version.`n`n" + (Get-ChangelogSection $mod $versions[$mod]) + "`n"

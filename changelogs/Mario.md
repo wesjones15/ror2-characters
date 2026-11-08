@@ -4,6 +4,18 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.6.4 - 2026-11-08
+
+- Missing-art lock-on uses a yellow circle with existing placement, facing, size,
+  spin and health/shield cue settings. Marker updates also run without a model view.
+- Primitive Spray cylinders share textured-water stretch and muzzle clipping;
+  the short light-trigger burst retains its actual particles and size.
+- The fallback tank uses a circle, rectangular blue water level, S/H/R/T/N nozzle
+  letter and ascending orange Rocket charge. It uses the normal tank position/scale
+  and works while spectating a missing-art Mario.
+- Native ABI 54; water-tip parity, burst/charge/copy-boundary, HUD and recorded
+  packet checks pass. Not yet played in RoR2.
+
 ## 0.6.3 - 2026-11-08
 
 - Luigi's skin entry follows Melee mod presence rather than local disc presence;

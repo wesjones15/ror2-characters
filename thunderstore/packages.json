@@ -29,7 +29,7 @@
     {
       "name": "Olimar",
       "plugin": "Olimar",
-      "version": "0.6.3",
+      "version": "0.6.4",
       "description": "Olimar, Pikmin and Ship Repair. Play with existing stand-ins; your own Pikmin assets are optional. No game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.1" ],
       "files": [

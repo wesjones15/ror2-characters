@@ -48,3 +48,9 @@ SharedFiles, select each offered character, exit the pod, move, use each skill,
 kill an enemy, interact/use equipment, die/revive, change stages and return to the
 lobby. Repeat with all three mods together. Manual RoR2 and mixed-asset co-op
 validation are pending; passing builds/headless checks do not establish them.
+
+The stand-in cues retain mod-owned behavior: Olimar's pink circle uses the native
+free/locked cursor pose and pellets use Pikmin colors plus simulated size. Mario
+has a yellow lock circle, shared FLUDD streak lengths/burst geometry, and a simple
+circle/rectangle tank gauge with nozzle letter and rising Rocket charge.
+See [cue previews and checks](Stand-in-cues-validation.md).
