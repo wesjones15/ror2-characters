@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.6.2 - 2026-11-07
+
+- Pikmin assets are optional. Existing swarm/Onion/pellet stand-ins share primitive/material support with the other mods, with a generic captain and standard drop pod for missing custom arrivals.
+- Client control/replicas no longer require extracted presentation assets. All 30 Ship Repair objectives have authored generic carry definitions when their models/configs are missing.
+- Required real-DLL no-assets checks run before staging. Original presentation/tuning remains optional; not yet played in RoR2.
+
 ## 0.6.0 - 2026-11-06
 
 **Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):

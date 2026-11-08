@@ -29,8 +29,9 @@ Install the BepInExPack dependency set for the modern game:
 
 ## Install
 
-See [Install](Install.md): install `wesleyasaurus-Olimar` (it brings `wesleyasaurus-SharedFiles`), put your own
-Pikmin disc in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game. A Pikmin 2 disc
+See [Install](Install.md): install `wesleyasaurus-Olimar` and its declared loader dependencies, then play.
+Existing stand-ins and generic Ship Repair objectives work without game assets; missing arrivals use RoR2's drop pod.
+Optionally add your own Pikmin disc in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`. A Pikmin 2 disc
 there as well adds Louie, Pikmin 2's enemies, the treasures and Candypop Buds; a Melee disc (USA, revision 1.02)
 adds Captain Pikachu.
 
@@ -360,7 +361,7 @@ The old `Dolphin.ShipPartsMode` config is ignored; select the actual mode instea
 Check `BepInEx/LogOutput.log`. A healthy start shows `libpikmin ABI 64`, `Olimar registered`,
 and in a run `Pikmin sim started (disc ...)`, `Pikmin models: 19 models` and `captain 0 is ...`.
 
-- *No assets / default tuning*: put your Pikmin disc in `wesleyasaurus-SharedFiles/put_games_here/`, restart, and read the extraction messages.
+- *No assets / default tuning*: normal built-in operation. Optionally add your own Pikmin disc in `wesleyasaurus-SharedFiles/put_games_here/` and restart for original presentation/tuning.
 - *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
 - *Wrong game version*: only DLC4 (2026) is supported.
 

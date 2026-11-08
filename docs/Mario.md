@@ -28,12 +28,13 @@ Install the BepInExPack dependency set for the modern game:
 
 ## Install
 
-See [Install](Install.md): install `wesleyasaurus-Mario` (it brings `wesleyasaurus-SharedFiles`), put your own
-Super Mario Sunshine disc in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game.
+See [Install](Install.md): install `wesleyasaurus-Mario` and its declared loader dependencies, then play.
+Without game assets Mario is a red shape, FLUDD water is blue shapes and arrival uses the standard drop pod.
+Optionally add your own Sunshine disc under `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` for original presentation and tuning.
 A Melee disc (USA, revision 1.02) there as well adds the Luigi skin; with the Melee mod installed too, the empty
 FLUDD button gets Mario's Melee punch and kick.
 
-Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 50.
+Install `MarioTest.dll` and `sms.dll` together. The native ABI must match; this release uses ABI 51.
 
 ## First run
 
@@ -275,11 +276,11 @@ description in the file.
 
 ## Troubleshooting
 
-Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 50`, `Mario is 1.xx m tall`,
+Check `BepInEx/LogOutput.log`. A healthy start shows `libsms ABI 51`, `Mario is 1.xx m tall`,
 `Mario registered`, and in a run `Mario's sim started` and `Mario's view: ...`.
 
-- *Mario looks like Commando*: extraction hasn't finished or failed; read the log. Check your disc is in
-  `wesleyasaurus-SharedFiles/put_games_here/`, then restart.
+- *Mario is a red shape*: normal without optional game assets; gameplay uses the built-in profile.
+- *Mario looks like Commando*: check for an old or mismatched DLL pair; reinstall both files from this release.
 - *ABI mismatch error*: you have mixed DLLs from different releases. Reinstall both from one ZIP.
 - *Wrong game version*: only DLC4 (2026) is supported.
 

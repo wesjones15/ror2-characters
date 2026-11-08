@@ -112,6 +112,11 @@ $docs = @(
     @{ To = 'docs/Olimar.md'; From = 'docs\Olimar.md' },
     @{ To = 'docs/Melee.md'; From = 'docs\Melee.md' },
     @{ To = 'docs/Install.md'; From = 'docs\Install.md' },
+    @{ To = 'docs/Optional-assets.md'; From = 'docs\Optional-assets.md' },
+    @{ To = 'docs/Optional-assets-validation.md'; From = 'docs\Optional-assets-validation.md' },
+    @{ To = 'docs/asset-free-captures/procedural-90.png'; From = 'docs\asset-free-captures\procedural-90.png' },
+    @{ To = 'docs/asset-free-captures/procedural-120.png'; From = 'docs\asset-free-captures\procedural-120.png' },
+    @{ To = 'docs/asset-free-captures/procedural-150.png'; From = 'docs\asset-free-captures\procedural-150.png' },
     # Ship examples away from the live paths so merging BepInEx preserves players' settings and disc locations.
     @{ To = 'docs/examples/com.libpikmin.olimartest.cfg'; From = 'config\com.libpikmin.olimartest.cfg' },
     @{ To = 'docs/examples/com.libsms.mariotest.cfg'; From = 'config\com.libsms.mariotest.cfg' },
@@ -304,7 +309,7 @@ foreach ($mod in @('Mario', 'Olimar', 'Melee')) {
     $prefix = "BepInEx/plugins/wesleyasaurus-$mod/"
     $pick = @($actual | Where-Object {
         $_.StartsWith($prefix) -or $_.StartsWith('BepInEx/plugins/wesleyasaurus-SharedFiles/') -or
-        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md' -or $_ -in $legalNames
+        $_ -eq "docs/$mod.md" -or $_ -eq 'docs/Install.md' -or $_ -eq 'docs/Optional-assets.md' -or $_ -eq 'docs/Optional-assets-validation.md' -or $_.StartsWith('docs/asset-free-captures/') -or $_ -eq "docs/examples/$($modExamples[$mod])" -or $_ -eq 'README.md' -or $_ -in $legalNames
     })
     if (-not ($pick | Where-Object { $_.StartsWith($prefix) })) { throw "No plugin files for $mod." }
     $modChangelog = "# $mod changelog`n`nWhat changed since the previous published $mod version.`n`n" + (Get-ChangelogSection $mod $versions[$mod]) + "`n"

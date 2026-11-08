@@ -2,7 +2,7 @@
 
 Play Risk of Rain 2 as **Captain Olimar**, leading a squad of Pikmin. You don't shoot: you throw Pikmin at enemies, whistle them back, and let your army do the fighting. Olimar and his Pikmin run on a reimplementation of Pikmin's own game logic, so they move, latch on, carry and fight the way they do in Pikmin.
 
-Requires your own copy of **Pikmin** (GameCube).
+GameCube assets are optional. Install and play with the existing stand-ins, default gameplay tuning, generic Ship Repair objectives and RoR2's drop pod. Your own **Pikmin** disc enables original presentation and disc-derived tuning. Missing game sounds/effects are omitted.
 
 ## How he plays
 

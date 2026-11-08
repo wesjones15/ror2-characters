@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.6.2 - 2026-11-07
+
+- Sunshine assets are optional: a red procedural body, blue simulated FLUDD water, yellow coin shapes and a standard drop pod keep Mario playable without a disc/cache. Missing original audio/effects are omitted.
+- Authored fallback tuning, finite action clocks and usable nozzle thrust/resource costs run through the existing Rust simulation. Native ABI 51 adds checked water drawing snapshots without a view handle.
+- Shared shape/display support and mandatory real-DLL no-assets checks precede staging. Built-in tuning/timing is approximate; not yet played in RoR2.
+
 ## 0.6.0 - 2026-11-06
 
 **Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):

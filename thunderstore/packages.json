@@ -8,8 +8,8 @@
   "packages": [
     {
       "name": "SharedFiles",
-      "version": "1.0.0",
-      "description": "The folder the wesleyasaurus Mario, Olimar and Melee mods share: put your own GameCube disc images in put_games_here. No code.",
+      "version": "1.0.1",
+      "description": "Optional folder for your own GameCube discs and extracted assets. Mario, Olimar and Melee also work without game assets. No code.",
       "dependencies": [],
       "files": [
         { "to": "put_games_here/README.txt", "from": "ror2-common/sharedfiles/put_games_here/README.txt" },
@@ -19,8 +19,8 @@
     {
       "name": "Mario",
       "plugin": "Mario",
-      "description": "Mario with FLUDD from Super Mario Sunshine as a survivor. Requires your own copy of Super Mario Sunshine (GameCube); no game content included. Offline and friends-only.",
-      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "description": "Mario with FLUDD as a survivor. Play with generic shapes; your own Sunshine assets are optional. No game content included. Offline and friends-only.",
+      "dependencies": [],
       "files": [
         { "to": "MarioTest.dll", "from": "ror2-mario/dist/MarioTest/MarioTest.dll" },
         { "to": "sms.dll", "from": "ror2-mario/dist/MarioTest/sms.dll" }
@@ -29,9 +29,9 @@
     {
       "name": "Olimar",
       "plugin": "Olimar",
-      "version": "0.6.1",
-      "description": "Captain Olimar and his Pikmin as a survivor, plus the Ship Repair mode. Requires your own copy of Pikmin (GameCube); no game content included. Offline and friends-only.",
-      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "version": "0.6.2",
+      "description": "Olimar, Pikmin and Ship Repair. Play with existing stand-ins; your own Pikmin assets are optional. No game content included. Offline and friends-only.",
+      "dependencies": [],
       "files": [
         { "to": "OlimarTest.dll", "from": "ror2-olimar/dist/OlimarTest/OlimarTest.dll" },
         { "to": "pikmin.dll", "from": "ror2-olimar/dist/OlimarTest/pikmin.dll" }
@@ -40,8 +40,8 @@
     {
       "name": "Melee",
       "plugin": "Melee",
-      "description": "Samus and Yoshi from Super Smash Bros. Melee as survivors. Requires your own copy of Melee (GameCube); no game content included. Offline and friends-only.",
-      "dependencies": [ "wesleyasaurus-SharedFiles-1.0.0" ],
+      "description": "Samus and Yoshi as survivors. Play with generic fighters and projectiles; your own Melee assets are optional. No game content included. Offline and friends-only.",
+      "dependencies": [],
       "files": [
         { "to": "Samus.dll", "from": "ror2-samus/Samus/bin/Release/netstandard2.1/Samus.dll" },
         { "to": "ssbm.dll", "from": "libssbm/target/release/ssbm.dll" }

@@ -2,7 +2,7 @@
 
 Mario from **Super Mario Sunshine** as a Risk of Rain 2 survivor: Sunshine's own movement (triple jumps, dives, wall kicks, ground pounds) and FLUDD's Spray, Hover, Rocket and Turbo nozzles.
 
-Requires your own copy of Super Mario Sunshine (GameCube). Nothing from the game is included in this package.
+GameCube assets are optional. Install and play with a red character shape, blue FLUDD water, generic coins and RoR2's drop pod. Built-in tuning/timing is approximate. Your own Sunshine disc enables original presentation and disc-derived data; missing game sounds/effects are omitted. Nothing from the game is included.
 
 Extras:
 - A Luigi skin, with your own copy of Super Smash Bros. Melee.

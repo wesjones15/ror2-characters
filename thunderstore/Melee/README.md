@@ -2,7 +2,7 @@
 
 **Samus** and **Yoshi** from **Super Smash Bros. Melee** as Risk of Rain 2 survivors, with Melee's own physics, moves and hitboxes.
 
-Requires your own copy of Super Smash Bros. Melee (GameCube, USA version 1.02). Nothing from the game is included in this package.
+GameCube assets are optional. Install and play with colored fighters, generic projectiles and RoR2 drop pods. Built-in gameplay uses approximate authored tuning and move schedules. Your own Melee disc (USA version 1.02) enables original presentation and disc-derived data; missing game sounds/effects are omitted. Nothing from the game is included.
 
 More fighters (Fox, Luigi, Pikachu, Captain Falcon, Link, Donkey Kong) are unfinished and hidden. To try them anyway, set `ShowUnfinished = true` in `BepInEx/config/Ror2Common.Experimental.cfg`; everyone in a multiplayer game needs the same setting.
 

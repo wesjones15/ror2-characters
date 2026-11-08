@@ -4,6 +4,12 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.5.1 - 2026-11-07
+
+- Melee assets are optional. All eight registered fighters have authored approximate gameplay profiles and generated body/projectile/held-object models. Missing assets retain the fighter's own skills rather than switching to Commando.
+- Missing original audio/effects are omitted. Missing custom arrivals use the standard RoR2 drop pod; available caches retain custom arrivals after deferred initialization.
+- Native ABI 7 and required real-DLL no-assets checks cover every generated fighter and generic moving projectiles. Original disc-backed behavior remains available. Not yet played in RoR2; co-op validation is pending.
+
 ## 0.5.0 - 2026-11-06
 
 **Updating from 0.4.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):

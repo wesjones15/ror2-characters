@@ -1,6 +1,7 @@
 # Optional game assets: release implementation plan
 
-Prepared 2026-11-07. **Planning only: no runtime changes or gameplay verification yet.**
+Prepared 2026-11-07. Runtime implementation and automated candidate checks are now in place;
+see [validation](Optional-assets-validation.md). Manual RoR2 acceptance/co-op checks remain pending.
 
 ## Release outcome
 
@@ -49,10 +50,11 @@ inventory. In particular, shared commit `068297a` repaired the visible stock fal
 it did not implement asset-free Melee gameplay. Some older behavior-spec sections
 describe historical prototypes, so use current constructors and tests as the baseline.
 
-Implementation checkout caution: the canonical `libsms/` currently points at
+At planning time the canonical `libsms/` pointed at
 `explore/luigis-mansion-fludd`. Its release-worktree source is on `modern/1.5.0`.
-Verify branches before implementing; do not build the release from the exploratory
-checkout. The release worktree also has existing submodule changes to preserve.
+Implementation switched the primary checkout to `modern/1.5.0`, preserving the exploratory
+branch. Builds use the canonical repositories. Existing release submodule working directories
+were preserved; release gitlinks record the canonical source commits used for packaging.
 
 ## 1. Commonize Olimar's fallback foundation
 

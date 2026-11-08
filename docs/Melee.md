@@ -33,8 +33,9 @@ multiplayer game needs the same setting. Melee multiplayer still needs a two-mac
 
 ## Install
 
-See [Install](Install.md): install `wesleyasaurus-Melee` (it brings `wesleyasaurus-SharedFiles`), put your own Melee
-disc (USA, revision 1.02) in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/` and start the game. First-run
+See [Install](Install.md): install `wesleyasaurus-Melee` and its declared loader dependencies, then play.
+Without game assets fighters and projectiles are generic shapes, gameplay uses authored approximate profiles and arrivals use standard drop pods.
+Optionally add your own Melee disc (USA, revision 1.02) in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`. First-run
 extraction runs on a worker thread (the survivors are listed but wait for it) into `SharedFiles/assets/melee/`, shared
 with Mario's Luigi skin and punch and kick and Olimar's Captain Pikachu. Each fighter extracts its own files; one
 failing does not disable the others.
@@ -155,9 +156,10 @@ Each entry has a description in the file.
 ## Troubleshooting
 
 Check `BepInEx/LogOutput.log`. A healthy start shows `Melee 0.4.10 registered` early and, after the game loads,
-`Melee 0.5.0 / libssbm ABI 6 loaded` then `Melee assets extracted from your disc` the first time.
+`Melee 0.5.1 / libssbm ABI 7 loaded`; extraction messages appear only when an optional supported disc is supplied.
 
-- *A fighter looks like Commando*: its assets are missing or extraction failed; read the log, check your disc is in `wesleyasaurus-SharedFiles/put_games_here/`, restart.
+- *A fighter is a generic shape*: normal without optional game assets; its own skills remain active.
+- *A fighter looks like Commando*: check for an old or mismatched DLL pair and reinstall this release.
 - *Two Samus entries / duplicate registration*: the old `MeleeSamus` plugin is still installed; delete it.
 - *ABI mismatch error*: you mixed DLLs from different releases. Reinstall both from one ZIP.
 - *Wrong game version*: only DLC4 (2026) is supported.

@@ -1,6 +1,6 @@
 # SharedFiles
 
-The folder the wesleyasaurus **Mario**, **Olimar** and **Melee** mods share. It holds no code, just two folders:
+An optional folder for the wesleyasaurus **Mario**, **Olimar** and **Melee** mods. They work without this package, discs or extracted caches. Use it to add original presentation from your own discs. It holds no code, just two folders:
 
 - `put_games_here/`: put your own GameCube disc images here (`.iso`, `.gcm` or `.ciso`, any file names, or one folder inside). Each mod reads them to find its own game.
 - `assets/`: what the mods copy from those discs on the first launch, one folder per game (`pikmin`, `sunshine`, `melee`). Files from one disc are shared, so nothing is copied twice.
