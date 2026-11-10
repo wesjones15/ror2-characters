@@ -6,7 +6,7 @@ Each entry lists only what changed since the previous published version. Everyon
 
 ## 0.7.0 - 2026-11-10
 
-Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.9 builds (listed below).
+This entry covers what changed after the published 0.6.0 and the unpublished 0.6.1 to 0.6.9 builds. Every change since 7 pm on 5 November is listed under it, version by version.
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
 
 - FLUDD moves on top of Sunshine's, each with its own switch in the config (`Sim` section; set it to false for the

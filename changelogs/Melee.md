@@ -6,7 +6,7 @@ Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin wi
 
 ## 0.6.0 - 2026-11-10
 
-Everything since the published 0.5.0, including the unpublished 0.5.1 and 0.5.2 builds (listed below).
+This entry covers what changed after the published 0.5.0 and the unpublished 0.5.1 and 0.5.2 builds. Every change since 7 pm on 5 November is listed under it, version by version.
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
 
 - The fighters, their simulation and procedural views run without extracted game files: Samus's whole kit (jab chain,
