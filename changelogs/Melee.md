@@ -4,6 +4,18 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.6.0 - 2026-11-10
+
+Everything since the published 0.5.0, including the unpublished 0.5.1 and 0.5.2 builds (their entries are below).
+Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
+
+- The fighters, their simulation and procedural views run without extracted game files: Samus's whole kit (jab chain,
+  Charge Shot and the rest) is authored for the no-assets profile, Luigi's Super Scope is built in, and the arrival
+  uses a generic entry platform (a flat cylinder that thickens and flashes).
+- Stand-in fighters tip into their strikes with the shared strike pose.
+- Locked shots lead a moving body.
+- Native ABI 7.
+
 ## 0.5.2 - 2026-11-08
 
 - Luigi's Super Scope no longer requires `ItCo.dat` when native built-in support

@@ -1,8 +1,22 @@
 # Olimar changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 65 from 0.6.3; ABI 64 from 0.5.7 (0.6.0 unchanged); ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 66 from 0.7.0; ABI 65 from 0.6.3; ABI 64 from 0.5.7 (0.6.0 unchanged); ABI 63 in 0.5.6; ABI 62 in 0.5.4 to 0.5.5; ABI 59, Pikmin network protocol 12 and snapshot 14 from 0.5.2 (0.5.3 unchanged); ABI 58 and protocol 11 in 0.5.0 to 0.5.1; ABI 52 in 0.4.3 to 0.4.4; ABI 46 from 0.4.0; ABI 44 from 0.3.15; ABI 41 in 0.3.14; ABI 39 in 0.3.13; ABI 37 in 0.3.8 to 0.3.11; ABI 35 from 0.3.5; ABI 33 in 0.3.4; ABI 32 in 0.3.3; ABI 31 in 0.3.1–0.3.2; ABI 30 in 0.3.0; ABI 29 through 0.2.3.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
+
+## 0.7.0 - 2026-11-10
+
+Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.5 builds (their entries are below).
+Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
+
+- Olimar, Louie and Ship Repair run without Pikmin 1 or Pikmin 2 game files: stand-in captains and Pikmin follow the
+  captain, with Ship Repair objectives, Pikmin 2 bonuses and the stock drop pod available without extracted assets.
+- Stand-in cursor and pellets use the native cursor draw poses and the simulated pellet colors and sizes; Pikmin counts
+  in the fallback HUD use RoR2's font; the stand-in captain tips through the dismiss strike (ABI 66).
+- Thrown Pikmin keep their 3D arrival guidance, lead a locked target and have their in-flight homing damped; a pad
+  throw keeps its authored horizontal speed after scraping a cliff.
+- Pellet Posies always spawn bloomed.
+- Native ABI 66.
 
 ## 0.6.4 - 2026-11-08
 

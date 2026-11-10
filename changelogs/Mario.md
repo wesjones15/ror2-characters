@@ -1,8 +1,33 @@
 # Mario changelog
 
-Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 53 from 0.6.3; ABI 51 in 0.6.2; ABI 50 and network protocol 13 from 0.6.0; ABI 48 and protocol 13 in 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
+Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), BepInEx 5.4.21.0 and RoR2BepInExPack 1.46.0. Native ABI 57 from 0.7.0; ABI 54 in 0.6.4; ABI 53 from 0.6.3; ABI 51 in 0.6.2; ABI 50 and network protocol 13 from 0.6.0; ABI 48 and protocol 13 in 0.5.8; ABI 47 and protocol 12 in 0.5.5 to 0.5.7; ABI 43 in 0.5.4; ABI 42 in 0.5.3; ABI 41 in 0.5.0 to 0.5.2; ABI 34 in 0.4.7 to 0.4.9; ABI 31 in 0.4.6; ABI 30 from 0.4.0; ABI 29 from 0.3.7; ABI 28 in 0.3.3 to 0.3.6; ABI 26 to 27 before.
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
+
+## 0.7.0 - 2026-11-10
+
+Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.9 builds (their entries are below).
+Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
+
+- FLUDD moves on top of Sunshine's, each with its own switch in the config (`Sim` section; set it to false for the
+  game's behavior):
+  - A held Turbo pushes Mario forward without feet on the ground: in a jump, a dive, a belly slide and a corkscrew
+    (`TurboAirThrust`). In a dive or slide the thrust is full from the first tick, so the Turbo sled keeps its
+    momentum, and a Turbo belly slide flies off the crest of an embankment.
+  - A spinning ground pound falls faster, flaming or not, and still flames at the same height (`SpinPoundFast`).
+  - The Rocket and the Turbo can charge and fire in a B dive and a dry or wet belly slide (`SlideDiveNozzles`). A
+    level Rocket shot gives a sustained rocket sled (about 1.5 s up to speed 140) and charges faster there.
+  - The FLUDD gauge also shows the Turbo's pressure and dash wind-up.
+- Experimental aimed Rocket, Turbo and Hover (`Experimental` section; on by default, needs an LB lock-on target):
+  the Rocket's head follows the lock through the charge and fires one very fast precision shot (a bright tracer
+  in stand-in mode, a small kick back, no launch); an aimed Turbo fires a rapid stream at the target; an aimed
+  Hover points both jets at it and keeps its lift. Losing the target ends the hold until RT is pressed again.
+  `AimAlternateNozzles` is the master switch and `AimRocket`, `AimTurbo` and `AimHover` switch each one.
+- Stand-in Mario (no Sunshine assets): a short blue Spray head at the outlet, Rocket smoke, a lying-down
+  pose (on his back or front) after a knock-down, and the plain Lemurian's fireball flames for the super ground
+  pound and a burning corkscrew.
+- FLUDD's lock-on leads a moving enemy; landing dust and terrain splashes show in stand-in mode.
+- Native ABI 57. The tuning carries the new switches, which also travel to other players' copies.
 
 ## 0.6.4 - 2026-11-08
 
