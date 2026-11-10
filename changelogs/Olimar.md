@@ -6,7 +6,7 @@ Each entry lists only what changed since the previous published version. Everyon
 
 ## 0.7.0 - 2026-11-10
 
-Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.5 builds (their entries are below).
+Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.5 builds (listed below).
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
 
 - Olimar, Louie and Ship Repair run without Pikmin 1 or Pikmin 2 game files: stand-in captains and Pikmin follow the
@@ -17,6 +17,90 @@ Not yet played in RoR2: the sim and the checks pass, how it plays and feels is u
   throw keeps its authored horizontal speed after scraping a cliff.
 - Pellet Posies always spawn bloomed.
 - Native ABI 66.
+
+
+### Earlier changes since 7 pm on 5 November
+
+The versions below are the ones since your evening release-20261105; the first group were never published.
+
+### 0.6.4 - 2026-11-08 (unpublished build)
+
+- The stand-in cursor is a pink circle using the native cursor draw pose: flat
+  during free aim, upright and facing Olimar while locked, with the existing spin.
+  Position/rotation match the original-art view through aim/lock/release tests.
+- Numbered pellet stand-ins use the Pikmin color table and actual simulation
+  radius/scale, including shrink-to-zero during absorption.
+- No ABI change (PIK 65). Native, presentation and required no-assets checks pass;
+  not yet played in RoR2.
+
+### 0.6.3 - 2026-11-08 (unpublished build)
+
+- Crossover skins follow installed mods: Pianta with Mario, Captain Pikachu with
+  Melee; Louie remains available with Olimar. Each client chooses local art or
+  fallback without changing selected skin identity/unlocks.
+- Native ABI 65 supports alternate captain art without Pikmin 1 world assets.
+  Generic army/Onion/enemy/bud presentation covers missing base art.
+- Pikmin 2 bonus gameplay uses the common lobby capability, independent of P1 art:
+  starting colors, Onion acceptance, buds, P2 enemies and treasures agree. Mixed
+  lobbies show an explanation; the run locks the set and refuses incompatible late joins.
+- Flying stand-in Onions hide their legs. Generic captains ascend into the pod,
+  hide while riding and become visible after dropping.
+- Native, policy, skin and build checks pass. Mixed-client RoR2 playtesting remains
+  pending; pre-existing optional animation QA failures remain documented.
+
+### 0.6.2 - 2026-11-07 (unpublished build)
+
+- Pikmin assets are optional. Existing swarm/Onion/pellet stand-ins share primitive/material support with the other mods, with a generic captain and standard drop pod for missing custom arrivals.
+- Client control/replicas no longer require extracted presentation assets. All 30 Ship Repair objectives have authored generic carry definitions when their models/configs are missing.
+- Required real-DLL no-assets checks run before staging. Original presentation/tuning remains optional; not yet played in RoR2.
+
+### 0.6.0 - 2026-11-06
+
+**Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Olimar`** (was `OlimarTest`), the name r2modman uses. Delete the old `OlimarTest` folder, after moving out any disc image you kept in it; left in place it is a second copy of Olimar.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir`, the skin and Pikmin 2 path settings, `assets_dir.txt` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/pikmin/` (Pikmin 2's files in `pikmin/p2/`); the Pianta skin reads Mario's `assets/sunshine/` and Captain Pikachu `assets/melee/`.
+- **Olimar extracts once more on the first launch**, even with an old cache: extracted files now carry the version of the extractor that made them (Pikmin, Pikmin 2, its enemies and treasures, the Ice Climbers set), and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Olimar`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Captain Pikachu's files are checked in full.** The Melee set Olimar extracts for the Captain Pikachu skin and the Ice Climber Pikmin now includes and validates Pikachu's animation file (`PlPkAJ.dat`), so a cache missing it is repaired instead of drawing a broken skin. Olimar extracts this set himself; the Melee mod is not needed.
+- **Character portraits are lit evenly**, with a shared key-and-fill light instead of one directional light that could leave them dark with a hard shadow. Portraits are regenerated once.
+- **Multiplayer:** the shared `ShowUnfinished` setting (`BepInEx/config/Ror2Common.Experimental.cfg`) is part of RoR2's mod-list check. Native ABI 64 is unchanged; everyone needs this build.
+
+Not played in game: the new folder layout and re-extraction, the lobby check.
+
+### 0.5.7 - 2026-11-05
+
+- **Olimar and the Pikmin follow the stage's gravity.** On RoR2's moon (low gravity) Olimar's jumps, thrown Pikmin and falling Pikmin, Onion seeds and nectar drops all use the lower gravity, so jumps are higher and falls slower. Other stages are unchanged. Pad flights keep the gravity the pad gave them, and enemies are not affected. Native ABI 64 (from 63): install `OlimarTest.dll` and `pikmin.dll` together; everyone in a multiplayer game needs this build. Not played on the moon yet.
+
+### 0.5.6 - 2026-11-05
+
+- **Dead Pikmin can sprout again (opt-in).** A Pikmin that dies can come back as a buried leaf you pluck again. Config: 60% of the time normally and 80% in a mass death. Off unless enabled; native ABI 63.
+- **The Onion plucker works from a hovering Onion.** The plucker button is allowed on a flying Onion, and the plucker teleports back to its captain if the Onion flies far off.
+- **Spectating shows the watched Olimar's bottom HUD.**
+- **Frozen survivors hold their pose** instead of playing the idle (shared library change; see Melee 0.4.13).
+- Install the updated `OlimarTest.dll` and `pikmin.dll` together: this build is native ABI 63. Everyone in a multiplayer game needs the same Olimar build.
+
+Not played in game; the Rust suites and managed checks passed on clean clones.
+
+### 0.5.5 - 2026-11-05
+
+- Rebuilt against the updated shared library (generated skill icons are kept when vanilla fallbacks load). No Olimar behavior changes; native ABI 62, protocol and snapshot format are unchanged from 0.5.4.
+
+### 0.5.4 - 2026-11-05
+
+- **Olimar in VR (opt-in).** First person from his head for every skin with his own arms on the controllers, the held Pikmin in the throwing hand, his layout read by RoR2 through VrBank, carry counts, the Onion window, Ship Repair's overlays and part names and the enemy gauges on the wrist panel, and a VR pause sheet. A ridden Onion hides in first person. Every captain body's VR arms are baked on first run.
+- **Free cursor.** A host's aimed point is kept in 3D (native ABI 61), so a VR pointer can throw Pikmin where it points.
+- **Onion follows its legs.** The Onion walks, jumps and climbs the legs the host draws, its lean eases into the jump, the flying Onion's entry jump is an arc peaking on the leg grab point, and its dormancy now comes from the sim instead of a host copy (ABI 60 to 62).
+- **Dolphin arrival.** Olimar lands in the goal spot's rings, with one short half-alpha dust cloud, and the dust dissolves instead of dimming as one sheet.
+- **Particles.** Per-particle alpha is applied in the C# renderer.
+- **Jump pads** hand Olimar the motor's throw, as Mario's host does.
+- **Pellet Posy** holds its 1-HP death trigger until the body has been healthy.
+- **Audio** reopens its output when the sound device is lost or the default changes.
+- **Native panics are logged** each frame (`pik_take_panic`).
+- Install the updated `OlimarTest.dll` and `pikmin.dll` together: this build is native ABI 62.
 
 ## 0.6.4 - 2026-11-08
 

@@ -6,7 +6,7 @@ Each entry lists only what changed since the previous published version. Everyon
 
 ## 0.7.0 - 2026-11-10
 
-Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.9 builds (their entries are below).
+Everything since the published 0.6.0, including the unpublished 0.6.1 to 0.6.9 builds (listed below).
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
 
 - FLUDD moves on top of Sunshine's, each with its own switch in the config (`Sim` section; set it to false for the
@@ -28,6 +28,97 @@ Not yet played in RoR2: the sim and the checks pass, how it plays and feels is u
   pound and a burning corkscrew.
 - FLUDD's lock-on leads a moving enemy; landing dust and terrain splashes show in stand-in mode.
 - Native ABI 57. The tuning carries the new switches, which also travel to other players' copies.
+
+
+### Earlier changes since 7 pm on 5 November
+
+The versions below are the ones since your evening release-20261105; the first group were never published.
+
+### 0.6.4 - 2026-11-08 (unpublished build)
+
+- Missing-art lock-on uses a yellow circle with existing placement, facing, size,
+  spin and health/shield cue settings. Marker updates also run without a model view.
+- Primitive Spray cylinders share textured-water stretch and muzzle clipping;
+  the short light-trigger burst retains its actual particles and size.
+- The fallback tank uses a circle, rectangular blue water level, S/H/R/T/N nozzle
+  letter and ascending orange Rocket charge. It uses the normal tank position/scale
+  and works while spectating a missing-art Mario.
+- Native ABI 54; water-tip parity, burst/charge/copy-boundary, HUD and recorded
+  packet checks pass. Not yet played in RoR2.
+
+### 0.6.3 - 2026-11-08 (unpublished build)
+
+- Luigi's skin entry follows Melee mod presence rather than local disc presence;
+  earned unlocks and per-client original/stand-in presentation remain independent.
+- Flowers and flower creatures run without presentation assets, with orange
+  cylinders. Missing Shine art uses a yellow sphere and simple teleporter exit.
+- Procedural FLUDD has a yellow backpack/nozzle at the gameplay emitter. Generated
+  dark patches show actual sampled wet ground. Existing goop defaults and generic
+  critter/Jr. drawing support missing art; unfinished-content gates remain unchanged.
+- Native ABI 53 exposes the common emitter and wet geometry without a view.
+  Headless/packet/build checks pass; not yet played in RoR2.
+
+### 0.6.2 - 2026-11-07 (unpublished build)
+
+- Sunshine assets are optional: a red procedural body, blue simulated FLUDD water, yellow coin shapes and a standard drop pod keep Mario playable without a disc/cache. Missing original audio/effects are omitted.
+- Authored fallback tuning, finite action clocks and usable nozzle thrust/resource costs run through the existing Rust simulation. Native ABI 51 adds checked water drawing snapshots without a view handle.
+- Shared shape/display support and mandatory real-DLL no-assets checks precede staging. Built-in tuning/timing is approximate; not yet played in RoR2.
+
+### 0.6.0 - 2026-11-06
+
+**Updating from 0.5.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Mario`** (was `MarioTest`), the name r2modman uses. Delete the old `MarioTest` folder, after moving out any disc image you kept in it; left in place it is a second copy of Mario.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir`, the skin path settings, `assets_dir.txt` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/sunshine/`, and Luigi's Melee files go to `SharedFiles/assets/melee/`, shared with the other mods.
+- **Mario extracts once more on the first launch**, even with an old cache: extracted files now carry the version of the extractor that made them, and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Mario`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Spinning ground pound jumps higher and leaves a ring of fire.** A on the landing of a spinning pound leaps 2.5 times as high as a plain pound's jump (new `Sim` setting `SpinPoundJump`, 1 for no difference), and the landing sweeps fire out to the shock wave's radius (shown on your machine; other players see the usual burst). Native ABI 50: install `MarioTest.dll` and `sms.dll` together.
+- **Luigi strikes the Melee punch and kick poses.** He kept playing his normal animation during Mario's Melee A attacks; now he follows the attack pose like Mario.
+- **Mario extracts the Melee files he uses himself**: the Luigi skin's files without the Melee mod, and the punch and kick's (`PlMr.dat`) when the Melee mod is installed. Luigi's egg-lay move waits until the Melee mod has Yoshi's files instead of trying before they exist.
+- **Character portraits are lit evenly.** The portrait camera uses a shared key-and-fill light instead of one directional light that could leave the picture dark with a hard shadow. Portraits are regenerated once. Mario's default skin icon is now his rendered portrait.
+- **Bowser Jr. stays hidden**, now behind the shared unfinished-content switch (`ShowUnfinished` in `BepInEx/config/Ror2Common.Experimental.cfg`). With it on, Shadow Mario gets an opaque body, brush attacks (RT tap throws goop at the crosshair, hold sprays), his own voice set, and a Gatekeeper that grows from big goop piles.
+- **Multiplayer:** the `ShowUnfinished` setting is part of RoR2's mod-list check, so players whose settings differ are told their mods don't match instead of joining with different rosters. Network protocol 13 is unchanged; everyone needs this build.
+
+Not played in game: the spinning-pound jump and fire ring, Luigi's attack poses, the new folder layout and re-extraction, the lobby check.
+
+### 0.5.8 - 2026-11-05
+
+- **Mario follows the stage's gravity.** RoR2's moon (Commencement) lowers gravity; Mario now jumps higher and falls slower there, with the same take-off speed. Every other stage is unchanged (the scale is 1). Native ABI 48 and network protocol 13: install `MarioTest.dll` and `sms.dll` together, and everyone in a multiplayer game needs this build. Not played on the moon yet.
+
+### 0.5.7 - 2026-11-05
+
+- **Throw in mid-air.** B while carrying a player or object, jumping or falling, throws it (with Mario's current velocity) instead of diving, and Mario stays in his jump. Before, only the grounded states could throw, so a jump-and-B never released a carried friend.
+- **Spinning ground pound.** A full stick circle during a ground pound's wind-up or fall spins it, with the spin jump's swirl. Its landing reaches 2.5 times as far and does 2 times the damage, on the enemy pounded and the shock wave. New `Damage` config keys `SpinPoundDamage` (2) and `SpinPoundRadius` (2.5).
+- **The ground pound can be aimed a little.** In its fall the stick nudges Mario sideways (up to 12 units a frame, a fraction of a run) and turns him toward it. With no stick he falls straight down.
+- **Burning no longer cancels a ground pound.** Fire hits, bullets, lava and graffito skip the burn reaction from the pound's wind-up through its get-up. The damage still lands.
+- **Flaming spins are steerable and hit harder.** A corkscrew that has caught fire (spun for 1 second) turns twice as hard, pitches up to 55 degrees from the camera instead of 15, and steers more sharply the faster it flies, so the Turbo's keeps up. The flaming Rocket spin is steered by the stick with the Rocket's 2.5 times air control. Defaults: `SuperCorkscrew` damage 20 to 40, `RocketSpin` 10 to 20 (an existing config file keeps its old values; delete the lines to take the new ones).
+- **Rocket spin no longer machine-guns a boss.** It hits each enemy once per climb, and at most once per 0.75 seconds per enemy, so wedging inside a large body (the Wandering Vagrant) can no longer land hit after hit.
+- **Luigi without FLUDD no longer wears the pack.** Choosing No FLUDD removes the pack from his back as well as the nozzle.
+- **Spray keeps up with a boosted Mario** (Wax Quail): the extra travel above 1x is inherited in full.
+- **Bigger kills drop a ring of coins:** golem 5, titan 8, champion 10.
+- **Spectating shows the watched Mario's HUD** (life, coins, FLUDD gauge), or none when the watched player is another character.
+- **Bowser Jr. is still hidden from character select** (as in 0.5.6). His Shadow Mario refraction and portrait fixes are in, but nobody can pick him yet.
+- Install the updated `MarioTest.dll` and `sms.dll` together (native ABI 47, unchanged). Everyone in a multiplayer game needs the same Mario build.
+
+Not played in game: the mid-air throw, spinning pound, aimed pound, steerable flaming spins and the Luigi pack fix. The libsms test suite passes.
+
+### 0.5.6 - 2026-11-05
+
+- **Bowser Jr. (Shadow Mario) is hidden from character select for this release.** His body, goop world and network messages stay registered, so nothing else changes for Mario, but he can no longer be picked.
+- Rebuilt against the shared library with the generated skill-icon fix (see Melee 0.4.12). Native ABI 47 is unchanged: keep `MarioTest.dll` and `sms.dll` from the same ZIP.
+
+### 0.5.5 - 2026-11-05
+
+- **Bowser Jr. and his goop.** A new Shadow Mario / Bowser Jr. survivor runs on Mario's sim, with Sunshine's goop world (every goop type, its lifetime and cap), goop critters (Swoopin' Stus, goop Piranhas and their shots), Petey Piranha as his sidekick, screen refraction over Shadow Mario's body, and the goop drawn with the disc's scrolling paint. The goop world is mirrored to every machine in multiplayer (native ABI 47). Not yet played in-game.
+- **Mario in VR (opt-in).** First person from his head with his forearms and gloves on the motion controllers, the nozzle wheel in the right hand, FLUDD aimed with the pointer, and the HUD, TOO BAD, GAME OVER and SHINE! on a wrist panel. RoR2 reads Mario's layout through the shared VrBank. Every skin's VR arms are baked on first run.
+- **Corkscrew hold.** A slow stick circle keeps the corkscrew going instead of needing a full circle every tick (ABI 43/44).
+- **Spray bursts by press time**, not by trigger depth.
+- **Multiplayer fixes.** Coin pickup works for non-Mario players, puppets nudge into place instead of teleporting, and spectators fit nozzles silently.
+- **Native panics are logged.** Anything sms.dll catches at its boundary is written to the log each frame.
+- Install the updated `MarioTest.dll` and `sms.dll` together: this build is native ABI 47. Everyone in a multiplayer game needs the same Mario build.
 
 ## 0.6.4 - 2026-11-08
 

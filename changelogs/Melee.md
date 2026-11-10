@@ -6,7 +6,7 @@ Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin wi
 
 ## 0.6.0 - 2026-11-10
 
-Everything since the published 0.5.0, including the unpublished 0.5.1 and 0.5.2 builds (their entries are below).
+Everything since the published 0.5.0, including the unpublished 0.5.1 and 0.5.2 builds (listed below).
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
 
 - The fighters, their simulation and procedural views run without extracted game files: Samus's whole kit (jab chain,
@@ -15,6 +15,66 @@ Not yet played in RoR2: the sim and the checks pass, how it plays and feels is u
 - Stand-in fighters tip into their strikes with the shared strike pose.
 - Locked shots lead a moving body.
 - Native ABI 7.
+
+
+### Earlier changes since 7 pm on 5 November
+
+The versions below are the ones since your evening release-20261105; the first group were never published.
+
+### 0.5.2 - 2026-11-08 (unpublished build)
+
+- Luigi's Super Scope no longer requires `ItCo.dat` when native built-in support
+  is available. The no-assets gate checks equip and moving beam behavior.
+- Includes current shared fallback/session helpers. Native ABI remains 7.
+  Shipping startup and no-assets checks pass; not yet played in RoR2.
+
+### 0.5.1 - 2026-11-07 (unpublished build)
+
+- Melee assets are optional. All eight registered fighters have authored approximate gameplay profiles and generated body/projectile/held-object models. Missing assets retain the fighter's own skills rather than switching to Commando.
+- Missing original audio/effects are omitted. Missing custom arrivals use the standard RoR2 drop pod; available caches retain custom arrivals after deferred initialization.
+- Native ABI 7 and required real-DLL no-assets checks cover every generated fighter and generic moving projectiles. Original disc-backed behavior remains available. Not yet played in RoR2; co-op validation is pending.
+
+### 0.5.0 - 2026-11-06
+
+**Updating from 0.4.x needs a few manual steps** (full checklist in `docs/Install.md`, "Upgrading"):
+
+- **The plugin folder is now `BepInEx/plugins/wesleyasaurus-Melee`** (was `Melee`), the name r2modman uses. Delete the old `Melee` folder, after moving out any disc image you kept in it; left in place it is a second copy of the mod.
+- **Discs go in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`**, a folder shared by all three mods (the release includes it). `Paths.Disc`, `Paths.AssetsDir` and `gamecube_library.txt` are no longer read; there are no path settings. The cache is `SharedFiles/assets/melee/`, shared with Mario's Luigi skin and Olimar's Captain Pikachu, so each file is extracted once.
+- **The fighters extract once more on the first launch**, even with an old cache: each fighter's files now carry the version of the extractor that made them, and a future update that changes an extractor re-reads the disc by itself.
+- **Packaged for Thunderstore** as `wesleyasaurus-Melee`, depending on `wesleyasaurus-SharedFiles`.
+
+Changes:
+
+- **Samus and Yoshi only.** Fox, Luigi, Pikachu, Captain Falcon, Link and Donkey Kong are unfinished and now hidden: they are not registered and their files are not extracted. To try them, set `ShowUnfinished = true` in `BepInEx/config/Ror2Common.Experimental.cfg` and restart (their files are extracted then). Each fighter's effects load only when that fighter's files are present, so a hidden fighter's missing files never affect the others.
+- **Generated skill icons are cached in `SharedFiles/assets/melee/skill-icons/`** instead of a `generated` folder in the plugin folder, which an update replaces.
+- **Character portraits are lit evenly**, with a shared key-and-fill light instead of one directional light that could leave them dark with a hard shadow. Portraits are regenerated once.
+- **Multiplayer:** the `ShowUnfinished` setting is part of RoR2's mod-list check, so players whose settings differ are told their mods don't match instead of joining with different rosters. Native ABI 6 is unchanged; everyone needs this build.
+
+Not played in game: Samus's and Yoshi's models and skill portraits with the new folder layout, re-extraction, the lobby check.
+
+### 0.4.14 - 2026-11-05
+
+- **Samus's homing missile locks the enemy nearest your crosshair.** Its 120 m lock range let distance outweigh how close an enemy was to the crosshair, so a nearby enemy often beat the one you were aiming at. The first pick now goes by the angle from the camera (where the crosshair is), with distance only breaking ties. Mario's and Olimar's lock-on share the code and are unchanged.
+- **Fighters follow the stage's gravity.** On RoR2's moon (low gravity) every Melee fighter falls with the lower gravity and the jump height is asked for at it, so jumps are higher and floatier; other stages are unchanged. Native ABI 6 (from 5), with the new setting carried in the network replay: install `Samus.dll` and `ssbm.dll` together, and everyone in a multiplayer game needs this build. Projectile shots keep normal gravity. Not played on the moon yet.
+
+### 0.4.13 - 2026-11-05
+
+- **Frozen fighters hold their pose.** When RoR2 freezes a Melee fighter (a Glacial elite's death blast) the mesh stays as it was instead of playing the idle, and the fighter gets the same icy tint Mario and the Pikmin get.
+- **Spectating shows the watched fighter's HUD.** A spectator of a Melee fighter now sees that fighter's HUD.
+- Native ABI 5 and `ssbm.dll` are unchanged.
+
+### 0.4.12 - 2026-11-05
+
+- **Generated skill portraits stay.** The skill art Melee generates for each fighter is now stored beside the installed plugin, and a vanilla fallback icon loading later no longer replaces a generated one.
+- **Menus pick up cached art.** When locally cached skill art arrives after a menu is already open, the Melee skill and loadout menus refresh instead of keeping the placeholder.
+- Native ABI 5 and `ssbm.dll` are unchanged.
+
+### 0.4.11 - 2026-11-05
+
+- **Melee in VR (opt-in).** Every fighter gets VR through the shared MeleeVr layer: a `[VR]` settings section, the body drawn through DrawBody, and RoR2 reading the fighter's layout via VrBank. Every fighter costume's VR arms are baked on first run (native ABI 5, with `ssbm_view_set_vr_arms`).
+- **Shared fighter behavior.** Common bodies became trait defaults in libssbm.
+- **Native panics are logged.** Anything ssbm.dll catches at its boundary is written to the log each frame.
+- Install the updated `Samus.dll` and `ssbm.dll` together.
 
 ## 0.5.2 - 2026-11-08
 
