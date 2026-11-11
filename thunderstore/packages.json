@@ -29,7 +29,6 @@
     {
       "name": "Olimar",
       "plugin": "Olimar",
-      "version": "0.6.4",
       "description": "Olimar, Pikmin and Ship Repair. Olimar plays with stand-ins and optional Pikmin assets; Ship Repair needs the Pikmin and Pikmin 2 discs on every player's machine. No game content included. Offline and friends-only.",
       "dependencies": [ "wesleyasaurus-SharedFiles-1.0.1" ],
       "files": [
