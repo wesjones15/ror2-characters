@@ -4,7 +4,7 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
-## 0.8.0 - 2026-11-11
+## 0.7.1 - 2026-11-11
 
 Changes since the published 0.7.0 (release-20261110).
 Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.

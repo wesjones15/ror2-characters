@@ -30,7 +30,7 @@ Install the BepInExPack dependency set for the modern game:
 ## Install
 
 See [Install](Install.md): install `wesleyasaurus-Olimar` and its declared loader dependencies, then play.
-Existing stand-ins work without game assets (missing arrivals use RoR2's drop pod). **Ship Repair is the exception: from 0.8.0 it needs the Pikmin and Pikmin 2 disc images on every player's machine, the host included** (a player still preparing their files makes the host wait; one missing a disc is removed after a warning).
+Existing stand-ins work without game assets (missing arrivals use RoR2's drop pod). **Ship Repair is the exception: from 0.7.1 it needs the Pikmin and Pikmin 2 disc images on every player's machine, the host included** (a player still preparing their files makes the host wait; one missing a disc is removed after a warning).
 Optionally add your own Pikmin disc in `BepInEx/plugins/wesleyasaurus-SharedFiles/put_games_here/`. A Pikmin 2 disc
 there as well adds Louie, Pikmin 2's enemies, the treasures and Candypop Buds; a Melee disc (USA, revision 1.02)
 adds Captain Pikachu.
