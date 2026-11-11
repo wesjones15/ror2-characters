@@ -13,7 +13,7 @@ the image does not need to remain installed after extraction.
 - Mario's Il Piantissimo and Yoshi costumes are already registered independently
   of disc availability. This does not refer to Olimar's separate Pianta costume.
 - Louie's starting Purple/White squad is no longer gated on Pikmin 2 artwork.
-- Ship Repair can launch with generic definitions for all 30 ship parts.
+- Ship Repair no longer launches without the Pikmin and Pikmin 2 discs (from Olimar 0.8.0, on every machine); its generic part definitions stay in the code for other uses.
 - Coins retain their gameplay with generic yellow shapes. Ordinary RoR2 teleporter
   interaction remains available without the optional Shine sequence.
 - Missing arrival artwork uses the stock pod; missing music, voices and decorative

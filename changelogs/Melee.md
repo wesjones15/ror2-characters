@@ -4,6 +4,16 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Samus was released alone as 0.2.14 through 0.2.17. 0.3.0 replaces that plugin with one Melee plugin that holds every fighter.
 
+## 0.6.1 - 2026-11-11
+
+Changes since the published 0.6.0 (release-20261110).
+Not yet played in RoR2: the checks pass, how it plays and feels is untested.
+
+- A fighter whose game files were still being prepared (a first run) no longer waits hidden and invulnerable in the arrival for as long as that takes:
+  the arrival lets go after 15 seconds.
+- A notice at the top of the screen says while the Melee files are still being prepared; it never blocks anything.
+- Native ABI 7 (unchanged).
+
 ## 0.6.0 - 2026-11-10
 
 This entry covers what changed after the published 0.5.0 and the unpublished 0.5.1 and 0.5.2 builds. Every change since 7 pm on 5 November is listed under it, version by version.

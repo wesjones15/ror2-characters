@@ -4,6 +4,18 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Olimar build.
 
+## 0.8.0 - 2026-11-11
+
+Changes since the published 0.7.0 (release-20261110).
+Not yet played in RoR2: the checks pass, how it plays and feels is untested.
+
+- **Ship Repair now needs the Pikmin and Pikmin 2 discs on every machine, the host included.** It has no stand-in version yet, so a player without
+  either disc image cannot start it or stay in its lobby or run (this replaces 0.7.0's "Ship Repair runs without game files"). The lobby says which
+  disc is missing and blocks Ready and launch. A player whose files are still being prepared makes the host wait; nobody is removed for that. A player
+  who is missing a disc (and not preparing) is warned about in chat and removed after 4 seconds, and a late joiner is refused the same way.
+- A notice at the top of the screen says while the Pikmin files are still being prepared; it never blocks anything.
+- Native ABI 66 (unchanged).
+
 ## 0.7.0 - 2026-11-10
 
 This entry covers what changed after the published 0.6.0 and the unpublished 0.6.1 to 0.6.5 builds. Every change since 7 pm on 5 November is listed under it, version by version.

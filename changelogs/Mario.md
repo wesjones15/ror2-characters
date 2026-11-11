@@ -4,6 +4,37 @@ Modern releases target the modern/1.5.0 game branch (DLC4, Unity 2021.3.45f2), B
 
 Each entry lists only what changed since the previous published version. Everyone in a multiplayer game needs the same Mario build.
 
+## 0.8.0 - 2026-11-11
+
+Changes since the published 0.7.0 (release-20261110).
+Not yet played in RoR2: the sim and the checks pass, how it plays and feels is untested.
+
+- Multiplayer: a player whose Sunshine files were still being prepared at launch (a first run) never registered the statue pod or its
+  four states, so the host's pod could not spawn on his machine and the game's state numbers were shifted: his body never reached the stage,
+  and his log filled with millions of errors (a runaway credits state machine). The pod and its states now register on every machine.
+  Everyone still needs the same Mario build.
+- The first stage's entrance is the same on every machine. Without ready Sunshine files (still preparing, or no disc) Mario enters
+  under a stand-in statue: a gray block with the statue's exact size and collider, a blue disc on its front, released at the stock exit
+  point after a fixed 2 seconds. A notice at the top of the screen says the files are still being prepared; it never blocks starting.
+- Aimed Rocket (LB lock-on, experimental): instead of one slug, five water drops, one a tick, each at 4 times the Spray's speed and 20 times a Spray
+  drop's hit, each locked on the enemy it was aimed at and following it. Aimed Turbo (the gatling): one drop a tick on a ring round the line to
+  the target, counter-clockwise, at 2 times the Spray's speed, each homing on the lock. Other players' copies of Mario use the real enemies, so
+  the drops lock and splash the same on every screen.
+- With Sunshine's files the Rocket, Turbo and Hover heads now turn to point their muzzle along the aim, as the stand-in's already did.
+- Aimed Hover: aimed while R and the LB lock are both held, and plain again (straight down, full lift, no pitch to the flight) the moment the lock
+  goes; release LB and the hover goes on. On the ground an aimed Hover is a gun: it does not lift him and shoots as far as the Spray.
+- A held Turbo now draws the dash's water-boost cone and particles with a sound in a jump, dive, slide and corkscrew, and a corkscrew started with the
+  Turbo held plays the Turbo's charge and blast (needs Sunshine's audio).
+- In the air of a burn or a knock-down a Hopoo Feather's extra jump pulls him out into a fresh jump and B then L is a ground pound
+  (with `Knockdown/GetUpEarly`, on by default).
+- Mario picks up small enemies with B (standing or walking slowly, the game's grab) and throws them with B while standing, walking, running or
+  jumping. A thrown enemy hurts the enemies it hits and, with its neighbours, itself where it lands. Config `Carry/EnemyCarry`, `EnemyMaxHealth`
+  (400), `EnemyThrowDamage` (8, times his damage). Bosses, champions and big enemies never qualify. Other players do not see his carry arms.
+- Fixes: a body already standing on a spawn point (Abyssal Depths) is no longer "rescued" to itself over and over with TOO BAD!; the no-footing rescue
+  plays no TOO BAD!; the life meter holds its value when the body is briefly missing; far-off coin pickups are no longer played in the player's ear
+  (silent beyond 60 m); a lobby-pad log line that repeated every frame is gone; a body placed far from where it was is logged.
+- Native ABI 57 (unchanged).
+
 ## 0.7.0 - 2026-11-10
 
 This entry covers what changed after the published 0.6.0 and the unpublished 0.6.1 to 0.6.9 builds. Every change since 7 pm on 5 November is listed under it, version by version.
